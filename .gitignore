@@ -1,0 +1,14 @@
+/venv/
+/.idea/
+/docs/.openapi*
+/javascript/api/.openapi*
+/python/asap_api/.openapi*
+/python/asap_api/.travis.yml
+/python/asap_api/.gitlab-ci.yml
+api.json
+*.tmp
+*.py[cod]
+__pycache__/
+temp.*
+*.zip
+*.extracted
