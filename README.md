@@ -6,10 +6,11 @@ In general, using the ASAP API consists of the following high level steps:
 
    Go to the Profile page
 
-![Image of menu](images/profilemenu.png)
+   <img style="float: left;" src="images/profilemenu.jpg" alt="Image of menu" height="300"/>
 
    Click on the key icon to create a new API key.
-![Image of profile page](images/createapikey.jpg)
+
+   <img style="float: left;" src="images/createapikey.jpg" alt="Image of profile page" width="400"/>
 
 2. Setting up the API client
 
