@@ -108,12 +108,13 @@ Class | Method | HTTP request | Description
 *OrganizationApi* | [**get_defined_defenses**](docs/OrganizationApi.md#get_defined_defenses) | **GET** /api/v1/organizations/{id}/defenses | Get the defenses defined for this organization.
 *OrganizationApi* | [**get_defined_metrics**](docs/OrganizationApi.md#get_defined_metrics) | **GET** /api/v1/organizations/{id}/metrics | Get the metrics defined for this organization.
 *OrganizationApi* | [**get_defined_noises**](docs/OrganizationApi.md#get_defined_noises) | **GET** /api/v1/organizations/{id}/noises | Get the noises defined for this organization.
+*OrganizationApi* | [**get_defined_transforms**](docs/OrganizationApi.md#get_defined_transforms) | **GET** /api/v1/organizations/{id}/transforms | Get the transforms defined for this organization.
 *OrganizationApi* | [**get_organization**](docs/OrganizationApi.md#get_organization) | **GET** /api/v1/organizations/{id} | Get organization by id.
 *OrganizationApi* | [**get_organizations**](docs/OrganizationApi.md#get_organizations) | **GET** /api/v1/organizations | Get organizations.
 *OrganizationApi* | [**update_custom_dataset**](docs/OrganizationApi.md#update_custom_dataset) | **PUT** /api/v1/organizations/{id}/datasets/{datasetId} | Update dataset.
 *OrganizationApi* | [**update_organization**](docs/OrganizationApi.md#update_organization) | **PUT** /api/v1/organizations/{id} | Update organization.
 *OrganizationApi* | [**upload_dataset**](docs/OrganizationApi.md#upload_dataset) | **POST** /api/v1/organizations/{id}/datasets | Upload dataset.
-*ProjectApi* | [**add_project**](docs/ProjectApi.md#add_project) | **POST** /api/v1/projects | Add a project to a organization.
+*ProjectApi* | [**add_project**](docs/ProjectApi.md#add_project) | **POST** /api/v1/projects | Add a project to an organization.
 *ProjectApi* | [**delete_data**](docs/ProjectApi.md#delete_data) | **DELETE** /api/v1/projects/{id}/modeldata | Delete project model data.
 *ProjectApi* | [**delete_project**](docs/ProjectApi.md#delete_project) | **DELETE** /api/v1/projects/{id} | Delete a project.
 *ProjectApi* | [**download_project_data**](docs/ProjectApi.md#download_project_data) | **GET** /api/v1/projects/{id}/data | Download project data.
@@ -121,6 +122,7 @@ Class | Method | HTTP request | Description
 *ProjectApi* | [**get_projects**](docs/ProjectApi.md#get_projects) | **GET** /api/v1/projects | Get list of projects.
 *ProjectApi* | [**update_project**](docs/ProjectApi.md#update_project) | **PUT** /api/v1/projects/{id} | Update project .
 *ProjectApi* | [**upload_project_data**](docs/ProjectApi.md#upload_project_data) | **POST** /api/v1/projects/{id}/modeldata | Upload project data.
+*ProjectApi* | [**verify_project**](docs/ProjectApi.md#verify_project) | **PUT** /api/v1/projects/{id}/verify | Start the model verification process.
 *RegisterApi* | [**register**](docs/RegisterApi.md#register) | **POST** /api/v1/register | Register user
 *RegisterApi* | [**send_invite**](docs/RegisterApi.md#send_invite) | **POST** /api/v1/register/invite | Send user invite
 *ReportsApi* | [**add_report**](docs/ReportsApi.md#add_report) | **POST** /api/v1/reports | Add report.
@@ -157,6 +159,7 @@ Class | Method | HTTP request | Description
  - [APIKeyResponse](docs/APIKeyResponse.md)
  - [AuthorizedUserResponse](docs/AuthorizedUserResponse.md)
  - [DataSet](docs/DataSet.md)
+ - [DatasetRequest](docs/DatasetRequest.md)
  - [DatasetSetting](docs/DatasetSetting.md)
  - [DefenseRequest](docs/DefenseRequest.md)
  - [DefenseResponse](docs/DefenseResponse.md)
@@ -182,6 +185,7 @@ Class | Method | HTTP request | Description
  - [TestRequest](docs/TestRequest.md)
  - [TestResponse](docs/TestResponse.md)
  - [TestSettings](docs/TestSettings.md)
+ - [Transform](docs/Transform.md)
  - [UserRequest](docs/UserRequest.md)
  - [UserResponse](docs/UserResponse.md)
 

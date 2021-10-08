@@ -12,6 +12,7 @@
 from asap_client.model.api_key_response import APIKeyResponse
 from asap_client.model.authorized_user_response import AuthorizedUserResponse
 from asap_client.model.data_set import DataSet
+from asap_client.model.dataset_request import DatasetRequest
 from asap_client.model.dataset_setting import DatasetSetting
 from asap_client.model.defense_request import DefenseRequest
 from asap_client.model.defense_response import DefenseResponse
@@ -37,5 +38,6 @@ from asap_client.model.status_request import StatusRequest
 from asap_client.model.test_request import TestRequest
 from asap_client.model.test_response import TestResponse
 from asap_client.model.test_settings import TestSettings
+from asap_client.model.transform import Transform
 from asap_client.model.user_request import UserRequest
 from asap_client.model.user_response import UserResponse

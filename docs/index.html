@@ -930,6 +930,34 @@ ul.nav-tabs {
       "items" : {
         "type" : "string"
       }
+    },
+    "transforms" : {
+      "type" : "array",
+      "items" : {
+        "$ref" : "#/components/schemas/Transform"
+      }
+    }
+  }
+};
+    defs["DatasetRequest"] = {
+  "title" : "DatasetRequest",
+  "type" : "object",
+  "properties" : {
+    "description" : {
+      "type" : "string"
+    },
+    "format" : {
+      "type" : "string",
+      "enum" : [ "Coco", "Custom", "Ksv", "VOCDetection", "VOCSegmentation" ]
+    },
+    "name" : {
+      "type" : "string"
+    },
+    "transforms" : {
+      "type" : "array",
+      "items" : {
+        "$ref" : "#/components/schemas/Transform"
+      }
     }
   }
 };
@@ -1226,6 +1254,10 @@ ul.nav-tabs {
   "title" : "ProjectSettings",
   "type" : "object",
   "properties" : {
+    "datasetId" : {
+      "type" : "integer",
+      "format" : "int64"
+    },
     "headSettings" : {
       "type" : "array",
       "items" : {
@@ -1234,6 +1266,22 @@ ul.nav-tabs {
     },
     "storeIntermediateData" : {
       "type" : "boolean"
+    },
+    "tasks" : {
+      "type" : "array",
+      "items" : {
+        "type" : "string"
+      }
+    },
+    "transforms" : {
+      "type" : "array",
+      "items" : {
+        "$ref" : "#/components/schemas/Transform"
+      }
+    },
+    "useTransformsFrom" : {
+      "type" : "string",
+      "enum" : [ "def", "gui", "ws" ]
     }
   }
 };
@@ -1428,6 +1476,23 @@ ul.nav-tabs {
     }
   }
 };
+    defs["Transform"] = {
+  "title" : "Transform",
+  "type" : "object",
+  "properties" : {
+    "id" : {
+      "type" : "integer",
+      "format" : "int64"
+    },
+    "name" : {
+      "type" : "string"
+    },
+    "params" : {
+      "type" : "object",
+      "properties" : { }
+    }
+  }
+};
     defs["UserRequest"] = {
   "title" : "UserRequest",
   "type" : "object",
@@ -1563,6 +1628,9 @@ ul.nav-tabs {
                     <li data-group="Organization" data-name="getDefinedNoises" class="">
                       <a href="#api-Organization-getDefinedNoises">getDefinedNoises</a>
                     </li>
+                    <li data-group="Organization" data-name="getDefinedTransforms" class="">
+                      <a href="#api-Organization-getDefinedTransforms">getDefinedTransforms</a>
+                    </li>
                     <li data-group="Organization" data-name="getOrganization" class="">
                       <a href="#api-Organization-getOrganization">getOrganization</a>
                     </li>
@@ -1602,6 +1670,9 @@ ul.nav-tabs {
                     </li>
                     <li data-group="Project" data-name="uploadProjectData" class="">
                       <a href="#api-Project-uploadProjectData">uploadProjectData</a>
+                    </li>
+                    <li data-group="Project" data-name="verifyProject" class="">
+                      <a href="#api-Project-verifyProject">verifyProject</a>
                     </li>
                   <li class="nav-header" data-group="Register"><a href="#api-Register">API Methods - Register</a></li>
                     <li data-group="Register" data-name="register" class="">
@@ -7263,7 +7334,7 @@ public class OrganizationApiExample {
         
         // Create an instance of the API class
         OrganizationApi apiInstance = new OrganizationApi();
-        Long id = 789; // Long | id
+        Long id = 789; // Long | The organization ID.
         
         try {
             array[DataSet] result = apiInstance.getDatasets(id);
@@ -7283,7 +7354,7 @@ public class OrganizationApiExample {
 public class OrganizationApiExample {
     public static void main(String[] args) {
         OrganizationApi apiInstance = new OrganizationApi();
-        Long id = 789; // Long | id
+        Long id = 789; // Long | The organization ID.
         
         try {
             array[DataSet] result = apiInstance.getDatasets(id);
@@ -7310,7 +7381,7 @@ public class OrganizationApiExample {
 
 // Create an instance of the API class
 OrganizationApi *apiInstance = [[OrganizationApi alloc] init];
-Long *id = 789; // id (default to null)
+Long *id = 789; // The organization ID. (default to null)
 
 // Get the datasets defined for this organization.
 [apiInstance getDatasetsWith:id
@@ -7337,7 +7408,7 @@ JWT.apiKey = "YOUR API KEY";
 
 // Create an instance of the API class
 var api = new AdversarialSecurityAssessmentPlatformForAi.OrganizationApi()
-var id = 789; // {Long} id
+var id = 789; // {Long} The organization ID.
 
 var callback = function(error, data, response) {
   if (error) {
@@ -7373,7 +7444,7 @@ namespace Example
             
             // Create an instance of the API class
             var apiInstance = new OrganizationApi();
-            var id = 789;  // Long | id (default to null)
+            var id = 789;  // Long | The organization ID. (default to null)
 
             try {
                 // Get the datasets defined for this organization.
@@ -7399,7 +7470,7 @@ OpenAPITools\Client\Configuration::getDefaultConfiguration()->setApiKey('Authori
 
 // Create an instance of the API class
 $api_instance = new OpenAPITools\Client\Api\OrganizationApi();
-$id = 789; // Long | id
+$id = 789; // Long | The organization ID.
 
 try {
     $result = $api_instance->getDatasets($id);
@@ -7422,7 +7493,7 @@ $WWW::OPenAPIClient::Configuration::api_key->{'Authorization'} = 'YOUR_API_KEY';
 
 # Create an instance of the API class
 my $api_instance = WWW::OPenAPIClient::OrganizationApi->new();
-my $id = 789; # Long | id
+my $id = 789; # Long | The organization ID.
 
 eval { 
     my $result = $api_instance->getDatasets(id => $id);
@@ -7447,7 +7518,7 @@ openapi_client.configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 
 # Create an instance of the API class
 api_instance = openapi_client.OrganizationApi()
-id = 789 # Long | id (default to null)
+id = 789 # Long | The organization ID. (default to null)
 
 try: 
     # Get the datasets defined for this organization.
@@ -7500,7 +7571,7 @@ pub fn main() {
                     </span>
 
                     <div class="inner description marked">
-id
+The organization ID.
                     </div>
             </div>
                 <div class="inner required">
@@ -9480,6 +9551,460 @@ id
                         </article>
                       </div>
                       <hr>
+                    <div id="api-Organization-getDefinedTransforms">
+                      <article id="api-Organization-getDefinedTransforms-0" data-group="User" data-name="getDefinedTransforms" data-version="0">
+                        <div class="pull-left">
+                          <h1>getDefinedTransforms</h1>
+                          <p>Get the transforms defined for this organization.</p>
+                        </div>
+                        <div class="pull-right"></div>
+                        <div class="clearfix"></div>
+                        <p></p>
+                        <p class="marked"></p>
+                        <p></p>
+                        <br />
+                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/api/v1/organizations/{id}/transforms</span></code></pre>
+                        <p>
+                          <h3>Usage and SDK Samples</h3>
+                        </p>
+                        <ul class="nav nav-tabs nav-tabs-examples">
+                          <li class="active"><a href="#examples-Organization-getDefinedTransforms-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-Organization-getDefinedTransforms-0-java">Java</a></li>
+                          <li class=""><a href="#examples-Organization-getDefinedTransforms-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-Organization-getDefinedTransforms-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-Organization-getDefinedTransforms-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-Organization-getDefinedTransforms-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-Organization-getDefinedTransforms-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-Organization-getDefinedTransforms-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-Organization-getDefinedTransforms-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-Organization-getDefinedTransforms-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-Organization-getDefinedTransforms-0-python">Python</a></li>
+                          <li class=""><a href="#examples-Organization-getDefinedTransforms-0-rust">Rust</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="examples-Organization-getDefinedTransforms-0-curl">
+                            <pre class="prettyprint"><code class="language-bsh">curl -X GET\
+-H "Authorization: [[apiKey]]"\
+ -H "Accept: application/json,application/xml"\
+ "http://localhost:8082/api/v1/organizations/{id}/transforms"</code></pre>
+                          </div>
+                          <div class="tab-pane" id="examples-Organization-getDefinedTransforms-0-java">
+                            <pre class="prettyprint"><code class="language-java">import org.openapitools.client.*;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.model.*;
+import org.openapitools.client.api.OrganizationApi;
+
+import java.io.File;
+import java.util.*;
+
+public class OrganizationApiExample {
+    public static void main(String[] args) {
+        ApiClient defaultClient = Configuration.getDefaultApiClient();
+        
+        // Configure API key authorization: JWT
+        ApiKeyAuth JWT = (ApiKeyAuth) defaultClient.getAuthentication("JWT");
+        JWT.setApiKey("YOUR API KEY");
+        // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+        //JWT.setApiKeyPrefix("Token");
+        
+        // Create an instance of the API class
+        OrganizationApi apiInstance = new OrganizationApi();
+        Long id = 789; // Long | id
+        
+        try {
+            'String' result = apiInstance.getDefinedTransforms(id);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling OrganizationApi#getDefinedTransforms");
+            e.printStackTrace();
+        }
+    }
+}
+</code></pre>
+                          </div>
+
+                          <div class="tab-pane" id="examples-Organization-getDefinedTransforms-0-android">
+                            <pre class="prettyprint"><code class="language-java">import org.openapitools.client.api.OrganizationApi;
+
+public class OrganizationApiExample {
+    public static void main(String[] args) {
+        OrganizationApi apiInstance = new OrganizationApi();
+        Long id = 789; // Long | id
+        
+        try {
+            'String' result = apiInstance.getDefinedTransforms(id);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling OrganizationApi#getDefinedTransforms");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+  <!--
+  <div class="tab-pane" id="examples-Organization-getDefinedTransforms-0-groovy">
+  <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+  </div> -->
+                            <div class="tab-pane" id="examples-Organization-getDefinedTransforms-0-objc">
+                              <pre class="prettyprint"><code class="language-cpp">Configuration *apiConfig = [Configuration sharedConfig];
+
+// Configure API key authorization: (authentication scheme: JWT)
+[apiConfig setApiKey:@"YOUR_API_KEY" forApiKeyIdentifier:@"Authorization"];
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+//[apiConfig setApiKeyPrefix:@"Bearer" forApiKeyIdentifier:@"Authorization"];
+
+
+// Create an instance of the API class
+OrganizationApi *apiInstance = [[OrganizationApi alloc] init];
+Long *id = 789; // id (default to null)
+
+// Get the transforms defined for this organization.
+[apiInstance getDefinedTransformsWith:id
+              completionHandler: ^('String' output, NSError* error) {
+    if (output) {
+        NSLog(@"%@", output);
+    }
+    if (error) {
+        NSLog(@"Error: %@", error);
+    }
+}];
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Organization-getDefinedTransforms-0-javascript">
+                              <pre class="prettyprint"><code class="language-js">var AdversarialSecurityAssessmentPlatformForAi = require('adversarial_security_assessment_platform_for_ai');
+var defaultClient = AdversarialSecurityAssessmentPlatformForAi.ApiClient.instance;
+
+// Configure API key authorization: JWT
+var JWT = defaultClient.authentications['JWT'];
+JWT.apiKey = "YOUR API KEY";
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//JWT.apiKeyPrefix['Authorization'] = "Token";
+
+// Create an instance of the API class
+var api = new AdversarialSecurityAssessmentPlatformForAi.OrganizationApi()
+var id = 789; // {Long} id
+
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+};
+api.getDefinedTransforms(id, callback);
+</code></pre>
+                            </div>
+
+                            <!--<div class="tab-pane" id="examples-Organization-getDefinedTransforms-0-angular">
+              <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+            </div>-->
+                            <div class="tab-pane" id="examples-Organization-getDefinedTransforms-0-csharp">
+                              <pre class="prettyprint"><code class="language-cs">using System;
+using System.Diagnostics;
+using asap_client.Api;
+using asap_client.Client;
+using asap_client.Model;
+
+namespace Example
+{
+    public class getDefinedTransformsExample
+    {
+        public void main()
+        {
+            // Configure API key authorization: JWT
+            Configuration.Default.ApiKey.Add("Authorization", "YOUR_API_KEY");
+            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+            // Configuration.Default.ApiKeyPrefix.Add("Authorization", "Bearer");
+            
+            // Create an instance of the API class
+            var apiInstance = new OrganizationApi();
+            var id = 789;  // Long | id (default to null)
+
+            try {
+                // Get the transforms defined for this organization.
+                'String' result = apiInstance.getDefinedTransforms(id);
+                Debug.WriteLine(result);
+            } catch (Exception e) {
+                Debug.Print("Exception when calling OrganizationApi.getDefinedTransforms: " + e.Message );
+            }
+        }
+    }
+}
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Organization-getDefinedTransforms-0-php">
+                              <pre class="prettyprint"><code class="language-php"><&#63;php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+// Configure API key authorization: JWT
+OpenAPITools\Client\Configuration::getDefaultConfiguration()->setApiKey('Authorization', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// OpenAPITools\Client\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Authorization', 'Bearer');
+
+// Create an instance of the API class
+$api_instance = new OpenAPITools\Client\Api\OrganizationApi();
+$id = 789; // Long | id
+
+try {
+    $result = $api_instance->getDefinedTransforms($id);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling OrganizationApi->getDefinedTransforms: ', $e->getMessage(), PHP_EOL;
+}
+?></code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Organization-getDefinedTransforms-0-perl">
+                              <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
+use WWW::OPenAPIClient::Configuration;
+use WWW::OPenAPIClient::OrganizationApi;
+
+# Configure API key authorization: JWT
+$WWW::OPenAPIClient::Configuration::api_key->{'Authorization'} = 'YOUR_API_KEY';
+# uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+#$WWW::OPenAPIClient::Configuration::api_key_prefix->{'Authorization'} = "Bearer";
+
+# Create an instance of the API class
+my $api_instance = WWW::OPenAPIClient::OrganizationApi->new();
+my $id = 789; # Long | id
+
+eval { 
+    my $result = $api_instance->getDefinedTransforms(id => $id);
+    print Dumper($result);
+};
+if ($@) {
+    warn "Exception when calling OrganizationApi->getDefinedTransforms: $@\n";
+}</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Organization-getDefinedTransforms-0-python">
+                              <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
+import time
+import openapi_client
+from openapi_client.rest import ApiException
+from pprint import pprint
+
+# Configure API key authorization: JWT
+openapi_client.configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# openapi_client.configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# Create an instance of the API class
+api_instance = openapi_client.OrganizationApi()
+id = 789 # Long | id (default to null)
+
+try: 
+    # Get the transforms defined for this organization.
+    api_response = api_instance.get_defined_transforms(id)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling OrganizationApi->getDefinedTransforms: %s\n" % e)</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Organization-getDefinedTransforms-0-rust">
+                              <pre class="prettyprint"><code class="language-rust">extern crate OrganizationApi;
+
+pub fn main() {
+    let id = 789; // Long
+
+    let mut context = OrganizationApi::Context::default();
+    let result = client.getDefinedTransforms(id, &context).wait();
+
+    println!("{:?}", result);
+}
+</code></pre>
+                            </div>
+                          </div>
+
+                          <h2>Scopes</h2>
+                          <table>
+                            
+                          </table>
+
+                          <h2>Parameters</h2>
+
+                            <div class="methodsubtabletitle">Path parameters</div>
+                            <table id="methodsubtable">
+                                <tr>
+                                  <th width="150px">Name</th>
+                                  <th>Description</th>
+                                </tr>
+                                  <tr><td style="width:150px;">id*</td>
+<td>
+
+
+    <div id="d2e199_getDefinedTransforms_id">
+        <div class="json-schema-view">
+            <div class="primitive">
+                <span class="type">
+                    Long
+                </span>
+                    <span class="format">
+                        (int64)
+                    </span>
+
+                    <div class="inner description marked">
+id
+                    </div>
+            </div>
+                <div class="inner required">
+                    Required
+                </div>
+        </div>
+    </div>
+</td>
+</tr>
+
+                            </table>
+
+
+
+
+
+                          <h2>Responses</h2>
+                            <h3 id="examples-Organization-getDefinedTransforms-title-200"></h3>
+                            <p id="examples-Organization-getDefinedTransforms-description-200" class="marked"></p>
+                            <script>
+                              var responseOrganization200_description = `OK`;
+                              var responseOrganization200_description_break = responseOrganization200_description.indexOf('\n');
+                              if (responseOrganization200_description_break == -1) {
+                                $("#examples-Organization-getDefinedTransforms-title-200").text("Status: 200 - " + responseOrganization200_description);
+                              } else {
+                                $("#examples-Organization-getDefinedTransforms-title-200").text("Status: 200 - " + responseOrganization200_description.substring(0, responseOrganization200_description_break));
+                                $("#examples-Organization-getDefinedTransforms-description-200").html(responseOrganization200_description.substring(responseOrganization200_description_break));
+                              }
+                            </script>
+
+
+                            <ul id="responses-detail-Organization-getDefinedTransforms-200" class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-Organization-getDefinedTransforms-200-schema">Schema</a>
+                                </li>
+
+
+
+
+                            </ul>
+
+
+                            <div class="tab-content" id="responses-Organization-getDefinedTransforms-200-wrapper" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-Organization-getDefinedTransforms-200-schema">
+                                  <div id="responses-Organization-getDefinedTransforms-schema-200" class="exampleStyle">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "OK",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "type" : "string"
+      }
+    },
+    "application/xml" : {
+      "schema" : {
+        "type" : "string"
+      }
+    }
+  }
+};
+                                        var schema = findNode('schema',schemaWrapper).schema;
+                                        if (!schema) {
+                                          schema = schemaWrapper.schema;
+                                        }
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else if (schema.items != null && schema.items.$ref != null) {
+                                            schema.items = defsParser.$refs.get(schema.items.$ref);
+                                        } else {
+                                          schemaWrapper.definitions = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-Organization-getDefinedTransforms-200-schema-data').val(JSON.stringify(schema));
+                                        var result = $('#responses-Organization-getDefinedTransforms-schema-200');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-Organization-getDefinedTransforms-200-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+                            <h3 id="examples-Organization-getDefinedTransforms-title-401"></h3>
+                            <p id="examples-Organization-getDefinedTransforms-description-401" class="marked"></p>
+                            <script>
+                              var responseOrganization401_description = `Unauthorized`;
+                              var responseOrganization401_description_break = responseOrganization401_description.indexOf('\n');
+                              if (responseOrganization401_description_break == -1) {
+                                $("#examples-Organization-getDefinedTransforms-title-401").text("Status: 401 - " + responseOrganization401_description);
+                              } else {
+                                $("#examples-Organization-getDefinedTransforms-title-401").text("Status: 401 - " + responseOrganization401_description.substring(0, responseOrganization401_description_break));
+                                $("#examples-Organization-getDefinedTransforms-description-401").html(responseOrganization401_description.substring(responseOrganization401_description_break));
+                              }
+                            </script>
+
+
+                            <ul id="responses-detail-Organization-getDefinedTransforms-401" class="nav nav-tabs nav-tabs-examples" >
+
+
+                            </ul>
+
+
+                            <div class="tab-content" id="responses-Organization-getDefinedTransforms-401-wrapper" style='margin-bottom: 10px;'>
+                            </div>
+                            <h3 id="examples-Organization-getDefinedTransforms-title-403"></h3>
+                            <p id="examples-Organization-getDefinedTransforms-description-403" class="marked"></p>
+                            <script>
+                              var responseOrganization403_description = `Forbidden`;
+                              var responseOrganization403_description_break = responseOrganization403_description.indexOf('\n');
+                              if (responseOrganization403_description_break == -1) {
+                                $("#examples-Organization-getDefinedTransforms-title-403").text("Status: 403 - " + responseOrganization403_description);
+                              } else {
+                                $("#examples-Organization-getDefinedTransforms-title-403").text("Status: 403 - " + responseOrganization403_description.substring(0, responseOrganization403_description_break));
+                                $("#examples-Organization-getDefinedTransforms-description-403").html(responseOrganization403_description.substring(responseOrganization403_description_break));
+                              }
+                            </script>
+
+
+                            <ul id="responses-detail-Organization-getDefinedTransforms-403" class="nav nav-tabs nav-tabs-examples" >
+
+
+                            </ul>
+
+
+                            <div class="tab-content" id="responses-Organization-getDefinedTransforms-403-wrapper" style='margin-bottom: 10px;'>
+                            </div>
+                            <h3 id="examples-Organization-getDefinedTransforms-title-404"></h3>
+                            <p id="examples-Organization-getDefinedTransforms-description-404" class="marked"></p>
+                            <script>
+                              var responseOrganization404_description = `Not Found`;
+                              var responseOrganization404_description_break = responseOrganization404_description.indexOf('\n');
+                              if (responseOrganization404_description_break == -1) {
+                                $("#examples-Organization-getDefinedTransforms-title-404").text("Status: 404 - " + responseOrganization404_description);
+                              } else {
+                                $("#examples-Organization-getDefinedTransforms-title-404").text("Status: 404 - " + responseOrganization404_description.substring(0, responseOrganization404_description_break));
+                                $("#examples-Organization-getDefinedTransforms-description-404").html(responseOrganization404_description.substring(responseOrganization404_description_break));
+                              }
+                            </script>
+
+
+                            <ul id="responses-detail-Organization-getDefinedTransforms-404" class="nav nav-tabs nav-tabs-examples" >
+
+
+                            </ul>
+
+
+                            <div class="tab-content" id="responses-Organization-getDefinedTransforms-404-wrapper" style='margin-bottom: 10px;'>
+                            </div>
+                        </article>
+                      </div>
+                      <hr>
                     <div id="api-Organization-getOrganization">
                       <article id="api-Organization-getOrganization-0" data-group="User" data-name="getOrganization" data-version="0">
                         <div class="pull-left">
@@ -10387,7 +10912,8 @@ pub fn main() {
                             <pre class="prettyprint"><code class="language-bsh">curl -X PUT\
 -H "Authorization: [[apiKey]]"\
  -H "Accept: application/json,application/xml"\
- "http://localhost:8082/api/v1/organizations/{id}/datasets/{datasetId}?description=&format=&name="</code></pre>
+ -H "Content-Type: application/json,application/xml"\
+ "http://localhost:8082/api/v1/organizations/{id}/datasets/{datasetId}"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Organization-updateCustomDataset-0-java">
                             <pre class="prettyprint"><code class="language-java">import org.openapitools.client.*;
@@ -10412,12 +10938,10 @@ public class OrganizationApiExample {
         OrganizationApi apiInstance = new OrganizationApi();
         Long datasetId = 789; // Long | The dataset ID.
         Long id = 789; // Long | The organization ID.
-        String description = description_example; // String | 
-        String format = format_example; // String | 
-        String name = name_example; // String | 
+        DatasetRequest datasetRequest = ; // DatasetRequest | 
         
         try {
-            array[DataSet] result = apiInstance.updateCustomDataset(datasetId, id, description, format, name);
+            array[DataSet] result = apiInstance.updateCustomDataset(datasetId, id, datasetRequest);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling OrganizationApi#updateCustomDataset");
@@ -10436,12 +10960,10 @@ public class OrganizationApiExample {
         OrganizationApi apiInstance = new OrganizationApi();
         Long datasetId = 789; // Long | The dataset ID.
         Long id = 789; // Long | The organization ID.
-        String description = description_example; // String | 
-        String format = format_example; // String | 
-        String name = name_example; // String | 
+        DatasetRequest datasetRequest = ; // DatasetRequest | 
         
         try {
-            array[DataSet] result = apiInstance.updateCustomDataset(datasetId, id, description, format, name);
+            array[DataSet] result = apiInstance.updateCustomDataset(datasetId, id, datasetRequest);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling OrganizationApi#updateCustomDataset");
@@ -10467,16 +10989,12 @@ public class OrganizationApiExample {
 OrganizationApi *apiInstance = [[OrganizationApi alloc] init];
 Long *datasetId = 789; // The dataset ID. (default to null)
 Long *id = 789; // The organization ID. (default to null)
-String *description = description_example; //  (optional) (default to null)
-String *format = format_example; //  (optional) (default to null)
-String *name = name_example; //  (optional) (default to null)
+DatasetRequest *datasetRequest = ; // 
 
 // Update dataset.
 [apiInstance updateCustomDatasetWith:datasetId
     id:id
-    description:description
-    format:format
-    name:name
+    datasetRequest:datasetRequest
               completionHandler: ^(array[DataSet] output, NSError* error) {
     if (output) {
         NSLog(@"%@", output);
@@ -10502,11 +11020,7 @@ JWT.apiKey = "YOUR API KEY";
 var api = new AdversarialSecurityAssessmentPlatformForAi.OrganizationApi()
 var datasetId = 789; // {Long} The dataset ID.
 var id = 789; // {Long} The organization ID.
-var opts = {
-  'description': description_example, // {String} 
-  'format': format_example, // {String} 
-  'name': name_example // {String} 
-};
+var datasetRequest = ; // {DatasetRequest} 
 
 var callback = function(error, data, response) {
   if (error) {
@@ -10515,7 +11029,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-api.updateCustomDataset(datasetId, id, opts, callback);
+api.updateCustomDataset(datasetId, id, datasetRequest, callback);
 </code></pre>
                             </div>
 
@@ -10544,13 +11058,11 @@ namespace Example
             var apiInstance = new OrganizationApi();
             var datasetId = 789;  // Long | The dataset ID. (default to null)
             var id = 789;  // Long | The organization ID. (default to null)
-            var description = description_example;  // String |  (optional)  (default to null)
-            var format = format_example;  // String |  (optional)  (default to null)
-            var name = name_example;  // String |  (optional)  (default to null)
+            var datasetRequest = new DatasetRequest(); // DatasetRequest | 
 
             try {
                 // Update dataset.
-                array[DataSet] result = apiInstance.updateCustomDataset(datasetId, id, description, format, name);
+                array[DataSet] result = apiInstance.updateCustomDataset(datasetId, id, datasetRequest);
                 Debug.WriteLine(result);
             } catch (Exception e) {
                 Debug.Print("Exception when calling OrganizationApi.updateCustomDataset: " + e.Message );
@@ -10574,12 +11086,10 @@ OpenAPITools\Client\Configuration::getDefaultConfiguration()->setApiKey('Authori
 $api_instance = new OpenAPITools\Client\Api\OrganizationApi();
 $datasetId = 789; // Long | The dataset ID.
 $id = 789; // Long | The organization ID.
-$description = description_example; // String | 
-$format = format_example; // String | 
-$name = name_example; // String | 
+$datasetRequest = ; // DatasetRequest | 
 
 try {
-    $result = $api_instance->updateCustomDataset($datasetId, $id, $description, $format, $name);
+    $result = $api_instance->updateCustomDataset($datasetId, $id, $datasetRequest);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling OrganizationApi->updateCustomDataset: ', $e->getMessage(), PHP_EOL;
@@ -10601,12 +11111,10 @@ $WWW::OPenAPIClient::Configuration::api_key->{'Authorization'} = 'YOUR_API_KEY';
 my $api_instance = WWW::OPenAPIClient::OrganizationApi->new();
 my $datasetId = 789; # Long | The dataset ID.
 my $id = 789; # Long | The organization ID.
-my $description = description_example; # String | 
-my $format = format_example; # String | 
-my $name = name_example; # String | 
+my $datasetRequest = WWW::OPenAPIClient::Object::DatasetRequest->new(); # DatasetRequest | 
 
 eval { 
-    my $result = $api_instance->updateCustomDataset(datasetId => $datasetId, id => $id, description => $description, format => $format, name => $name);
+    my $result = $api_instance->updateCustomDataset(datasetId => $datasetId, id => $id, datasetRequest => $datasetRequest);
     print Dumper($result);
 };
 if ($@) {
@@ -10630,13 +11138,11 @@ openapi_client.configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 api_instance = openapi_client.OrganizationApi()
 datasetId = 789 # Long | The dataset ID. (default to null)
 id = 789 # Long | The organization ID. (default to null)
-description = description_example # String |  (optional) (default to null)
-format = format_example # String |  (optional) (default to null)
-name = name_example # String |  (optional) (default to null)
+datasetRequest =  # DatasetRequest | 
 
 try: 
     # Update dataset.
-    api_response = api_instance.update_custom_dataset(datasetId, id, description=description, format=format, name=name)
+    api_response = api_instance.update_custom_dataset(datasetId, id, datasetRequest)
     pprint(api_response)
 except ApiException as e:
     print("Exception when calling OrganizationApi->updateCustomDataset: %s\n" % e)</code></pre>
@@ -10648,12 +11154,10 @@ except ApiException as e:
 pub fn main() {
     let datasetId = 789; // Long
     let id = 789; // Long
-    let description = description_example; // String
-    let format = format_example; // String
-    let name = name_example; // String
+    let datasetRequest = ; // DatasetRequest
 
     let mut context = OrganizationApi::Context::default();
-    let result = client.updateCustomDataset(datasetId, id, description, format, name, &context).wait();
+    let result = client.updateCustomDataset(datasetId, id, datasetRequest, &context).wait();
 
     println!("{:?}", result);
 }
@@ -10729,66 +11233,60 @@ The organization ID.
                             </table>
 
 
-
-
-                            <div class="methodsubtabletitle">Query parameters</div>
+                            <div class="methodsubtabletitle">Body parameters</div>
                             <table id="methodsubtable">
                               <tr>
                                 <th width="150px">Name</th>
                                 <th>Description</th>
                               </tr>
-                                <tr><td style="width:150px;">description</td>
+                                <tr><td style="width:150px;">datasetRequest <span style="color:red;">*</span></td>
 <td>
+<p class="marked">The dataset update request.</p>
+<script>
+$(document).ready(function() {
+  var schemaWrapper = {
+  "description" : "The dataset update request.",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/DatasetRequest"
+      }
+    },
+    "application/xml" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/DatasetRequest"
+      }
+    }
+  },
+  "required" : true
+};
 
+  var schema = findNode('schema',schemaWrapper).schema;
+  if (!schema) {
+    schema = schemaWrapper.schema;
+  }
+  if (schema.$ref != null) {
+    schema = defsParser.$refs.get(schema.$ref);
+  } else {
+    schemaWrapper.definitions = Object.assign({}, defs);
+    $RefParser.dereference(schemaWrapper).catch(function(err) {
+      console.log(err);
+    });
+  }
 
-    <div id="d2e199_updateCustomDataset_description">
-        <div class="json-schema-view">
-            <div class="primitive">
-                <span class="type">
-                    String
-                </span>
-
-            </div>
-        </div>
-    </div>
-</td>
-</tr>
-
-                                <tr><td style="width:150px;">format</td>
-<td>
-
-
-    <div id="d2e199_updateCustomDataset_format">
-        <div class="json-schema-view">
-            <div class="primitive">
-                <span class="type">
-                    String
-                </span>
-
-            </div>
-        </div>
-    </div>
-</td>
-</tr>
-
-                                <tr><td style="width:150px;">name</td>
-<td>
-
-
-    <div id="d2e199_updateCustomDataset_name">
-        <div class="json-schema-view">
-            <div class="primitive">
-                <span class="type">
-                    String
-                </span>
-
-            </div>
-        </div>
-    </div>
+  var view = new JSONSchemaView(schema,2,{isBodyParam: true});
+  var result = $('#d2e199_updateCustomDataset_datasetRequest');
+  result.empty();
+  result.append(view.render());
+});
+</script>
+<div id="d2e199_updateCustomDataset_datasetRequest"></div>
 </td>
 </tr>
 
                             </table>
+
+
 
                           <h2>Responses</h2>
                             <h3 id="examples-Organization-updateCustomDataset-title-200"></h3>
@@ -12133,7 +12631,7 @@ name
                       <article id="api-Project-addProject-0" data-group="User" data-name="addProject" data-version="0">
                         <div class="pull-left">
                           <h1>addProject</h1>
-                          <p>Add a project to a organization.</p>
+                          <p>Add a project to an organization.</p>
                         </div>
                         <div class="pull-right"></div>
                         <div class="clearfix"></div>
@@ -12189,7 +12687,7 @@ public class ProjectApiExample {
         
         // Create an instance of the API class
         ProjectApi apiInstance = new ProjectApi();
-        Long organizationId = 789; // Long | organizationId
+        Long organizationId = 789; // Long | The organization ID.
         ProjectRequest project = ; // ProjectRequest | 
         
         try {
@@ -12210,7 +12708,7 @@ public class ProjectApiExample {
 public class ProjectApiExample {
     public static void main(String[] args) {
         ProjectApi apiInstance = new ProjectApi();
-        Long organizationId = 789; // Long | organizationId
+        Long organizationId = 789; // Long | The organization ID.
         ProjectRequest project = ; // ProjectRequest | 
         
         try {
@@ -12238,10 +12736,10 @@ public class ProjectApiExample {
 
 // Create an instance of the API class
 ProjectApi *apiInstance = [[ProjectApi alloc] init];
-Long *organizationId = 789; // organizationId (default to null)
+Long *organizationId = 789; // The organization ID. (default to null)
 ProjectRequest *project = ; // 
 
-// Add a project to a organization.
+// Add a project to an organization.
 [apiInstance addProjectWith:organizationId
     project:project
               completionHandler: ^(ProjectResponse output, NSError* error) {
@@ -12267,7 +12765,7 @@ JWT.apiKey = "YOUR API KEY";
 
 // Create an instance of the API class
 var api = new AdversarialSecurityAssessmentPlatformForAi.ProjectApi()
-var organizationId = 789; // {Long} organizationId
+var organizationId = 789; // {Long} The organization ID.
 var project = ; // {ProjectRequest} 
 
 var callback = function(error, data, response) {
@@ -12304,11 +12802,11 @@ namespace Example
             
             // Create an instance of the API class
             var apiInstance = new ProjectApi();
-            var organizationId = 789;  // Long | organizationId (default to null)
+            var organizationId = 789;  // Long | The organization ID. (default to null)
             var project = new ProjectRequest(); // ProjectRequest | 
 
             try {
-                // Add a project to a organization.
+                // Add a project to an organization.
                 ProjectResponse result = apiInstance.addProject(organizationId, project);
                 Debug.WriteLine(result);
             } catch (Exception e) {
@@ -12331,7 +12829,7 @@ OpenAPITools\Client\Configuration::getDefaultConfiguration()->setApiKey('Authori
 
 // Create an instance of the API class
 $api_instance = new OpenAPITools\Client\Api\ProjectApi();
-$organizationId = 789; // Long | organizationId
+$organizationId = 789; // Long | The organization ID.
 $project = ; // ProjectRequest | 
 
 try {
@@ -12355,7 +12853,7 @@ $WWW::OPenAPIClient::Configuration::api_key->{'Authorization'} = 'YOUR_API_KEY';
 
 # Create an instance of the API class
 my $api_instance = WWW::OPenAPIClient::ProjectApi->new();
-my $organizationId = 789; # Long | organizationId
+my $organizationId = 789; # Long | The organization ID.
 my $project = WWW::OPenAPIClient::Object::ProjectRequest->new(); # ProjectRequest | 
 
 eval { 
@@ -12381,11 +12879,11 @@ openapi_client.configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 
 # Create an instance of the API class
 api_instance = openapi_client.ProjectApi()
-organizationId = 789 # Long | organizationId (default to null)
+organizationId = 789 # Long | The organization ID. (default to null)
 project =  # ProjectRequest | 
 
 try: 
-    # Add a project to a organization.
+    # Add a project to an organization.
     api_response = api_instance.add_project(organizationId, project)
     pprint(api_response)
 except ApiException as e:
@@ -12492,7 +12990,7 @@ $(document).ready(function() {
                     </span>
 
                     <div class="inner description marked">
-organizationId
+The organization ID.
                     </div>
             </div>
                 <div class="inner required">
@@ -12728,7 +13226,7 @@ public class ProjectApiExample {
         // Create an instance of the API class
         ProjectApi apiInstance = new ProjectApi();
         String dataType = dataType_example; // String | dataType
-        Long id = 789; // Long | id
+        Long id = 789; // Long | The project ID.
         
         try {
             ProjectResponse result = apiInstance.deleteData(dataType, id);
@@ -12749,7 +13247,7 @@ public class ProjectApiExample {
     public static void main(String[] args) {
         ProjectApi apiInstance = new ProjectApi();
         String dataType = dataType_example; // String | dataType
-        Long id = 789; // Long | id
+        Long id = 789; // Long | The project ID.
         
         try {
             ProjectResponse result = apiInstance.deleteData(dataType, id);
@@ -12777,7 +13275,7 @@ public class ProjectApiExample {
 // Create an instance of the API class
 ProjectApi *apiInstance = [[ProjectApi alloc] init];
 String *dataType = dataType_example; // dataType (default to null)
-Long *id = 789; // id (default to null)
+Long *id = 789; // The project ID. (default to null)
 
 // Delete project model data.
 [apiInstance deleteDataWith:dataType
@@ -12806,7 +13304,7 @@ JWT.apiKey = "YOUR API KEY";
 // Create an instance of the API class
 var api = new AdversarialSecurityAssessmentPlatformForAi.ProjectApi()
 var dataType = dataType_example; // {String} dataType
-var id = 789; // {Long} id
+var id = 789; // {Long} The project ID.
 
 var callback = function(error, data, response) {
   if (error) {
@@ -12843,7 +13341,7 @@ namespace Example
             // Create an instance of the API class
             var apiInstance = new ProjectApi();
             var dataType = dataType_example;  // String | dataType (default to null)
-            var id = 789;  // Long | id (default to null)
+            var id = 789;  // Long | The project ID. (default to null)
 
             try {
                 // Delete project model data.
@@ -12870,7 +13368,7 @@ OpenAPITools\Client\Configuration::getDefaultConfiguration()->setApiKey('Authori
 // Create an instance of the API class
 $api_instance = new OpenAPITools\Client\Api\ProjectApi();
 $dataType = dataType_example; // String | dataType
-$id = 789; // Long | id
+$id = 789; // Long | The project ID.
 
 try {
     $result = $api_instance->deleteData($dataType, $id);
@@ -12894,7 +13392,7 @@ $WWW::OPenAPIClient::Configuration::api_key->{'Authorization'} = 'YOUR_API_KEY';
 # Create an instance of the API class
 my $api_instance = WWW::OPenAPIClient::ProjectApi->new();
 my $dataType = dataType_example; # String | dataType
-my $id = 789; # Long | id
+my $id = 789; # Long | The project ID.
 
 eval { 
     my $result = $api_instance->deleteData(dataType => $dataType, id => $id);
@@ -12920,7 +13418,7 @@ openapi_client.configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # Create an instance of the API class
 api_instance = openapi_client.ProjectApi()
 dataType = dataType_example # String | dataType (default to null)
-id = 789 # Long | id (default to null)
+id = 789 # Long | The project ID. (default to null)
 
 try: 
     # Delete project model data.
@@ -12974,7 +13472,7 @@ pub fn main() {
                     </span>
 
                     <div class="inner description marked">
-id
+The project ID.
                     </div>
             </div>
                 <div class="inner required">
@@ -13220,7 +13718,7 @@ public class ProjectApiExample {
         
         // Create an instance of the API class
         ProjectApi apiInstance = new ProjectApi();
-        Long id = 789; // Long | id
+        Long id = 789; // Long | The project ID.
         
         try {
             apiInstance.deleteProject(id);
@@ -13239,7 +13737,7 @@ public class ProjectApiExample {
 public class ProjectApiExample {
     public static void main(String[] args) {
         ProjectApi apiInstance = new ProjectApi();
-        Long id = 789; // Long | id
+        Long id = 789; // Long | The project ID.
         
         try {
             apiInstance.deleteProject(id);
@@ -13265,7 +13763,7 @@ public class ProjectApiExample {
 
 // Create an instance of the API class
 ProjectApi *apiInstance = [[ProjectApi alloc] init];
-Long *id = 789; // id (default to null)
+Long *id = 789; // The project ID. (default to null)
 
 // Delete a project.
 [apiInstance deleteProjectWith:id
@@ -13289,7 +13787,7 @@ JWT.apiKey = "YOUR API KEY";
 
 // Create an instance of the API class
 var api = new AdversarialSecurityAssessmentPlatformForAi.ProjectApi()
-var id = 789; // {Long} id
+var id = 789; // {Long} The project ID.
 
 var callback = function(error, data, response) {
   if (error) {
@@ -13325,7 +13823,7 @@ namespace Example
             
             // Create an instance of the API class
             var apiInstance = new ProjectApi();
-            var id = 789;  // Long | id (default to null)
+            var id = 789;  // Long | The project ID. (default to null)
 
             try {
                 // Delete a project.
@@ -13350,7 +13848,7 @@ OpenAPITools\Client\Configuration::getDefaultConfiguration()->setApiKey('Authori
 
 // Create an instance of the API class
 $api_instance = new OpenAPITools\Client\Api\ProjectApi();
-$id = 789; // Long | id
+$id = 789; // Long | The project ID.
 
 try {
     $api_instance->deleteProject($id);
@@ -13372,7 +13870,7 @@ $WWW::OPenAPIClient::Configuration::api_key->{'Authorization'} = 'YOUR_API_KEY';
 
 # Create an instance of the API class
 my $api_instance = WWW::OPenAPIClient::ProjectApi->new();
-my $id = 789; # Long | id
+my $id = 789; # Long | The project ID.
 
 eval { 
     $api_instance->deleteProject(id => $id);
@@ -13396,7 +13894,7 @@ openapi_client.configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 
 # Create an instance of the API class
 api_instance = openapi_client.ProjectApi()
-id = 789 # Long | id (default to null)
+id = 789 # Long | The project ID. (default to null)
 
 try: 
     # Delete a project.
@@ -13448,7 +13946,7 @@ pub fn main() {
                     </span>
 
                     <div class="inner description marked">
-id
+The project ID.
                     </div>
             </div>
                 <div class="inner required">
@@ -13617,7 +14115,7 @@ public class ProjectApiExample {
         // Create an instance of the API class
         ProjectApi apiInstance = new ProjectApi();
         String dataType = dataType_example; // String | dataType
-        Long id = 789; // Long | id
+        Long id = 789; // Long | The project ID.
         
         try {
             File result = apiInstance.downloadProjectData(dataType, id);
@@ -13638,7 +14136,7 @@ public class ProjectApiExample {
     public static void main(String[] args) {
         ProjectApi apiInstance = new ProjectApi();
         String dataType = dataType_example; // String | dataType
-        Long id = 789; // Long | id
+        Long id = 789; // Long | The project ID.
         
         try {
             File result = apiInstance.downloadProjectData(dataType, id);
@@ -13666,7 +14164,7 @@ public class ProjectApiExample {
 // Create an instance of the API class
 ProjectApi *apiInstance = [[ProjectApi alloc] init];
 String *dataType = dataType_example; // dataType (default to null)
-Long *id = 789; // id (default to null)
+Long *id = 789; // The project ID. (default to null)
 
 // Download project data.
 [apiInstance downloadProjectDataWith:dataType
@@ -13695,7 +14193,7 @@ JWT.apiKey = "YOUR API KEY";
 // Create an instance of the API class
 var api = new AdversarialSecurityAssessmentPlatformForAi.ProjectApi()
 var dataType = dataType_example; // {String} dataType
-var id = 789; // {Long} id
+var id = 789; // {Long} The project ID.
 
 var callback = function(error, data, response) {
   if (error) {
@@ -13732,7 +14230,7 @@ namespace Example
             // Create an instance of the API class
             var apiInstance = new ProjectApi();
             var dataType = dataType_example;  // String | dataType (default to null)
-            var id = 789;  // Long | id (default to null)
+            var id = 789;  // Long | The project ID. (default to null)
 
             try {
                 // Download project data.
@@ -13759,7 +14257,7 @@ OpenAPITools\Client\Configuration::getDefaultConfiguration()->setApiKey('Authori
 // Create an instance of the API class
 $api_instance = new OpenAPITools\Client\Api\ProjectApi();
 $dataType = dataType_example; // String | dataType
-$id = 789; // Long | id
+$id = 789; // Long | The project ID.
 
 try {
     $result = $api_instance->downloadProjectData($dataType, $id);
@@ -13783,7 +14281,7 @@ $WWW::OPenAPIClient::Configuration::api_key->{'Authorization'} = 'YOUR_API_KEY';
 # Create an instance of the API class
 my $api_instance = WWW::OPenAPIClient::ProjectApi->new();
 my $dataType = dataType_example; # String | dataType
-my $id = 789; # Long | id
+my $id = 789; # Long | The project ID.
 
 eval { 
     my $result = $api_instance->downloadProjectData(dataType => $dataType, id => $id);
@@ -13809,7 +14307,7 @@ openapi_client.configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # Create an instance of the API class
 api_instance = openapi_client.ProjectApi()
 dataType = dataType_example # String | dataType (default to null)
-id = 789 # Long | id (default to null)
+id = 789 # Long | The project ID. (default to null)
 
 try: 
     # Download project data.
@@ -13863,7 +14361,7 @@ pub fn main() {
                     </span>
 
                     <div class="inner description marked">
-id
+The project ID.
                     </div>
             </div>
                 <div class="inner required">
@@ -14112,7 +14610,7 @@ public class ProjectApiExample {
         
         // Create an instance of the API class
         ProjectApi apiInstance = new ProjectApi();
-        Long id = 789; // Long | id
+        Long id = 789; // Long | The project ID.
         
         try {
             ProjectResponse result = apiInstance.getProject(id);
@@ -14132,7 +14630,7 @@ public class ProjectApiExample {
 public class ProjectApiExample {
     public static void main(String[] args) {
         ProjectApi apiInstance = new ProjectApi();
-        Long id = 789; // Long | id
+        Long id = 789; // Long | The project ID.
         
         try {
             ProjectResponse result = apiInstance.getProject(id);
@@ -14159,7 +14657,7 @@ public class ProjectApiExample {
 
 // Create an instance of the API class
 ProjectApi *apiInstance = [[ProjectApi alloc] init];
-Long *id = 789; // id (default to null)
+Long *id = 789; // The project ID. (default to null)
 
 // Get a project.
 [apiInstance getProjectWith:id
@@ -14186,7 +14684,7 @@ JWT.apiKey = "YOUR API KEY";
 
 // Create an instance of the API class
 var api = new AdversarialSecurityAssessmentPlatformForAi.ProjectApi()
-var id = 789; // {Long} id
+var id = 789; // {Long} The project ID.
 
 var callback = function(error, data, response) {
   if (error) {
@@ -14222,7 +14720,7 @@ namespace Example
             
             // Create an instance of the API class
             var apiInstance = new ProjectApi();
-            var id = 789;  // Long | id (default to null)
+            var id = 789;  // Long | The project ID. (default to null)
 
             try {
                 // Get a project.
@@ -14248,7 +14746,7 @@ OpenAPITools\Client\Configuration::getDefaultConfiguration()->setApiKey('Authori
 
 // Create an instance of the API class
 $api_instance = new OpenAPITools\Client\Api\ProjectApi();
-$id = 789; // Long | id
+$id = 789; // Long | The project ID.
 
 try {
     $result = $api_instance->getProject($id);
@@ -14271,7 +14769,7 @@ $WWW::OPenAPIClient::Configuration::api_key->{'Authorization'} = 'YOUR_API_KEY';
 
 # Create an instance of the API class
 my $api_instance = WWW::OPenAPIClient::ProjectApi->new();
-my $id = 789; # Long | id
+my $id = 789; # Long | The project ID.
 
 eval { 
     my $result = $api_instance->getProject(id => $id);
@@ -14296,7 +14794,7 @@ openapi_client.configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 
 # Create an instance of the API class
 api_instance = openapi_client.ProjectApi()
-id = 789 # Long | id (default to null)
+id = 789 # Long | The project ID. (default to null)
 
 try: 
     # Get a project.
@@ -14349,7 +14847,7 @@ pub fn main() {
                     </span>
 
                     <div class="inner description marked">
-id
+The project ID.
                     </div>
             </div>
                 <div class="inner required">
@@ -14984,7 +15482,7 @@ public class ProjectApiExample {
         
         // Create an instance of the API class
         ProjectApi apiInstance = new ProjectApi();
-        Long id = 789; // Long | id
+        Long id = 789; // Long | The project ID.
         ProjectRequest projectRequest = ; // ProjectRequest | 
         
         try {
@@ -15005,7 +15503,7 @@ public class ProjectApiExample {
 public class ProjectApiExample {
     public static void main(String[] args) {
         ProjectApi apiInstance = new ProjectApi();
-        Long id = 789; // Long | id
+        Long id = 789; // Long | The project ID.
         ProjectRequest projectRequest = ; // ProjectRequest | 
         
         try {
@@ -15033,7 +15531,7 @@ public class ProjectApiExample {
 
 // Create an instance of the API class
 ProjectApi *apiInstance = [[ProjectApi alloc] init];
-Long *id = 789; // id (default to null)
+Long *id = 789; // The project ID. (default to null)
 ProjectRequest *projectRequest = ; // 
 
 // Update project .
@@ -15062,7 +15560,7 @@ JWT.apiKey = "YOUR API KEY";
 
 // Create an instance of the API class
 var api = new AdversarialSecurityAssessmentPlatformForAi.ProjectApi()
-var id = 789; // {Long} id
+var id = 789; // {Long} The project ID.
 var projectRequest = ; // {ProjectRequest} 
 
 var callback = function(error, data, response) {
@@ -15099,7 +15597,7 @@ namespace Example
             
             // Create an instance of the API class
             var apiInstance = new ProjectApi();
-            var id = 789;  // Long | id (default to null)
+            var id = 789;  // Long | The project ID. (default to null)
             var projectRequest = new ProjectRequest(); // ProjectRequest | 
 
             try {
@@ -15126,7 +15624,7 @@ OpenAPITools\Client\Configuration::getDefaultConfiguration()->setApiKey('Authori
 
 // Create an instance of the API class
 $api_instance = new OpenAPITools\Client\Api\ProjectApi();
-$id = 789; // Long | id
+$id = 789; // Long | The project ID.
 $projectRequest = ; // ProjectRequest | 
 
 try {
@@ -15150,7 +15648,7 @@ $WWW::OPenAPIClient::Configuration::api_key->{'Authorization'} = 'YOUR_API_KEY';
 
 # Create an instance of the API class
 my $api_instance = WWW::OPenAPIClient::ProjectApi->new();
-my $id = 789; # Long | id
+my $id = 789; # Long | The project ID.
 my $projectRequest = WWW::OPenAPIClient::Object::ProjectRequest->new(); # ProjectRequest | 
 
 eval { 
@@ -15176,7 +15674,7 @@ openapi_client.configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 
 # Create an instance of the API class
 api_instance = openapi_client.ProjectApi()
-id = 789 # Long | id (default to null)
+id = 789 # Long | The project ID. (default to null)
 projectRequest =  # ProjectRequest | 
 
 try: 
@@ -15231,7 +15729,7 @@ pub fn main() {
                     </span>
 
                     <div class="inner description marked">
-id
+The project ID.
                     </div>
             </div>
                 <div class="inner required">
@@ -15524,7 +16022,7 @@ public class ProjectApiExample {
         // Create an instance of the API class
         ProjectApi apiInstance = new ProjectApi();
         String dataType = dataType_example; // String | dataType
-        Long id = 789; // Long | id
+        Long id = 789; // Long | The project ID.
         File file = BINARY_DATA_HERE; // File | 
         
         try {
@@ -15546,7 +16044,7 @@ public class ProjectApiExample {
     public static void main(String[] args) {
         ProjectApi apiInstance = new ProjectApi();
         String dataType = dataType_example; // String | dataType
-        Long id = 789; // Long | id
+        Long id = 789; // Long | The project ID.
         File file = BINARY_DATA_HERE; // File | 
         
         try {
@@ -15575,7 +16073,7 @@ public class ProjectApiExample {
 // Create an instance of the API class
 ProjectApi *apiInstance = [[ProjectApi alloc] init];
 String *dataType = dataType_example; // dataType (default to null)
-Long *id = 789; // id (default to null)
+Long *id = 789; // The project ID. (default to null)
 File *file = BINARY_DATA_HERE; //  (optional) (default to null)
 
 // Upload project data.
@@ -15606,7 +16104,7 @@ JWT.apiKey = "YOUR API KEY";
 // Create an instance of the API class
 var api = new AdversarialSecurityAssessmentPlatformForAi.ProjectApi()
 var dataType = dataType_example; // {String} dataType
-var id = 789; // {Long} id
+var id = 789; // {Long} The project ID.
 var opts = {
   'file': BINARY_DATA_HERE // {File} 
 };
@@ -15646,7 +16144,7 @@ namespace Example
             // Create an instance of the API class
             var apiInstance = new ProjectApi();
             var dataType = dataType_example;  // String | dataType (default to null)
-            var id = 789;  // Long | id (default to null)
+            var id = 789;  // Long | The project ID. (default to null)
             var file = BINARY_DATA_HERE;  // File |  (optional)  (default to null)
 
             try {
@@ -15674,7 +16172,7 @@ OpenAPITools\Client\Configuration::getDefaultConfiguration()->setApiKey('Authori
 // Create an instance of the API class
 $api_instance = new OpenAPITools\Client\Api\ProjectApi();
 $dataType = dataType_example; // String | dataType
-$id = 789; // Long | id
+$id = 789; // Long | The project ID.
 $file = BINARY_DATA_HERE; // File | 
 
 try {
@@ -15699,7 +16197,7 @@ $WWW::OPenAPIClient::Configuration::api_key->{'Authorization'} = 'YOUR_API_KEY';
 # Create an instance of the API class
 my $api_instance = WWW::OPenAPIClient::ProjectApi->new();
 my $dataType = dataType_example; # String | dataType
-my $id = 789; # Long | id
+my $id = 789; # Long | The project ID.
 my $file = BINARY_DATA_HERE; # File | 
 
 eval { 
@@ -15726,7 +16224,7 @@ openapi_client.configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # Create an instance of the API class
 api_instance = openapi_client.ProjectApi()
 dataType = dataType_example # String | dataType (default to null)
-id = 789 # Long | id (default to null)
+id = 789 # Long | The project ID. (default to null)
 file = BINARY_DATA_HERE # File |  (optional) (default to null)
 
 try: 
@@ -15782,7 +16280,7 @@ pub fn main() {
                     </span>
 
                     <div class="inner description marked">
-id
+The project ID.
                     </div>
             </div>
                 <div class="inner required">
@@ -16015,6 +16513,482 @@ dataType
 
 
                             <div class="tab-content" id="responses-Project-uploadProjectData-404-wrapper" style='margin-bottom: 10px;'>
+                            </div>
+                        </article>
+                      </div>
+                      <hr>
+                    <div id="api-Project-verifyProject">
+                      <article id="api-Project-verifyProject-0" data-group="User" data-name="verifyProject" data-version="0">
+                        <div class="pull-left">
+                          <h1>verifyProject</h1>
+                          <p>Start the model verification process.</p>
+                        </div>
+                        <div class="pull-right"></div>
+                        <div class="clearfix"></div>
+                        <p></p>
+                        <p class="marked"></p>
+                        <p></p>
+                        <br />
+                        <pre class="prettyprint language-html prettyprinted" data-type="put"><code><span class="pln">/api/v1/projects/{id}/verify</span></code></pre>
+                        <p>
+                          <h3>Usage and SDK Samples</h3>
+                        </p>
+                        <ul class="nav nav-tabs nav-tabs-examples">
+                          <li class="active"><a href="#examples-Project-verifyProject-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-Project-verifyProject-0-java">Java</a></li>
+                          <li class=""><a href="#examples-Project-verifyProject-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-Project-verifyProject-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-Project-verifyProject-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-Project-verifyProject-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-Project-verifyProject-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-Project-verifyProject-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-Project-verifyProject-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-Project-verifyProject-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-Project-verifyProject-0-python">Python</a></li>
+                          <li class=""><a href="#examples-Project-verifyProject-0-rust">Rust</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="examples-Project-verifyProject-0-curl">
+                            <pre class="prettyprint"><code class="language-bsh">curl -X PUT\
+-H "Authorization: [[apiKey]]"\
+ -H "Accept: application/json,application/xml"\
+ "http://localhost:8082/api/v1/projects/{id}/verify"</code></pre>
+                          </div>
+                          <div class="tab-pane" id="examples-Project-verifyProject-0-java">
+                            <pre class="prettyprint"><code class="language-java">import org.openapitools.client.*;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.model.*;
+import org.openapitools.client.api.ProjectApi;
+
+import java.io.File;
+import java.util.*;
+
+public class ProjectApiExample {
+    public static void main(String[] args) {
+        ApiClient defaultClient = Configuration.getDefaultApiClient();
+        
+        // Configure API key authorization: JWT
+        ApiKeyAuth JWT = (ApiKeyAuth) defaultClient.getAuthentication("JWT");
+        JWT.setApiKey("YOUR API KEY");
+        // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+        //JWT.setApiKeyPrefix("Token");
+        
+        // Create an instance of the API class
+        ProjectApi apiInstance = new ProjectApi();
+        Long id = 789; // Long | The project ID.
+        
+        try {
+            ProjectResponse result = apiInstance.verifyProject(id);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling ProjectApi#verifyProject");
+            e.printStackTrace();
+        }
+    }
+}
+</code></pre>
+                          </div>
+
+                          <div class="tab-pane" id="examples-Project-verifyProject-0-android">
+                            <pre class="prettyprint"><code class="language-java">import org.openapitools.client.api.ProjectApi;
+
+public class ProjectApiExample {
+    public static void main(String[] args) {
+        ProjectApi apiInstance = new ProjectApi();
+        Long id = 789; // Long | The project ID.
+        
+        try {
+            ProjectResponse result = apiInstance.verifyProject(id);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling ProjectApi#verifyProject");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+  <!--
+  <div class="tab-pane" id="examples-Project-verifyProject-0-groovy">
+  <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+  </div> -->
+                            <div class="tab-pane" id="examples-Project-verifyProject-0-objc">
+                              <pre class="prettyprint"><code class="language-cpp">Configuration *apiConfig = [Configuration sharedConfig];
+
+// Configure API key authorization: (authentication scheme: JWT)
+[apiConfig setApiKey:@"YOUR_API_KEY" forApiKeyIdentifier:@"Authorization"];
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+//[apiConfig setApiKeyPrefix:@"Bearer" forApiKeyIdentifier:@"Authorization"];
+
+
+// Create an instance of the API class
+ProjectApi *apiInstance = [[ProjectApi alloc] init];
+Long *id = 789; // The project ID. (default to null)
+
+// Start the model verification process.
+[apiInstance verifyProjectWith:id
+              completionHandler: ^(ProjectResponse output, NSError* error) {
+    if (output) {
+        NSLog(@"%@", output);
+    }
+    if (error) {
+        NSLog(@"Error: %@", error);
+    }
+}];
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Project-verifyProject-0-javascript">
+                              <pre class="prettyprint"><code class="language-js">var AdversarialSecurityAssessmentPlatformForAi = require('adversarial_security_assessment_platform_for_ai');
+var defaultClient = AdversarialSecurityAssessmentPlatformForAi.ApiClient.instance;
+
+// Configure API key authorization: JWT
+var JWT = defaultClient.authentications['JWT'];
+JWT.apiKey = "YOUR API KEY";
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//JWT.apiKeyPrefix['Authorization'] = "Token";
+
+// Create an instance of the API class
+var api = new AdversarialSecurityAssessmentPlatformForAi.ProjectApi()
+var id = 789; // {Long} The project ID.
+
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+};
+api.verifyProject(id, callback);
+</code></pre>
+                            </div>
+
+                            <!--<div class="tab-pane" id="examples-Project-verifyProject-0-angular">
+              <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+            </div>-->
+                            <div class="tab-pane" id="examples-Project-verifyProject-0-csharp">
+                              <pre class="prettyprint"><code class="language-cs">using System;
+using System.Diagnostics;
+using asap_client.Api;
+using asap_client.Client;
+using asap_client.Model;
+
+namespace Example
+{
+    public class verifyProjectExample
+    {
+        public void main()
+        {
+            // Configure API key authorization: JWT
+            Configuration.Default.ApiKey.Add("Authorization", "YOUR_API_KEY");
+            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+            // Configuration.Default.ApiKeyPrefix.Add("Authorization", "Bearer");
+            
+            // Create an instance of the API class
+            var apiInstance = new ProjectApi();
+            var id = 789;  // Long | The project ID. (default to null)
+
+            try {
+                // Start the model verification process.
+                ProjectResponse result = apiInstance.verifyProject(id);
+                Debug.WriteLine(result);
+            } catch (Exception e) {
+                Debug.Print("Exception when calling ProjectApi.verifyProject: " + e.Message );
+            }
+        }
+    }
+}
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Project-verifyProject-0-php">
+                              <pre class="prettyprint"><code class="language-php"><&#63;php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+// Configure API key authorization: JWT
+OpenAPITools\Client\Configuration::getDefaultConfiguration()->setApiKey('Authorization', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// OpenAPITools\Client\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Authorization', 'Bearer');
+
+// Create an instance of the API class
+$api_instance = new OpenAPITools\Client\Api\ProjectApi();
+$id = 789; // Long | The project ID.
+
+try {
+    $result = $api_instance->verifyProject($id);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling ProjectApi->verifyProject: ', $e->getMessage(), PHP_EOL;
+}
+?></code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Project-verifyProject-0-perl">
+                              <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
+use WWW::OPenAPIClient::Configuration;
+use WWW::OPenAPIClient::ProjectApi;
+
+# Configure API key authorization: JWT
+$WWW::OPenAPIClient::Configuration::api_key->{'Authorization'} = 'YOUR_API_KEY';
+# uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+#$WWW::OPenAPIClient::Configuration::api_key_prefix->{'Authorization'} = "Bearer";
+
+# Create an instance of the API class
+my $api_instance = WWW::OPenAPIClient::ProjectApi->new();
+my $id = 789; # Long | The project ID.
+
+eval { 
+    my $result = $api_instance->verifyProject(id => $id);
+    print Dumper($result);
+};
+if ($@) {
+    warn "Exception when calling ProjectApi->verifyProject: $@\n";
+}</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Project-verifyProject-0-python">
+                              <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
+import time
+import openapi_client
+from openapi_client.rest import ApiException
+from pprint import pprint
+
+# Configure API key authorization: JWT
+openapi_client.configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# openapi_client.configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# Create an instance of the API class
+api_instance = openapi_client.ProjectApi()
+id = 789 # Long | The project ID. (default to null)
+
+try: 
+    # Start the model verification process.
+    api_response = api_instance.verify_project(id)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling ProjectApi->verifyProject: %s\n" % e)</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Project-verifyProject-0-rust">
+                              <pre class="prettyprint"><code class="language-rust">extern crate ProjectApi;
+
+pub fn main() {
+    let id = 789; // Long
+
+    let mut context = ProjectApi::Context::default();
+    let result = client.verifyProject(id, &context).wait();
+
+    println!("{:?}", result);
+}
+</code></pre>
+                            </div>
+                          </div>
+
+                          <h2>Scopes</h2>
+                          <table>
+                            
+                          </table>
+
+                          <h2>Parameters</h2>
+
+                            <div class="methodsubtabletitle">Path parameters</div>
+                            <table id="methodsubtable">
+                                <tr>
+                                  <th width="150px">Name</th>
+                                  <th>Description</th>
+                                </tr>
+                                  <tr><td style="width:150px;">id*</td>
+<td>
+
+
+    <div id="d2e199_verifyProject_id">
+        <div class="json-schema-view">
+            <div class="primitive">
+                <span class="type">
+                    Long
+                </span>
+                    <span class="format">
+                        (int64)
+                    </span>
+
+                    <div class="inner description marked">
+The project ID.
+                    </div>
+            </div>
+                <div class="inner required">
+                    Required
+                </div>
+        </div>
+    </div>
+</td>
+</tr>
+
+                            </table>
+
+
+
+
+
+                          <h2>Responses</h2>
+                            <h3 id="examples-Project-verifyProject-title-200"></h3>
+                            <p id="examples-Project-verifyProject-description-200" class="marked"></p>
+                            <script>
+                              var responseProject200_description = `OK`;
+                              var responseProject200_description_break = responseProject200_description.indexOf('\n');
+                              if (responseProject200_description_break == -1) {
+                                $("#examples-Project-verifyProject-title-200").text("Status: 200 - " + responseProject200_description);
+                              } else {
+                                $("#examples-Project-verifyProject-title-200").text("Status: 200 - " + responseProject200_description.substring(0, responseProject200_description_break));
+                                $("#examples-Project-verifyProject-description-200").html(responseProject200_description.substring(responseProject200_description_break));
+                              }
+                            </script>
+
+
+                            <ul id="responses-detail-Project-verifyProject-200" class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-Project-verifyProject-200-schema">Schema</a>
+                                </li>
+
+
+
+
+                            </ul>
+
+
+                            <div class="tab-content" id="responses-Project-verifyProject-200-wrapper" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-Project-verifyProject-200-schema">
+                                  <div id="responses-Project-verifyProject-schema-200" class="exampleStyle">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "OK",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/ProjectResponse"
+      }
+    },
+    "application/xml" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/ProjectResponse"
+      }
+    }
+  }
+};
+                                        var schema = findNode('schema',schemaWrapper).schema;
+                                        if (!schema) {
+                                          schema = schemaWrapper.schema;
+                                        }
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else if (schema.items != null && schema.items.$ref != null) {
+                                            schema.items = defsParser.$refs.get(schema.items.$ref);
+                                        } else {
+                                          schemaWrapper.definitions = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-Project-verifyProject-200-schema-data').val(JSON.stringify(schema));
+                                        var result = $('#responses-Project-verifyProject-schema-200');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-Project-verifyProject-200-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+                            <h3 id="examples-Project-verifyProject-title-201"></h3>
+                            <p id="examples-Project-verifyProject-description-201" class="marked"></p>
+                            <script>
+                              var responseProject201_description = `Created`;
+                              var responseProject201_description_break = responseProject201_description.indexOf('\n');
+                              if (responseProject201_description_break == -1) {
+                                $("#examples-Project-verifyProject-title-201").text("Status: 201 - " + responseProject201_description);
+                              } else {
+                                $("#examples-Project-verifyProject-title-201").text("Status: 201 - " + responseProject201_description.substring(0, responseProject201_description_break));
+                                $("#examples-Project-verifyProject-description-201").html(responseProject201_description.substring(responseProject201_description_break));
+                              }
+                            </script>
+
+
+                            <ul id="responses-detail-Project-verifyProject-201" class="nav nav-tabs nav-tabs-examples" >
+
+
+                            </ul>
+
+
+                            <div class="tab-content" id="responses-Project-verifyProject-201-wrapper" style='margin-bottom: 10px;'>
+                            </div>
+                            <h3 id="examples-Project-verifyProject-title-401"></h3>
+                            <p id="examples-Project-verifyProject-description-401" class="marked"></p>
+                            <script>
+                              var responseProject401_description = `Unauthorized`;
+                              var responseProject401_description_break = responseProject401_description.indexOf('\n');
+                              if (responseProject401_description_break == -1) {
+                                $("#examples-Project-verifyProject-title-401").text("Status: 401 - " + responseProject401_description);
+                              } else {
+                                $("#examples-Project-verifyProject-title-401").text("Status: 401 - " + responseProject401_description.substring(0, responseProject401_description_break));
+                                $("#examples-Project-verifyProject-description-401").html(responseProject401_description.substring(responseProject401_description_break));
+                              }
+                            </script>
+
+
+                            <ul id="responses-detail-Project-verifyProject-401" class="nav nav-tabs nav-tabs-examples" >
+
+
+                            </ul>
+
+
+                            <div class="tab-content" id="responses-Project-verifyProject-401-wrapper" style='margin-bottom: 10px;'>
+                            </div>
+                            <h3 id="examples-Project-verifyProject-title-403"></h3>
+                            <p id="examples-Project-verifyProject-description-403" class="marked"></p>
+                            <script>
+                              var responseProject403_description = `Forbidden`;
+                              var responseProject403_description_break = responseProject403_description.indexOf('\n');
+                              if (responseProject403_description_break == -1) {
+                                $("#examples-Project-verifyProject-title-403").text("Status: 403 - " + responseProject403_description);
+                              } else {
+                                $("#examples-Project-verifyProject-title-403").text("Status: 403 - " + responseProject403_description.substring(0, responseProject403_description_break));
+                                $("#examples-Project-verifyProject-description-403").html(responseProject403_description.substring(responseProject403_description_break));
+                              }
+                            </script>
+
+
+                            <ul id="responses-detail-Project-verifyProject-403" class="nav nav-tabs nav-tabs-examples" >
+
+
+                            </ul>
+
+
+                            <div class="tab-content" id="responses-Project-verifyProject-403-wrapper" style='margin-bottom: 10px;'>
+                            </div>
+                            <h3 id="examples-Project-verifyProject-title-404"></h3>
+                            <p id="examples-Project-verifyProject-description-404" class="marked"></p>
+                            <script>
+                              var responseProject404_description = `Not Found`;
+                              var responseProject404_description_break = responseProject404_description.indexOf('\n');
+                              if (responseProject404_description_break == -1) {
+                                $("#examples-Project-verifyProject-title-404").text("Status: 404 - " + responseProject404_description);
+                              } else {
+                                $("#examples-Project-verifyProject-title-404").text("Status: 404 - " + responseProject404_description.substring(0, responseProject404_description_break));
+                                $("#examples-Project-verifyProject-description-404").html(responseProject404_description.substring(responseProject404_description_break));
+                              }
+                            </script>
+
+
+                            <ul id="responses-detail-Project-verifyProject-404" class="nav nav-tabs nav-tabs-examples" >
+
+
+                            </ul>
+
+
+                            <div class="tab-content" id="responses-Project-verifyProject-404-wrapper" style='margin-bottom: 10px;'>
                             </div>
                         </article>
                       </div>

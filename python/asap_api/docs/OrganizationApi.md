@@ -13,6 +13,7 @@ Method | HTTP request | Description
 [**get_defined_defenses**](OrganizationApi.md#get_defined_defenses) | **GET** /api/v1/organizations/{id}/defenses | Get the defenses defined for this organization.
 [**get_defined_metrics**](OrganizationApi.md#get_defined_metrics) | **GET** /api/v1/organizations/{id}/metrics | Get the metrics defined for this organization.
 [**get_defined_noises**](OrganizationApi.md#get_defined_noises) | **GET** /api/v1/organizations/{id}/noises | Get the noises defined for this organization.
+[**get_defined_transforms**](OrganizationApi.md#get_defined_transforms) | **GET** /api/v1/organizations/{id}/transforms | Get the transforms defined for this organization.
 [**get_organization**](OrganizationApi.md#get_organization) | **GET** /api/v1/organizations/{id} | Get organization by id.
 [**get_organizations**](OrganizationApi.md#get_organizations) | **GET** /api/v1/organizations | Get organizations.
 [**update_custom_dataset**](OrganizationApi.md#update_custom_dataset) | **PUT** /api/v1/organizations/{id}/datasets/{datasetId} | Update dataset.
@@ -373,7 +374,7 @@ configuration.api_key['JWT'] = 'YOUR_API_KEY'
 with asap_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = organization_api.OrganizationApi(api_client)
-    id = 1 # int | id
+    id = 1 # int | The organization ID.
 
     # example passing only required values which don't have defaults set
     try:
@@ -389,7 +390,7 @@ with asap_client.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **int**| id |
+ **id** | **int**| The organization ID. |
 
 ### Return type
 
@@ -719,6 +720,82 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+# **get_defined_transforms**
+> str get_defined_transforms(id)
+
+Get the transforms defined for this organization.
+
+### Example
+
+* Api Key Authentication (JWT):
+```python
+import time
+import asap_client
+from asap_api import organization_api
+from pprint import pprint
+# Defining the host is optional and defaults to http://localhost:8082
+# See configuration.py for a list of all supported configuration parameters.
+configuration = asap_client.Configuration(
+    host = "http://localhost:8082"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: JWT
+configuration.api_key['JWT'] = 'YOUR_API_KEY'
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['JWT'] = 'Bearer'
+
+# Enter a context with an instance of the API client
+with asap_client.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = organization_api.OrganizationApi(api_client)
+    id = 1 # int | id
+
+    # example passing only required values which don't have defaults set
+    try:
+        # Get the transforms defined for this organization.
+        api_response = api_instance.get_defined_transforms(id)
+        pprint(api_response)
+    except asap_client.ApiException as e:
+        print("Exception when calling OrganizationApi->get_defined_transforms: %s\n" % e)
+```
+
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | **int**| id |
+
+### Return type
+
+**str**
+
+### Authorization
+
+[JWT](../README.md#JWT)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json, application/xml
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**404** | Not Found |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 # **get_organization**
 > OrganizationResponse get_organization(id)
 
@@ -870,7 +947,7 @@ This endpoint does not need any parameter.
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **update_custom_dataset**
-> [DataSet] update_custom_dataset(dataset_id, id)
+> [DataSet] update_custom_dataset(dataset_id, id, dataset_request)
 
 Update dataset.
 
@@ -881,6 +958,7 @@ Update dataset.
 import time
 import asap_client
 from asap_api import organization_api
+from asap_client.model.dataset_request import DatasetRequest
 from asap_client.model.data_set import DataSet
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost:8082
@@ -906,23 +984,23 @@ with asap_client.ApiClient(configuration) as api_client:
     api_instance = organization_api.OrganizationApi(api_client)
     dataset_id = 1 # int | The dataset ID.
     id = 1 # int | The organization ID.
-    description = "description_example" # str |  (optional)
-    format = "Coco" # str |  (optional)
-    name = "name_example" # str |  (optional)
+    dataset_request = DatasetRequest(
+        description="description_example",
+        format="Coco",
+        name="name_example",
+        transforms=[
+            Transform(
+                id=1,
+                name="name_example",
+                params={},
+            ),
+        ],
+    ) # DatasetRequest | The dataset update request.
 
     # example passing only required values which don't have defaults set
     try:
         # Update dataset.
-        api_response = api_instance.update_custom_dataset(dataset_id, id)
-        pprint(api_response)
-    except asap_client.ApiException as e:
-        print("Exception when calling OrganizationApi->update_custom_dataset: %s\n" % e)
-
-    # example passing only required values which don't have defaults set
-    # and optional values
-    try:
-        # Update dataset.
-        api_response = api_instance.update_custom_dataset(dataset_id, id, description=description, format=format, name=name)
+        api_response = api_instance.update_custom_dataset(dataset_id, id, dataset_request)
         pprint(api_response)
     except asap_client.ApiException as e:
         print("Exception when calling OrganizationApi->update_custom_dataset: %s\n" % e)
@@ -935,9 +1013,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **dataset_id** | **int**| The dataset ID. |
  **id** | **int**| The organization ID. |
- **description** | **str**|  | [optional]
- **format** | **str**|  | [optional]
- **name** | **str**|  | [optional]
+ **dataset_request** | [**DatasetRequest**](DatasetRequest.md)| The dataset update request. |
 
 ### Return type
 
@@ -949,7 +1025,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json, application/xml
  - **Accept**: application/json, application/xml
 
 

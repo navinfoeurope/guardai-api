@@ -4,7 +4,7 @@ All URIs are relative to *http://localhost:8082*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**add_project**](ProjectApi.md#add_project) | **POST** /api/v1/projects | Add a project to a organization.
+[**add_project**](ProjectApi.md#add_project) | **POST** /api/v1/projects | Add a project to an organization.
 [**delete_data**](ProjectApi.md#delete_data) | **DELETE** /api/v1/projects/{id}/modeldata | Delete project model data.
 [**delete_project**](ProjectApi.md#delete_project) | **DELETE** /api/v1/projects/{id} | Delete a project.
 [**download_project_data**](ProjectApi.md#download_project_data) | **GET** /api/v1/projects/{id}/data | Download project data.
@@ -12,12 +12,13 @@ Method | HTTP request | Description
 [**get_projects**](ProjectApi.md#get_projects) | **GET** /api/v1/projects | Get list of projects.
 [**update_project**](ProjectApi.md#update_project) | **PUT** /api/v1/projects/{id} | Update project .
 [**upload_project_data**](ProjectApi.md#upload_project_data) | **POST** /api/v1/projects/{id}/modeldata | Upload project data.
+[**verify_project**](ProjectApi.md#verify_project) | **PUT** /api/v1/projects/{id}/verify | Start the model verification process.
 
 
 # **add_project**
 > ProjectResponse add_project(organization_id, project)
 
-Add a project to a organization.
+Add a project to an organization.
 
 ### Example
 
@@ -50,7 +51,7 @@ configuration.api_key['JWT'] = 'YOUR_API_KEY'
 with asap_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = project_api.ProjectApi(api_client)
-    organization_id = 1 # int | organizationId
+    organization_id = 1 # int | The organization ID.
     project = ProjectRequest(
         heads=[
             ModelHead(
@@ -63,6 +64,7 @@ with asap_client.ApiClient(configuration) as api_client:
         message="message_example",
         name="name_example",
         settings=ProjectSettings(
+            dataset_id=1,
             head_settings=[
                 HeadSetting(
                     head=ModelHead(
@@ -81,13 +83,24 @@ with asap_client.ApiClient(configuration) as api_client:
                 ),
             ],
             store_intermediate_data=True,
+            tasks=[
+                "tasks_example",
+            ],
+            transforms=[
+                Transform(
+                    id=1,
+                    name="name_example",
+                    params={},
+                ),
+            ],
+            use_transforms_from="def",
         ),
         valid=True,
     ) # ProjectRequest | project
 
     # example passing only required values which don't have defaults set
     try:
-        # Add a project to a organization.
+        # Add a project to an organization.
         api_response = api_instance.add_project(organization_id, project)
         pprint(api_response)
     except asap_client.ApiException as e:
@@ -99,7 +112,7 @@ with asap_client.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **organization_id** | **int**| organizationId |
+ **organization_id** | **int**| The organization ID. |
  **project** | [**ProjectRequest**](ProjectRequest.md)| project |
 
 ### Return type
@@ -163,7 +176,7 @@ with asap_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = project_api.ProjectApi(api_client)
     data_type = "Dataset" # str | dataType
-    id = 1 # int | id
+    id = 1 # int | The project ID.
 
     # example passing only required values which don't have defaults set
     try:
@@ -180,7 +193,7 @@ with asap_client.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **data_type** | **str**| dataType |
- **id** | **int**| id |
+ **id** | **int**| The project ID. |
 
 ### Return type
 
@@ -240,7 +253,7 @@ configuration.api_key['JWT'] = 'YOUR_API_KEY'
 with asap_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = project_api.ProjectApi(api_client)
-    id = 1 # int | id
+    id = 1 # int | The project ID.
 
     # example passing only required values which don't have defaults set
     try:
@@ -255,7 +268,7 @@ with asap_client.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **int**| id |
+ **id** | **int**| The project ID. |
 
 ### Return type
 
@@ -316,7 +329,7 @@ with asap_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = project_api.ProjectApi(api_client)
     data_type = "Dataset" # str | dataType
-    id = 1 # int | id
+    id = 1 # int | The project ID.
 
     # example passing only required values which don't have defaults set
     try:
@@ -333,7 +346,7 @@ with asap_client.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **data_type** | **str**| dataType |
- **id** | **int**| id |
+ **id** | **int**| The project ID. |
 
 ### Return type
 
@@ -394,7 +407,7 @@ configuration.api_key['JWT'] = 'YOUR_API_KEY'
 with asap_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = project_api.ProjectApi(api_client)
-    id = 1 # int | id
+    id = 1 # int | The project ID.
 
     # example passing only required values which don't have defaults set
     try:
@@ -410,7 +423,7 @@ with asap_client.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **int**| id |
+ **id** | **int**| The project ID. |
 
 ### Return type
 
@@ -545,7 +558,7 @@ configuration.api_key['JWT'] = 'YOUR_API_KEY'
 with asap_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = project_api.ProjectApi(api_client)
-    id = 1 # int | id
+    id = 1 # int | The project ID.
     project_request = ProjectRequest(
         heads=[
             ModelHead(
@@ -558,6 +571,7 @@ with asap_client.ApiClient(configuration) as api_client:
         message="message_example",
         name="name_example",
         settings=ProjectSettings(
+            dataset_id=1,
             head_settings=[
                 HeadSetting(
                     head=ModelHead(
@@ -576,6 +590,17 @@ with asap_client.ApiClient(configuration) as api_client:
                 ),
             ],
             store_intermediate_data=True,
+            tasks=[
+                "tasks_example",
+            ],
+            transforms=[
+                Transform(
+                    id=1,
+                    name="name_example",
+                    params={},
+                ),
+            ],
+            use_transforms_from="def",
         ),
         valid=True,
     ) # ProjectRequest | projectRequest
@@ -594,7 +619,7 @@ with asap_client.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **int**| id |
+ **id** | **int**| The project ID. |
  **project_request** | [**ProjectRequest**](ProjectRequest.md)| projectRequest |
 
 ### Return type
@@ -658,7 +683,7 @@ with asap_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = project_api.ProjectApi(api_client)
     data_type = "Dataset" # str | dataType
-    id = 1 # int | id
+    id = 1 # int | The project ID.
     file = open('/path/to/file', 'rb') # file_type |  (optional)
 
     # example passing only required values which don't have defaults set
@@ -685,7 +710,7 @@ with asap_client.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **data_type** | **str**| dataType |
- **id** | **int**| id |
+ **id** | **int**| The project ID. |
  **file** | **file_type**|  | [optional]
 
 ### Return type
@@ -699,6 +724,84 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: multipart/form-data
+ - **Accept**: application/json, application/xml
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**201** | Created |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**404** | Not Found |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **verify_project**
+> ProjectResponse verify_project(id)
+
+Start the model verification process.
+
+### Example
+
+* Api Key Authentication (JWT):
+```python
+import time
+import asap_client
+from asap_api import project_api
+from asap_client.model.project_response import ProjectResponse
+from pprint import pprint
+# Defining the host is optional and defaults to http://localhost:8082
+# See configuration.py for a list of all supported configuration parameters.
+configuration = asap_client.Configuration(
+    host = "http://localhost:8082"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: JWT
+configuration.api_key['JWT'] = 'YOUR_API_KEY'
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['JWT'] = 'Bearer'
+
+# Enter a context with an instance of the API client
+with asap_client.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = project_api.ProjectApi(api_client)
+    id = 1 # int | The project ID.
+
+    # example passing only required values which don't have defaults set
+    try:
+        # Start the model verification process.
+        api_response = api_instance.verify_project(id)
+        pprint(api_response)
+    except asap_client.ApiException as e:
+        print("Exception when calling ProjectApi->verify_project: %s\n" % e)
+```
+
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | **int**| The project ID. |
+
+### Return type
+
+[**ProjectResponse**](ProjectResponse.md)
+
+### Authorization
+
+[JWT](../README.md#JWT)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
  - **Accept**: application/json, application/xml
 
 

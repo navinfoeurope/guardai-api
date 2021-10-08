@@ -23,6 +23,7 @@ from asap_client.model_utils import (  # noqa: F401
     validate_and_convert_types
 )
 from asap_client.model.data_set import DataSet
+from asap_client.model.dataset_request import DatasetRequest
 from asap_client.model.organization_request import OrganizationRequest
 from asap_client.model.organization_response import OrganizationResponse
 
@@ -61,8 +62,8 @@ class OrganizationApi(object):
                 _preload_content (bool): if False, the urllib3.HTTPResponse object
                     will be returned without reading/decoding response data.
                     Default is True.
-                _request_timeout (float/tuple): timeout setting for this request. If one
-                    number provided, it will be total request timeout. It can also
+                _request_timeout (int/float/tuple): timeout setting for this request. If
+                    one number provided, it will be total request timeout. It can also
                     be a pair (tuple) of (connection, read) timeouts.
                     Default is None.
                 _check_input_type (bool): specifies if type checking
@@ -184,8 +185,8 @@ class OrganizationApi(object):
                 _preload_content (bool): if False, the urllib3.HTTPResponse object
                     will be returned without reading/decoding response data.
                     Default is True.
-                _request_timeout (float/tuple): timeout setting for this request. If one
-                    number provided, it will be total request timeout. It can also
+                _request_timeout (int/float/tuple): timeout setting for this request. If
+                    one number provided, it will be total request timeout. It can also
                     be a pair (tuple) of (connection, read) timeouts.
                     Default is None.
                 _check_input_type (bool): specifies if type checking
@@ -311,8 +312,8 @@ class OrganizationApi(object):
                 _preload_content (bool): if False, the urllib3.HTTPResponse object
                     will be returned without reading/decoding response data.
                     Default is True.
-                _request_timeout (float/tuple): timeout setting for this request. If one
-                    number provided, it will be total request timeout. It can also
+                _request_timeout (int/float/tuple): timeout setting for this request. If
+                    one number provided, it will be total request timeout. It can also
                     be a pair (tuple) of (connection, read) timeouts.
                     Default is None.
                 _check_input_type (bool): specifies if type checking
@@ -429,8 +430,8 @@ class OrganizationApi(object):
                 _preload_content (bool): if False, the urllib3.HTTPResponse object
                     will be returned without reading/decoding response data.
                     Default is True.
-                _request_timeout (float/tuple): timeout setting for this request. If one
-                    number provided, it will be total request timeout. It can also
+                _request_timeout (int/float/tuple): timeout setting for this request. If
+                    one number provided, it will be total request timeout. It can also
                     be a pair (tuple) of (connection, read) timeouts.
                     Default is None.
                 _check_input_type (bool): specifies if type checking
@@ -548,7 +549,7 @@ class OrganizationApi(object):
             >>> result = thread.get()
 
             Args:
-                id (int): id
+                id (int): The organization ID.
 
             Keyword Args:
                 _return_http_data_only (bool): response data without head status
@@ -556,8 +557,8 @@ class OrganizationApi(object):
                 _preload_content (bool): if False, the urllib3.HTTPResponse object
                     will be returned without reading/decoding response data.
                     Default is True.
-                _request_timeout (float/tuple): timeout setting for this request. If one
-                    number provided, it will be total request timeout. It can also
+                _request_timeout (int/float/tuple): timeout setting for this request. If
+                    one number provided, it will be total request timeout. It can also
                     be a pair (tuple) of (connection, read) timeouts.
                     Default is None.
                 _check_input_type (bool): specifies if type checking
@@ -675,8 +676,8 @@ class OrganizationApi(object):
                 _preload_content (bool): if False, the urllib3.HTTPResponse object
                     will be returned without reading/decoding response data.
                     Default is True.
-                _request_timeout (float/tuple): timeout setting for this request. If one
-                    number provided, it will be total request timeout. It can also
+                _request_timeout (int/float/tuple): timeout setting for this request. If
+                    one number provided, it will be total request timeout. It can also
                     be a pair (tuple) of (connection, read) timeouts.
                     Default is None.
                 _check_input_type (bool): specifies if type checking
@@ -794,8 +795,8 @@ class OrganizationApi(object):
                 _preload_content (bool): if False, the urllib3.HTTPResponse object
                     will be returned without reading/decoding response data.
                     Default is True.
-                _request_timeout (float/tuple): timeout setting for this request. If one
-                    number provided, it will be total request timeout. It can also
+                _request_timeout (int/float/tuple): timeout setting for this request. If
+                    one number provided, it will be total request timeout. It can also
                     be a pair (tuple) of (connection, read) timeouts.
                     Default is None.
                 _check_input_type (bool): specifies if type checking
@@ -913,8 +914,8 @@ class OrganizationApi(object):
                 _preload_content (bool): if False, the urllib3.HTTPResponse object
                     will be returned without reading/decoding response data.
                     Default is True.
-                _request_timeout (float/tuple): timeout setting for this request. If one
-                    number provided, it will be total request timeout. It can also
+                _request_timeout (int/float/tuple): timeout setting for this request. If
+                    one number provided, it will be total request timeout. It can also
                     be a pair (tuple) of (connection, read) timeouts.
                     Default is None.
                 _check_input_type (bool): specifies if type checking
@@ -1032,8 +1033,8 @@ class OrganizationApi(object):
                 _preload_content (bool): if False, the urllib3.HTTPResponse object
                     will be returned without reading/decoding response data.
                     Default is True.
-                _request_timeout (float/tuple): timeout setting for this request. If one
-                    number provided, it will be total request timeout. It can also
+                _request_timeout (int/float/tuple): timeout setting for this request. If
+                    one number provided, it will be total request timeout. It can also
                     be a pair (tuple) of (connection, read) timeouts.
                     Default is None.
                 _check_input_type (bool): specifies if type checking
@@ -1129,6 +1130,125 @@ class OrganizationApi(object):
             callable=__get_defined_noises
         )
 
+        def __get_defined_transforms(
+            self,
+            id,
+            **kwargs
+        ):
+            """Get the transforms defined for this organization.  # noqa: E501
+
+            This method makes a synchronous HTTP request by default. To make an
+            asynchronous HTTP request, please pass async_req=True
+
+            >>> thread = api.get_defined_transforms(id, async_req=True)
+            >>> result = thread.get()
+
+            Args:
+                id (int): id
+
+            Keyword Args:
+                _return_http_data_only (bool): response data without head status
+                    code and headers. Default is True.
+                _preload_content (bool): if False, the urllib3.HTTPResponse object
+                    will be returned without reading/decoding response data.
+                    Default is True.
+                _request_timeout (int/float/tuple): timeout setting for this request. If
+                    one number provided, it will be total request timeout. It can also
+                    be a pair (tuple) of (connection, read) timeouts.
+                    Default is None.
+                _check_input_type (bool): specifies if type checking
+                    should be done one the data sent to the server.
+                    Default is True.
+                _check_return_type (bool): specifies if type checking
+                    should be done one the data received from the server.
+                    Default is True.
+                _host_index (int/None): specifies the index of the server
+                    that we want to use.
+                    Default is read from the configuration.
+                async_req (bool): execute request asynchronously
+
+            Returns:
+                str
+                    If the method is called asynchronously, returns the request
+                    thread.
+            """
+            kwargs['async_req'] = kwargs.get(
+                'async_req', False
+            )
+            kwargs['_return_http_data_only'] = kwargs.get(
+                '_return_http_data_only', True
+            )
+            kwargs['_preload_content'] = kwargs.get(
+                '_preload_content', True
+            )
+            kwargs['_request_timeout'] = kwargs.get(
+                '_request_timeout', None
+            )
+            kwargs['_check_input_type'] = kwargs.get(
+                '_check_input_type', True
+            )
+            kwargs['_check_return_type'] = kwargs.get(
+                '_check_return_type', True
+            )
+            kwargs['_host_index'] = kwargs.get('_host_index')
+            kwargs['id'] = \
+                id
+            return self.call_with_http_info(**kwargs)
+
+        self.get_defined_transforms = _Endpoint(
+            settings={
+                'response_type': (str,),
+                'auth': [
+                    'JWT'
+                ],
+                'endpoint_path': '/api/v1/organizations/{id}/transforms',
+                'operation_id': 'get_defined_transforms',
+                'http_method': 'GET',
+                'servers': None,
+            },
+            params_map={
+                'all': [
+                    'id',
+                ],
+                'required': [
+                    'id',
+                ],
+                'nullable': [
+                ],
+                'enum': [
+                ],
+                'validation': [
+                ]
+            },
+            root_map={
+                'validations': {
+                },
+                'allowed_values': {
+                },
+                'openapi_types': {
+                    'id':
+                        (int,),
+                },
+                'attribute_map': {
+                    'id': 'id',
+                },
+                'location_map': {
+                    'id': 'path',
+                },
+                'collection_format_map': {
+                }
+            },
+            headers_map={
+                'accept': [
+                    'application/json',
+                    'application/xml'
+                ],
+                'content_type': [],
+            },
+            api_client=api_client,
+            callable=__get_defined_transforms
+        )
+
         def __get_organization(
             self,
             id,
@@ -1151,8 +1271,8 @@ class OrganizationApi(object):
                 _preload_content (bool): if False, the urllib3.HTTPResponse object
                     will be returned without reading/decoding response data.
                     Default is True.
-                _request_timeout (float/tuple): timeout setting for this request. If one
-                    number provided, it will be total request timeout. It can also
+                _request_timeout (int/float/tuple): timeout setting for this request. If
+                    one number provided, it will be total request timeout. It can also
                     be a pair (tuple) of (connection, read) timeouts.
                     Default is None.
                 _check_input_type (bool): specifies if type checking
@@ -1267,8 +1387,8 @@ class OrganizationApi(object):
                 _preload_content (bool): if False, the urllib3.HTTPResponse object
                     will be returned without reading/decoding response data.
                     Default is True.
-                _request_timeout (float/tuple): timeout setting for this request. If one
-                    number provided, it will be total request timeout. It can also
+                _request_timeout (int/float/tuple): timeout setting for this request. If
+                    one number provided, it will be total request timeout. It can also
                     be a pair (tuple) of (connection, read) timeouts.
                     Default is None.
                 _check_input_type (bool): specifies if type checking
@@ -1359,6 +1479,7 @@ class OrganizationApi(object):
             self,
             dataset_id,
             id,
+            dataset_request,
             **kwargs
         ):
             """Update dataset.  # noqa: E501
@@ -1366,24 +1487,22 @@ class OrganizationApi(object):
             This method makes a synchronous HTTP request by default. To make an
             asynchronous HTTP request, please pass async_req=True
 
-            >>> thread = api.update_custom_dataset(dataset_id, id, async_req=True)
+            >>> thread = api.update_custom_dataset(dataset_id, id, dataset_request, async_req=True)
             >>> result = thread.get()
 
             Args:
                 dataset_id (int): The dataset ID.
                 id (int): The organization ID.
+                dataset_request (DatasetRequest): The dataset update request.
 
             Keyword Args:
-                description (str): [optional]
-                format (str): [optional]
-                name (str): [optional]
                 _return_http_data_only (bool): response data without head status
                     code and headers. Default is True.
                 _preload_content (bool): if False, the urllib3.HTTPResponse object
                     will be returned without reading/decoding response data.
                     Default is True.
-                _request_timeout (float/tuple): timeout setting for this request. If one
-                    number provided, it will be total request timeout. It can also
+                _request_timeout (int/float/tuple): timeout setting for this request. If
+                    one number provided, it will be total request timeout. It can also
                     be a pair (tuple) of (connection, read) timeouts.
                     Default is None.
                 _check_input_type (bool): specifies if type checking
@@ -1425,6 +1544,8 @@ class OrganizationApi(object):
                 dataset_id
             kwargs['id'] = \
                 id
+            kwargs['dataset_request'] = \
+                dataset_request
             return self.call_with_http_info(**kwargs)
 
         self.update_custom_dataset = _Endpoint(
@@ -1442,18 +1563,16 @@ class OrganizationApi(object):
                 'all': [
                     'dataset_id',
                     'id',
-                    'description',
-                    'format',
-                    'name',
+                    'dataset_request',
                 ],
                 'required': [
                     'dataset_id',
                     'id',
+                    'dataset_request',
                 ],
                 'nullable': [
                 ],
                 'enum': [
-                    'format',
                 ],
                 'validation': [
                 ]
@@ -1462,39 +1581,23 @@ class OrganizationApi(object):
                 'validations': {
                 },
                 'allowed_values': {
-                    ('format',): {
-
-                        "COCO": "Coco",
-                        "KSV": "Ksv",
-                        "VOCDETECTION": "VOCDetection",
-                        "VOCSEGMENTATION": "VOCSegmentation"
-                    },
                 },
                 'openapi_types': {
                     'dataset_id':
                         (int,),
                     'id':
                         (int,),
-                    'description':
-                        (str,),
-                    'format':
-                        (str,),
-                    'name':
-                        (str,),
+                    'dataset_request':
+                        (DatasetRequest,),
                 },
                 'attribute_map': {
                     'dataset_id': 'datasetId',
                     'id': 'id',
-                    'description': 'description',
-                    'format': 'format',
-                    'name': 'name',
                 },
                 'location_map': {
                     'dataset_id': 'path',
                     'id': 'path',
-                    'description': 'query',
-                    'format': 'query',
-                    'name': 'query',
+                    'dataset_request': 'body',
                 },
                 'collection_format_map': {
                 }
@@ -1504,7 +1607,10 @@ class OrganizationApi(object):
                     'application/json',
                     'application/xml'
                 ],
-                'content_type': [],
+                'content_type': [
+                    'application/json',
+                    'application/xml'
+                ]
             },
             api_client=api_client,
             callable=__update_custom_dataset
@@ -1534,8 +1640,8 @@ class OrganizationApi(object):
                 _preload_content (bool): if False, the urllib3.HTTPResponse object
                     will be returned without reading/decoding response data.
                     Default is True.
-                _request_timeout (float/tuple): timeout setting for this request. If one
-                    number provided, it will be total request timeout. It can also
+                _request_timeout (int/float/tuple): timeout setting for this request. If
+                    one number provided, it will be total request timeout. It can also
                     be a pair (tuple) of (connection, read) timeouts.
                     Default is None.
                 _check_input_type (bool): specifies if type checking
@@ -1670,8 +1776,8 @@ class OrganizationApi(object):
                 _preload_content (bool): if False, the urllib3.HTTPResponse object
                     will be returned without reading/decoding response data.
                     Default is True.
-                _request_timeout (float/tuple): timeout setting for this request. If one
-                    number provided, it will be total request timeout. It can also
+                _request_timeout (int/float/tuple): timeout setting for this request. If
+                    one number provided, it will be total request timeout. It can also
                     be a pair (tuple) of (connection, read) timeouts.
                     Default is None.
                 _check_input_type (bool): specifies if type checking
@@ -1759,6 +1865,7 @@ class OrganizationApi(object):
                     ('format',): {
 
                         "COCO": "Coco",
+                        "CUSTOM": "Custom",
                         "KSV": "Ksv",
                         "VOCDETECTION": "VOCDetection",
                         "VOCSEGMENTATION": "VOCSegmentation"
