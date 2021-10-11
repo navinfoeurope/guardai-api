@@ -1,10 +1,9 @@
 #!/usr/bin/env python
-#  Copyright (c) 2021. NavInfo EU
-#  All rights reserved.
-#
-#  You may only use this code under the terms of the NavInfo license.
-#
-# -*- coding: utf-8 -*-
+#  Copyright (C) 2021 by NavInfo Europe B.V. The Netherlands - All rights reserved
+#  Information classification: Confidential
+#  This content is protected by international copyright laws.
+#  Reproduction and distribution is prohibited without written permission.
+#  -*- coding: utf-8 -*-
 __author__ = "Kobus Grobler"
 
 import sys
