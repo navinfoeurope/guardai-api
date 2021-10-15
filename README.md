@@ -1,5 +1,11 @@
 # Adversarial Security Assessment Platform for AI API
 
+The ASA Platform, created by [NavInfo Europe](https://navinfo.eu), is used to measure the 
+Adversarial and Natural Robustness of a model.
+
+The provided API is used in automation to integrate testing into your AI
+development pipeline. Specifically, this enables integration with continuous integration and/or deployment systems
+
 ## API Guide
 In general, using the ASAP API consists of the following high level steps:
 1. Creating API credentials
