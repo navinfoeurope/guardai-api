@@ -45,6 +45,6 @@ In general, using the ASAP API consists of the following high level steps:
 [Python examples](python/README.md#Running-the-example-code)
 
 ## API Reference Documentation
-[HTML Documentation](https://htmlpreview.github.io/?https://github.com/navinfoeurope/asap-api/blob/master/docs/index.html)
+[HTML Documentation](https://navinfoeurope.github.io/asap-api/docs/index.html)
 
 [Python API client documentation](python/asap_api/README.md#Documentation-for-API-Endpoints)
