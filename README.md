@@ -8,17 +8,15 @@ development pipeline. Specifically, this enables integration with continuous int
 
 ## API Guide
 In general, using the GuardAI API consists of the following high level steps:
-1. Creating API credentials
+1. Creating API credentials - go to the Profile page:
 
-   Go to the Profile page
+   <img src="images/profilemenu.jpg" alt="Image of menu" height="250"/>
 
-   <img style="float: left;" src="images/profilemenu.jpg" alt="Image of menu" height="300"/>
+2. Click on the key icon to create a new API key:
 
-   Click on the key icon to create a new API key.
+   <img style="" src="images/createapikey.jpg" alt="Image of profile page" width="400"/>
 
-   <img style="float: left;" src="images/createapikey.jpg" alt="Image of profile page" width="400"/>
-
-2. Setting up the API client
+3. Setting up the API client
 
    Using the API key created in step 1, create an API client for your chosen language, for example, in Python:
    ```python
@@ -29,7 +27,7 @@ In general, using the GuardAI API consists of the following high level steps:
     api_client = get_api_client(config['connection']['host'], auth_token)
     ...
    ```
-3. Use the api client to make API calls:
+4. Use the api client to make API calls:
    ```python
     ...
     project_api = ProjectApi(api_client)
