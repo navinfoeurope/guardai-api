@@ -1,8 +1,0 @@
-version: 1
-
-connection:
-  # Ensure that the URL matches your ASA Platform deployment
-  host: "https://asap.gpu.navinfo.cloud"
-  # Create an API key from your ASA Platform profile
-  api-key-id: "keyid"
-  api-key: "key"

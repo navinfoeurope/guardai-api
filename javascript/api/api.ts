@@ -1,8 +1,8 @@
 /* tslint:disable */
 /* eslint-disable */
 /**
- * Adversarial Security Assessment Platform for AI
- * Adversarial Security Assessment Platform for AI API
+ * GuardAI Platform API
+ * GuardAI is an adversarial security assessment Platform for AI
  *
  * The version of the OpenAPI document: 1.0
  * Contact: info@navinfo.eu
@@ -14,13 +14,74 @@
 
 
 import { Configuration } from './configuration';
-import globalAxios, { AxiosPromise, AxiosInstance } from 'axios';
+import globalAxios, { AxiosPromise, AxiosInstance, AxiosRequestConfig } from 'axios';
 // Some imports not used depending on template conditions
 // @ts-ignore
 import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from './common';
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from './base';
 
+/**
+ * 
+ * @export
+ * @interface AIFilter
+ */
+export interface AIFilter {
+    /**
+     * 
+     * @type {string}
+     * @memberof AIFilter
+     */
+    'codebase_name'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof AIFilter
+     */
+    'enabled'?: boolean;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof AIFilter
+     */
+    'group'?: Array<string>;
+    /**
+     * 
+     * @type {number}
+     * @memberof AIFilter
+     */
+    'id'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof AIFilter
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AIFilter
+     */
+    'paper_link'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AIFilter
+     */
+    'parameters'?: string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof AIFilter
+     */
+    'tasks'?: Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof AIFilter
+     */
+    'type'?: string;
+}
 /**
  * 
  * @export
@@ -32,37 +93,105 @@ export interface APIKeyResponse {
      * @type {string}
      * @memberof APIKeyResponse
      */
-    creationDate?: string;
+    'creationDate'?: string;
     /**
      * 
      * @type {string}
      * @memberof APIKeyResponse
      */
-    expiryDate?: string;
+    'expiryDate'?: string;
     /**
      * 
      * @type {number}
      * @memberof APIKeyResponse
      */
-    id?: number;
+    'id'?: number;
     /**
      * 
      * @type {string}
      * @memberof APIKeyResponse
      */
-    key?: string;
+    'key'?: string;
     /**
      * 
      * @type {string}
      * @memberof APIKeyResponse
      */
-    keyId?: string;
+    'keyId'?: string;
     /**
      * 
      * @type {string}
      * @memberof APIKeyResponse
      */
-    lastUsedDate?: string;
+    'lastUsedDate'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface Annotation
+ */
+export interface Annotation {
+    /**
+     * 
+     * @type {Array<BoundingBox>}
+     * @memberof Annotation
+     */
+    'bboxes'?: Array<BoundingBox>;
+    /**
+     * 
+     * @type {Array<Segmentation>}
+     * @memberof Annotation
+     */
+    'segmentations'?: Array<Segmentation>;
+}
+/**
+ * 
+ * @export
+ * @interface AssetsResponse
+ */
+export interface AssetsResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof AssetsResponse
+     */
+    'adversarialAttacks'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AssetsResponse
+     */
+    'datasetFormats'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AssetsResponse
+     */
+    'defenses'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AssetsResponse
+     */
+    'domainAdaptations'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AssetsResponse
+     */
+    'metaAttacks'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AssetsResponse
+     */
+    'metrics'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AssetsResponse
+     */
+    'noises'?: string;
 }
 /**
  * 
@@ -72,46 +201,315 @@ export interface APIKeyResponse {
 export interface AuthorizedUserResponse {
     /**
      * 
-     * @type {string}
+     * @type {boolean}
      * @memberof AuthorizedUserResponse
      */
-    email?: string;
+    'autoEnrol'?: boolean;
     /**
      * 
      * @type {string}
      * @memberof AuthorizedUserResponse
      */
-    jsonSettings?: string;
+    'email'?: string;
     /**
      * 
      * @type {string}
      * @memberof AuthorizedUserResponse
      */
-    jwt?: string;
+    'jwt'?: string;
     /**
      * 
      * @type {string}
      * @memberof AuthorizedUserResponse
      */
-    name?: string;
+    'name'?: string;
     /**
      * 
      * @type {boolean}
      * @memberof AuthorizedUserResponse
      */
-    registered?: boolean;
+    'registered'?: boolean;
     /**
      * 
      * @type {string}
      * @memberof AuthorizedUserResponse
      */
-    roles?: string;
+    'roles'?: string;
+    /**
+     * 
+     * @type {UserSettings}
+     * @memberof AuthorizedUserResponse
+     */
+    'settings'?: UserSettings;
     /**
      * 
      * @type {string}
      * @memberof AuthorizedUserResponse
      */
-    uid?: string;
+    'uid'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface BenchmarkProject
+ */
+export interface BenchmarkProject {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof BenchmarkProject
+     */
+    'enabled'?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof BenchmarkProject
+     */
+    'id'?: number;
+}
+/**
+ * 
+ * @export
+ * @interface BenchmarkRequest
+ */
+export interface BenchmarkRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof BenchmarkRequest
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {BenchmarkSettings}
+     * @memberof BenchmarkRequest
+     */
+    'settings'?: BenchmarkSettings;
+}
+/**
+ * 
+ * @export
+ * @interface BenchmarkResponse
+ */
+export interface BenchmarkResponse {
+    /**
+     * 
+     * @type {number}
+     * @memberof BenchmarkResponse
+     */
+    'id'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof BenchmarkResponse
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {OrganizationResponse}
+     * @memberof BenchmarkResponse
+     */
+    'organization'?: OrganizationResponse;
+    /**
+     * 
+     * @type {BenchmarkSettings}
+     * @memberof BenchmarkResponse
+     */
+    'settings'?: BenchmarkSettings;
+    /**
+     * 
+     * @type {string}
+     * @memberof BenchmarkResponse
+     */
+    'uid'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface BenchmarkSettings
+ */
+export interface BenchmarkSettings {
+    /**
+     * 
+     * @type {Array<BenchmarkProject>}
+     * @memberof BenchmarkSettings
+     */
+    'projects'?: Array<BenchmarkProject>;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof BenchmarkSettings
+     */
+    'tasks'?: Array<string>;
+    /**
+     * 
+     * @type {Array<BenchmarkTest>}
+     * @memberof BenchmarkSettings
+     */
+    'tests'?: Array<BenchmarkTest>;
+}
+/**
+ * 
+ * @export
+ * @interface BenchmarkTest
+ */
+export interface BenchmarkTest {
+    /**
+     * 
+     * @type {DatasetSetting}
+     * @memberof BenchmarkTest
+     */
+    'datasetSetting'?: DatasetSetting;
+    /**
+     * 
+     * @type {Array<DefenseResponse>}
+     * @memberof BenchmarkTest
+     */
+    'defenses'?: Array<DefenseResponse>;
+    /**
+     * 
+     * @type {number}
+     * @memberof BenchmarkTest
+     */
+    'id'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof BenchmarkTest
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BenchmarkTest
+     */
+    'status'?: BenchmarkTestStatusEnum;
+}
+
+export const BenchmarkTestStatusEnum = {
+    Cancelled: 'CANCELLED',
+    Done: 'DONE',
+    Err: 'ERR',
+    Idle: 'IDLE',
+    Initializing: 'INITIALIZING',
+    Running: 'RUNNING',
+    Submitted: 'SUBMITTED'
+} as const;
+
+export type BenchmarkTestStatusEnum = typeof BenchmarkTestStatusEnum[keyof typeof BenchmarkTestStatusEnum];
+
+/**
+ * 
+ * @export
+ * @interface BenchmarkTestRequest
+ */
+export interface BenchmarkTestRequest {
+    /**
+     * 
+     * @type {DefenseResponse}
+     * @memberof BenchmarkTestRequest
+     */
+    'defense'?: DefenseResponse;
+    /**
+     * 
+     * @type {string}
+     * @memberof BenchmarkTestRequest
+     */
+    'name'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface BenchmarkTestStatusResponse
+ */
+export interface BenchmarkTestStatusResponse {
+    /**
+     * 
+     * @type {Array<TestRunResponse>}
+     * @memberof BenchmarkTestStatusResponse
+     */
+    'testRuns'?: Array<TestRunResponse>;
+}
+/**
+ * 
+ * @export
+ * @interface BoundingBox
+ */
+export interface BoundingBox {
+    /**
+     * 
+     * @type {Array<number>}
+     * @memberof BoundingBox
+     */
+    'bbox'?: Array<number>;
+}
+/**
+ * 
+ * @export
+ * @interface ClassMappingFileRef
+ */
+export interface ClassMappingFileRef {
+    /**
+     * 
+     * @type {string}
+     * @memberof ClassMappingFileRef
+     */
+    'contentType'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof ClassMappingFileRef
+     */
+    'datasetId'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClassMappingFileRef
+     */
+    'fileName'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClassMappingFileRef
+     */
+    'ref'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface CraftedTestSettings
+ */
+export interface CraftedTestSettings {
+    /**
+     * 
+     * @type {string}
+     * @memberof CraftedTestSettings
+     */
+    'fromClass'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof CraftedTestSettings
+     */
+    'itemIdx'?: number;
+    /**
+     * 
+     * @type {object}
+     * @memberof CraftedTestSettings
+     */
+    'params'?: object;
+    /**
+     * 
+     * @type {Array<Rectangle>}
+     * @memberof CraftedTestSettings
+     */
+    'regions'?: Array<Rectangle>;
+    /**
+     * 
+     * @type {string}
+     * @memberof CraftedTestSettings
+     */
+    'toClass'?: string;
 }
 /**
  * 
@@ -121,52 +519,82 @@ export interface AuthorizedUserResponse {
 export interface DataSet {
     /**
      * 
+     * @type {number}
+     * @memberof DataSet
+     */
+    'datasetLength'?: number;
+    /**
+     * 
      * @type {string}
      * @memberof DataSet
      */
-    description?: string;
+    'description'?: string;
     /**
      * 
      * @type {boolean}
      * @memberof DataSet
      */
-    enabled?: boolean;
+    'enabled'?: boolean;
     /**
      * 
      * @type {string}
      * @memberof DataSet
      */
-    format?: string;
+    'error'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DataSet
+     */
+    'format'?: string;
     /**
      * 
      * @type {number}
      * @memberof DataSet
      */
-    id?: number;
+    'id'?: number;
     /**
      * 
      * @type {string}
      * @memberof DataSet
      */
-    name?: string;
+    'name'?: string;
     /**
      * 
      * @type {object}
      * @memberof DataSet
      */
-    params?: object;
+    'params'?: object;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof DataSet
+     */
+    'predefined'?: boolean;
+    /**
+     * 
+     * @type {DatasetSettings}
+     * @memberof DataSet
+     */
+    'settings'?: DatasetSettings;
     /**
      * 
      * @type {Array<string>}
      * @memberof DataSet
      */
-    tasks?: Array<string>;
+    'tasks'?: Array<string>;
     /**
      * 
      * @type {Array<Transform>}
      * @memberof DataSet
      */
-    transforms?: Array<Transform>;
+    'transforms'?: Array<Transform>;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof DataSet
+     */
+    'valid'?: boolean;
 }
 /**
  * 
@@ -179,39 +607,32 @@ export interface DatasetRequest {
      * @type {string}
      * @memberof DatasetRequest
      */
-    description?: string;
+    'description'?: string;
     /**
      * 
      * @type {string}
      * @memberof DatasetRequest
      */
-    format?: DatasetRequestFormatEnum;
+    'format'?: string;
     /**
      * 
      * @type {string}
      * @memberof DatasetRequest
      */
-    name?: string;
+    'name'?: string;
+    /**
+     * 
+     * @type {DatasetSettings}
+     * @memberof DatasetRequest
+     */
+    'settings'?: DatasetSettings;
     /**
      * 
      * @type {Array<Transform>}
      * @memberof DatasetRequest
      */
-    transforms?: Array<Transform>;
+    'transforms'?: Array<Transform>;
 }
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum DatasetRequestFormatEnum {
-    Coco = 'Coco',
-    Custom = 'Custom',
-    Ksv = 'Ksv',
-    VocDetection = 'VOCDetection',
-    VocSegmentation = 'VOCSegmentation'
-}
-
 /**
  * 
  * @export
@@ -223,25 +644,98 @@ export interface DatasetSetting {
      * @type {number}
      * @memberof DatasetSetting
      */
-    endIdx?: number;
-    /**
-     * 
-     * @type {Array<number>}
-     * @memberof DatasetSetting
-     */
-    indexes?: Array<number>;
+    'batchSize'?: number;
     /**
      * 
      * @type {number}
      * @memberof DatasetSetting
      */
-    startIdx?: number;
+    'endIdx'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof DatasetSetting
+     */
+    'fraction'?: number;
+    /**
+     * 
+     * @type {Array<number>}
+     * @memberof DatasetSetting
+     */
+    'indexes'?: Array<number>;
+    /**
+     * 
+     * @type {number}
+     * @memberof DatasetSetting
+     */
+    'numItems'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof DatasetSetting
+     */
+    'selectionType'?: DatasetSettingSelectionTypeEnum;
     /**
      * 
      * @type {boolean}
      * @memberof DatasetSetting
      */
-    useRange?: boolean;
+    'shuffle'?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof DatasetSetting
+     */
+    'startIdx'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof DatasetSetting
+     */
+    'workers'?: number;
+}
+
+export const DatasetSettingSelectionTypeEnum = {
+    Count: 'COUNT',
+    Entire: 'ENTIRE',
+    Fraction: 'FRACTION',
+    Indexes: 'INDEXES',
+    Range: 'RANGE'
+} as const;
+
+export type DatasetSettingSelectionTypeEnum = typeof DatasetSettingSelectionTypeEnum[keyof typeof DatasetSettingSelectionTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface DatasetSettings
+ */
+export interface DatasetSettings {
+    /**
+     * 
+     * @type {object}
+     * @memberof DatasetSettings
+     */
+    'params'?: object;
+}
+/**
+ * 
+ * @export
+ * @interface DatasetTarget
+ */
+export interface DatasetTarget {
+    /**
+     * 
+     * @type {{ [key: string]: Annotation; }}
+     * @memberof DatasetTarget
+     */
+    'annotations'?: { [key: string]: Annotation; };
+    /**
+     * 
+     * @type {string}
+     * @memberof DatasetTarget
+     */
+    'format'?: string;
 }
 /**
  * 
@@ -254,13 +748,13 @@ export interface DefenseRequest {
      * @type {string}
      * @memberof DefenseRequest
      */
-    name: string;
+    'name': string;
     /**
      * 
      * @type {string}
      * @memberof DefenseRequest
      */
-    parameters?: string;
+    'parameters'?: string;
 }
 /**
  * 
@@ -273,31 +767,106 @@ export interface DefenseResponse {
      * @type {string}
      * @memberof DefenseResponse
      */
-    defenseParameters?: string;
+    'defenseParameters'?: string;
     /**
      * 
-     * @type {Array<FilterResponse>}
+     * @type {Array<AIFilter>}
      * @memberof DefenseResponse
      */
-    filters?: Array<FilterResponse>;
+    'filters'?: Array<AIFilter>;
     /**
      * 
      * @type {number}
      * @memberof DefenseResponse
      */
-    id?: number;
+    'id'?: number;
     /**
      * 
      * @type {string}
      * @memberof DefenseResponse
      */
-    name?: string;
+    'name'?: string;
     /**
      * 
      * @type {number}
      * @memberof DefenseResponse
      */
-    testId?: number;
+    'testId'?: number;
+}
+/**
+ * 
+ * @export
+ * @interface DetectionTestSettings
+ */
+export interface DetectionTestSettings {
+    /**
+     * 
+     * @type {number}
+     * @memberof DetectionTestSettings
+     */
+    'id'?: number;
+    /**
+     * 
+     * @type {object}
+     * @memberof DetectionTestSettings
+     */
+    'params'?: object;
+    /**
+     * 
+     * @type {number}
+     * @memberof DetectionTestSettings
+     */
+    'passDeviations'?: number;
+    /**
+     * 
+     * @type {DatasetSetting}
+     * @memberof DetectionTestSettings
+     */
+    'poisonedDatasetSetting'?: DatasetSetting;
+}
+/**
+ * 
+ * @export
+ * @interface EnvironmentResponse
+ */
+export interface EnvironmentResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof EnvironmentResponse
+     */
+    'description'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof EnvironmentResponse
+     */
+    'enabled'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof EnvironmentResponse
+     */
+    'name'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface FileStatResponse
+ */
+export interface FileStatResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof FileStatResponse
+     */
+    'contentType'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof FileStatResponse
+     */
+    'size'?: number;
 }
 /**
  * 
@@ -310,56 +879,72 @@ export interface FilterRequest {
      * @type {boolean}
      * @memberof FilterRequest
      */
-    enabled?: boolean;
+    'enabled'?: boolean;
     /**
      * 
      * @type {string}
      * @memberof FilterRequest
      */
-    name: string;
+    'name': string;
     /**
      * 
      * @type {string}
      * @memberof FilterRequest
      */
-    parameters?: string;
+    'parameters'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof FilterRequest
+     */
+    'type'?: FilterRequestTypeEnum;
 }
+
+export const FilterRequestTypeEnum = {
+    AdversarialAttacks: 'adversarial_attacks',
+    DomainAdaptations: 'domain_adaptations',
+    MetaAttacks: 'meta_attacks',
+    Noises: 'noises'
+} as const;
+
+export type FilterRequestTypeEnum = typeof FilterRequestTypeEnum[keyof typeof FilterRequestTypeEnum];
+
 /**
  * 
  * @export
- * @interface FilterResponse
+ * @interface HPODefinition
  */
-export interface FilterResponse {
+export interface HPODefinition {
+    /**
+     * 
+     * @type {string}
+     * @memberof HPODefinition
+     */
+    'description'?: string;
     /**
      * 
      * @type {boolean}
-     * @memberof FilterResponse
+     * @memberof HPODefinition
      */
-    enabled?: boolean;
+    'enabled'?: boolean;
     /**
      * 
      * @type {number}
-     * @memberof FilterResponse
+     * @memberof HPODefinition
      */
-    id?: number;
+    'id'?: number;
     /**
      * 
      * @type {string}
-     * @memberof FilterResponse
+     * @memberof HPODefinition
      */
-    name?: string;
+    'name'?: string;
     /**
      * 
-     * @type {string}
-     * @memberof FilterResponse
+     * @type {Array<{ [key: string]: object; }>}
+     * @memberof HPODefinition
      */
-    parameters?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof FilterResponse
-     */
-    type?: string;
+    'params'?: Array<{ [key: string]: object; }>;
 }
 /**
  * 
@@ -372,13 +957,13 @@ export interface HeadSetting {
      * @type {ModelHead}
      * @memberof HeadSetting
      */
-    head?: ModelHead;
+    'head'?: ModelHead;
     /**
      * 
      * @type {Array<Metric>}
      * @memberof HeadSetting
      */
-    metrics?: Array<Metric>;
+    'metrics'?: Array<Metric>;
 }
 /**
  * 
@@ -391,13 +976,38 @@ export interface InviteRequest {
      * @type {string}
      * @memberof InviteRequest
      */
-    email?: string;
+    'email'?: string;
     /**
      * 
      * @type {string}
      * @memberof InviteRequest
      */
-    name?: string;
+    'name'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface LogEntryResponse
+ */
+export interface LogEntryResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof LogEntryResponse
+     */
+    'level'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof LogEntryResponse
+     */
+    'message'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof LogEntryResponse
+     */
+    'timeStamp'?: string;
 }
 /**
  * 
@@ -410,13 +1020,13 @@ export interface LoginRequest {
      * @type {string}
      * @memberof LoginRequest
      */
-    apiKey?: string;
+    'apiKey'?: string;
     /**
      * 
      * @type {string}
      * @memberof LoginRequest
      */
-    apiKeyId?: string;
+    'apiKeyId'?: string;
 }
 /**
  * 
@@ -429,19 +1039,80 @@ export interface Metric {
      * @type {boolean}
      * @memberof Metric
      */
-    enabled?: boolean;
+    'enabled'?: boolean;
     /**
      * 
      * @type {string}
      * @memberof Metric
      */
-    name?: string;
+    'name'?: string;
     /**
      * 
      * @type {object}
      * @memberof Metric
      */
-    params?: object;
+    'params'?: object;
+    /**
+     * 
+     * @type {string}
+     * @memberof Metric
+     */
+    'uid'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface MetricDefinition
+ */
+export interface MetricDefinition {
+    /**
+     * 
+     * @type {string}
+     * @memberof MetricDefinition
+     */
+    'codebase_name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MetricDefinition
+     */
+    'description'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof MetricDefinition
+     */
+    'enabled'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof MetricDefinition
+     */
+    'metric_type'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MetricDefinition
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {Array<object>}
+     * @memberof MetricDefinition
+     */
+    'params'?: Array<object>;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof MetricDefinition
+     */
+    'tasks'?: Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof MetricDefinition
+     */
+    'uid'?: string;
 }
 /**
  * 
@@ -454,14 +1125,166 @@ export interface ModelHead {
      * @type {Array<string>}
      * @memberof ModelHead
      */
-    losses?: Array<string>;
+    'losses'?: Array<string>;
     /**
      * 
      * @type {string}
      * @memberof ModelHead
      */
-    name?: string;
+    'name'?: string;
 }
+/**
+ * 
+ * @export
+ * @interface ModelRequest
+ */
+export interface ModelRequest {
+    /**
+     * 
+     * @type {number}
+     * @memberof ModelRequest
+     */
+    'datasetId'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ModelRequest
+     */
+    'description'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ModelRequest
+     */
+    'environment'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ModelRequest
+     */
+    'frameworkType'?: ModelRequestFrameworkTypeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof ModelRequest
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof ModelRequest
+     */
+    'tasks'?: Array<string>;
+    /**
+     * 
+     * @type {Array<Transform>}
+     * @memberof ModelRequest
+     */
+    'transforms'?: Array<Transform>;
+}
+
+export const ModelRequestFrameworkTypeEnum = {
+    Keras: 'Keras',
+    Onnx: 'ONNX',
+    PyTorch: 'PyTorch'
+} as const;
+
+export type ModelRequestFrameworkTypeEnum = typeof ModelRequestFrameworkTypeEnum[keyof typeof ModelRequestFrameworkTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface ModelResponse
+ */
+export interface ModelResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof ModelResponse
+     */
+    'dataRef'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof ModelResponse
+     */
+    'datasetId'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ModelResponse
+     */
+    'description'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ModelResponse
+     */
+    'environment'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ModelResponse
+     */
+    'frameworkType'?: ModelResponseFrameworkTypeEnum;
+    /**
+     * 
+     * @type {number}
+     * @memberof ModelResponse
+     */
+    'id'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ModelResponse
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {OrganizationResponse}
+     * @memberof ModelResponse
+     */
+    'organization'?: OrganizationResponse;
+    /**
+     * 
+     * @type {number}
+     * @memberof ModelResponse
+     */
+    'projectSource'?: number;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof ModelResponse
+     */
+    'tasks'?: Array<string>;
+    /**
+     * 
+     * @type {Array<Transform>}
+     * @memberof ModelResponse
+     */
+    'transforms'?: Array<Transform>;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ModelResponse
+     */
+    'verified'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof ModelResponse
+     */
+    'wrapperRef'?: string;
+}
+
+export const ModelResponseFrameworkTypeEnum = {
+    Keras: 'Keras',
+    Onnx: 'ONNX',
+    PyTorch: 'PyTorch'
+} as const;
+
+export type ModelResponseFrameworkTypeEnum = typeof ModelResponseFrameworkTypeEnum[keyof typeof ModelResponseFrameworkTypeEnum];
+
 /**
  * 
  * @export
@@ -473,13 +1296,13 @@ export interface OrganizationRequest {
      * @type {string}
      * @memberof OrganizationRequest
      */
-    name?: string;
+    'name'?: string;
     /**
      * 
      * @type {OrganizationSettings}
      * @memberof OrganizationRequest
      */
-    settings?: OrganizationSettings;
+    'settings'?: OrganizationSettings;
 }
 /**
  * 
@@ -489,22 +1312,40 @@ export interface OrganizationRequest {
 export interface OrganizationResponse {
     /**
      * 
+     * @type {string}
+     * @memberof OrganizationResponse
+     */
+    'creationDateTime'?: string;
+    /**
+     * 
      * @type {number}
      * @memberof OrganizationResponse
      */
-    id?: number;
+    'id'?: number;
     /**
      * 
      * @type {string}
      * @memberof OrganizationResponse
      */
-    name?: string;
+    'name'?: string;
     /**
      * 
      * @type {OrganizationSettings}
      * @memberof OrganizationResponse
      */
-    settings?: OrganizationSettings;
+    'settings'?: OrganizationSettings;
+    /**
+     * 
+     * @type {OrganizationStatsResponse}
+     * @memberof OrganizationResponse
+     */
+    'stats'?: OrganizationStatsResponse;
+    /**
+     * 
+     * @type {number}
+     * @memberof OrganizationResponse
+     */
+    'timeUsed'?: number;
 }
 /**
  * 
@@ -514,22 +1355,94 @@ export interface OrganizationResponse {
 export interface OrganizationSettings {
     /**
      * 
+     * @type {Array<ClassMappingFileRef>}
+     * @memberof OrganizationSettings
+     */
+    'classMappingFiles'?: Array<ClassMappingFileRef>;
+    /**
+     * 
      * @type {Array<string>}
      * @memberof OrganizationSettings
      */
-    disabledFeatures?: Array<OrganizationSettingsDisabledFeaturesEnum>;
+    'disabledFeatures'?: Array<OrganizationSettingsDisabledFeaturesEnum>;
+    /**
+     * 
+     * @type {number}
+     * @memberof OrganizationSettings
+     */
+    'maxItemCount'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof OrganizationSettings
+     */
+    'maxTimeAllocated'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof OrganizationSettings
+     */
+    'maxTimePerTask'?: number;
 }
+
+export const OrganizationSettingsDisabledFeaturesEnum = {
+    AdvCrafting: 'ADV_CRAFTING',
+    Evaluation: 'EVALUATION',
+    Robustness: 'ROBUSTNESS'
+} as const;
+
+export type OrganizationSettingsDisabledFeaturesEnum = typeof OrganizationSettingsDisabledFeaturesEnum[keyof typeof OrganizationSettingsDisabledFeaturesEnum];
 
 /**
-    * @export
-    * @enum {string}
-    */
-export enum OrganizationSettingsDisabledFeaturesEnum {
-    AdvCrafting = 'ADV_CRAFTING',
-    Evaluation = 'EVALUATION',
-    Robustness = 'ROBUSTNESS'
+ * 
+ * @export
+ * @interface OrganizationStatsResponse
+ */
+export interface OrganizationStatsResponse {
+    /**
+     * 
+     * @type {number}
+     * @memberof OrganizationStatsResponse
+     */
+    'datasetStorage'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof OrganizationStatsResponse
+     */
+    'projectStorage'?: number;
 }
-
+/**
+ * 
+ * @export
+ * @interface PassFailCriteria
+ */
+export interface PassFailCriteria {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof PassFailCriteria
+     */
+    'above'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof PassFailCriteria
+     */
+    'enabled'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof PassFailCriteria
+     */
+    'metricName'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof PassFailCriteria
+     */
+    'passVal'?: number;
+}
 /**
  * 
  * @export
@@ -541,14 +1454,156 @@ export interface PipelineResponse {
      * @type {number}
      * @memberof PipelineResponse
      */
-    id?: number;
+    'id'?: number;
     /**
      * 
      * @type {string}
      * @memberof PipelineResponse
      */
-    name?: string;
+    'name'?: string;
 }
+/**
+ * 
+ * @export
+ * @interface ProfileSettings
+ */
+export interface ProfileSettings {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ProfileSettings
+     */
+    'approximateRobustness'?: boolean;
+    /**
+     * 
+     * @type {object}
+     * @memberof ProfileSettings
+     */
+    'arParams'?: object;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ProfileSettings
+     */
+    'batchWiseHPO'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ProfileSettings
+     */
+    'configured'?: boolean;
+    /**
+     * 
+     * @type {CraftedTestSettings}
+     * @memberof ProfileSettings
+     */
+    'craftedSettings'?: CraftedTestSettings;
+    /**
+     * 
+     * @type {DatasetSetting}
+     * @memberof ProfileSettings
+     */
+    'datasetSetting'?: DatasetSetting;
+    /**
+     * 
+     * @type {Array<DefenseResponse>}
+     * @memberof ProfileSettings
+     */
+    'defenses'?: Array<DefenseResponse>;
+    /**
+     * 
+     * @type {DetectionTestSettings}
+     * @memberof ProfileSettings
+     */
+    'detectionTestSettings'?: DetectionTestSettings;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ProfileSettings
+     */
+    'epsExploration'?: boolean;
+    /**
+     * 
+     * @type {object}
+     * @memberof ProfileSettings
+     */
+    'epsExplorationParams'?: object;
+    /**
+     * 
+     * @type {number}
+     * @memberof ProfileSettings
+     */
+    'hpoId'?: number;
+    /**
+     * 
+     * @type {object}
+     * @memberof ProfileSettings
+     */
+    'hpoParams'?: object;
+    /**
+     * 
+     * @type {{ [key: string]: Array<Metric>; }}
+     * @memberof ProfileSettings
+     */
+    'metrics'?: { [key: string]: Array<Metric>; };
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ProfileSettings
+     */
+    'optimalParameterization'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ProfileSettings
+     */
+    'overlayImageOnSegMap'?: boolean;
+    /**
+     * 
+     * @type {Array<PassFailCriteria>}
+     * @memberof ProfileSettings
+     */
+    'passFailCriteria'?: Array<PassFailCriteria>;
+    /**
+     * 
+     * @type {number}
+     * @memberof ProfileSettings
+     */
+    'passPercentage'?: number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ProfileSettings
+     */
+    'storeCompositeImages'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ProfileSettings
+     */
+    'storeIntermediateData'?: boolean;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof ProfileSettings
+     */
+    'tasks'?: Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof ProfileSettings
+     */
+    'testType'?: ProfileSettingsTestTypeEnum;
+}
+
+export const ProfileSettingsTestTypeEnum = {
+    Crafted: 'Crafted',
+    Detection: 'Detection',
+    Robustness: 'Robustness'
+} as const;
+
+export type ProfileSettingsTestTypeEnum = typeof ProfileSettingsTestTypeEnum[keyof typeof ProfileSettingsTestTypeEnum];
+
 /**
  * 
  * @export
@@ -557,34 +1612,40 @@ export interface PipelineResponse {
 export interface ProjectRequest {
     /**
      * 
+     * @type {number}
+     * @memberof ProjectRequest
+     */
+    'datasetLength'?: number;
+    /**
+     * 
      * @type {Array<ModelHead>}
      * @memberof ProjectRequest
      */
-    heads?: Array<ModelHead>;
+    'heads'?: Array<ModelHead>;
     /**
      * 
      * @type {string}
      * @memberof ProjectRequest
      */
-    message?: string;
+    'message'?: string;
     /**
      * 
      * @type {string}
      * @memberof ProjectRequest
      */
-    name?: string;
+    'name'?: string;
     /**
      * 
      * @type {ProjectSettings}
      * @memberof ProjectRequest
      */
-    settings?: ProjectSettings;
+    'settings'?: ProjectSettings;
     /**
      * 
      * @type {boolean}
      * @memberof ProjectRequest
      */
-    valid?: boolean;
+    'valid'?: boolean;
 }
 /**
  * 
@@ -597,61 +1658,79 @@ export interface ProjectResponse {
      * @type {string}
      * @memberof ProjectResponse
      */
-    dataRef?: string;
+    'dataRef'?: string;
     /**
      * 
      * @type {number}
      * @memberof ProjectResponse
      */
-    id?: number;
+    'id'?: number;
     /**
      * 
      * @type {string}
      * @memberof ProjectResponse
      */
-    message?: string;
+    'message'?: string;
+    /**
+     * 
+     * @type {ModelResponse}
+     * @memberof ProjectResponse
+     */
+    'model'?: ModelResponse;
+    /**
+     * 
+     * @type {number}
+     * @memberof ProjectResponse
+     */
+    'modelId'?: number;
     /**
      * 
      * @type {string}
      * @memberof ProjectResponse
      */
-    name?: string;
+    'modelName'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ProjectResponse
+     */
+    'name'?: string;
     /**
      * 
      * @type {OrganizationResponse}
      * @memberof ProjectResponse
      */
-    organization?: OrganizationResponse;
+    'organization'?: OrganizationResponse;
     /**
      * 
      * @type {Array<PipelineResponse>}
      * @memberof ProjectResponse
      */
-    pipelines?: Array<PipelineResponse>;
+    'pipelines'?: Array<PipelineResponse>;
     /**
      * 
      * @type {ProjectSettings}
      * @memberof ProjectResponse
      */
-    settings?: ProjectSettings;
+    'settings'?: ProjectSettings;
     /**
      * 
      * @type {string}
      * @memberof ProjectResponse
      */
-    uid?: string;
+    'uid'?: string;
     /**
      * 
      * @type {boolean}
      * @memberof ProjectResponse
      */
-    verified?: boolean;
+    'verified'?: boolean;
     /**
      * 
      * @type {string}
      * @memberof ProjectResponse
      */
-    wrapperRef?: string;
+    'wrapperRef'?: string;
 }
 /**
  * 
@@ -661,52 +1740,175 @@ export interface ProjectResponse {
 export interface ProjectSettings {
     /**
      * 
-     * @type {number}
+     * @type {boolean}
      * @memberof ProjectSettings
      */
-    datasetId?: number;
+    'approximateRobustness'?: boolean;
     /**
      * 
-     * @type {Array<HeadSetting>}
+     * @type {object}
      * @memberof ProjectSettings
      */
-    headSettings?: Array<HeadSetting>;
+    'arParams'?: object;
     /**
      * 
      * @type {boolean}
      * @memberof ProjectSettings
      */
-    storeIntermediateData?: boolean;
+    'batchWiseHPO'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ProjectSettings
+     */
+    'classMappingEstimation'?: boolean;
+    /**
+     * 
+     * @type {object}
+     * @memberof ProjectSettings
+     */
+    'classMappingParams'?: object;
+    /**
+     * 
+     * @type {number}
+     * @memberof ProjectSettings
+     */
+    'datasetId'?: number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ProjectSettings
+     */
+    'epsExploration'?: boolean;
+    /**
+     * 
+     * @type {object}
+     * @memberof ProjectSettings
+     */
+    'epsExplorationParams'?: object;
+    /**
+     * 
+     * @type {Array<HeadSetting>}
+     * @memberof ProjectSettings
+     */
+    'headSettings'?: Array<HeadSetting>;
+    /**
+     * 
+     * @type {number}
+     * @memberof ProjectSettings
+     */
+    'hpoId'?: number;
+    /**
+     * 
+     * @type {object}
+     * @memberof ProjectSettings
+     */
+    'hpoParams'?: object;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ProjectSettings
+     */
+    'optimalParameterization'?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof ProjectSettings
+     */
+    'sourceModelId'?: number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ProjectSettings
+     */
+    'storeCompositeImages'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ProjectSettings
+     */
+    'storeIntermediateData'?: boolean;
     /**
      * 
      * @type {Array<string>}
      * @memberof ProjectSettings
      */
-    tasks?: Array<string>;
+    'tasks'?: Array<string>;
     /**
      * 
      * @type {Array<Transform>}
      * @memberof ProjectSettings
      */
-    transforms?: Array<Transform>;
+    'transforms'?: Array<Transform>;
     /**
      * 
-     * @type {string}
+     * @type {boolean}
      * @memberof ProjectSettings
      */
-    useTransformsFrom?: ProjectSettingsUseTransformsFromEnum;
+    'useClassNamesFromDataset'?: boolean;
 }
-
 /**
-    * @export
-    * @enum {string}
-    */
-export enum ProjectSettingsUseTransformsFromEnum {
-    Def = 'def',
-    Gui = 'gui',
-    Ws = 'ws'
+ * 
+ * @export
+ * @interface QueueInfoResponse
+ */
+export interface QueueInfoResponse {
+    /**
+     * 
+     * @type {number}
+     * @memberof QueueInfoResponse
+     */
+    'busyCount'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof QueueInfoResponse
+     */
+    'consumerCount'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof QueueInfoResponse
+     */
+    'messageCount'?: number;
+    /**
+     * 
+     * @type {Array<WorkerHeartbeatEntry>}
+     * @memberof QueueInfoResponse
+     */
+    'workers'?: Array<WorkerHeartbeatEntry>;
 }
-
+/**
+ * 
+ * @export
+ * @interface Rectangle
+ */
+export interface Rectangle {
+    /**
+     * 
+     * @type {number}
+     * @memberof Rectangle
+     */
+    'x1'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof Rectangle
+     */
+    'x2'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof Rectangle
+     */
+    'y1'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof Rectangle
+     */
+    'y2'?: number;
+}
 /**
  * 
  * @export
@@ -718,7 +1920,7 @@ export interface RegisterRequest {
      * @type {string}
      * @memberof RegisterRequest
      */
-    token?: string;
+    'token'?: string;
 }
 /**
  * 
@@ -731,19 +1933,31 @@ export interface ReportRequest {
      * @type {string}
      * @memberof ReportRequest
      */
-    dataRef?: string;
+    'dataRef'?: string;
     /**
      * 
      * @type {string}
      * @memberof ReportRequest
      */
-    jsonReport: string;
+    'jsonReport': string;
     /**
      * 
      * @type {number}
      * @memberof ReportRequest
      */
-    testId: number;
+    'projectId'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ReportRequest
+     */
+    'runId'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ReportRequest
+     */
+    'testId': number;
 }
 /**
  * 
@@ -756,31 +1970,49 @@ export interface ReportResponse {
      * @type {string}
      * @memberof ReportResponse
      */
-    dataRef?: string;
+    'dataRef'?: string;
     /**
      * 
      * @type {string}
      * @memberof ReportResponse
      */
-    date?: string;
+    'date'?: string;
     /**
      * 
      * @type {number}
      * @memberof ReportResponse
      */
-    id?: number;
+    'id'?: number;
     /**
      * 
      * @type {string}
      * @memberof ReportResponse
      */
-    jsonReport?: string;
+    'jsonReport'?: string;
     /**
      * 
      * @type {number}
      * @memberof ReportResponse
      */
-    testId?: number;
+    'projectId'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ReportResponse
+     */
+    'runId'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ReportResponse
+     */
+    'runName'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof ReportResponse
+     */
+    'testId'?: number;
 }
 /**
  * 
@@ -793,49 +2025,68 @@ export interface Resource {
      * @type {string}
      * @memberof Resource
      */
-    description?: string;
+    'description'?: string;
     /**
      * 
-     * @type {any}
+     * @type {File}
      * @memberof Resource
      */
-    file?: any;
+    'file'?: File;
     /**
      * 
      * @type {string}
      * @memberof Resource
      */
-    filename?: string;
+    'filename'?: string;
     /**
      * 
      * @type {object}
      * @memberof Resource
      */
-    inputStream?: object;
+    'inputStream'?: object;
     /**
      * 
      * @type {boolean}
      * @memberof Resource
      */
-    open?: boolean;
+    'open'?: boolean;
     /**
      * 
      * @type {boolean}
      * @memberof Resource
      */
-    readable?: boolean;
+    'readable'?: boolean;
     /**
      * 
      * @type {string}
      * @memberof Resource
      */
-    uri?: string;
+    'uri'?: string;
     /**
      * 
      * @type {string}
      * @memberof Resource
      */
-    url?: string;
+    'url'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface Segmentation
+ */
+export interface Segmentation {
+    /**
+     * 
+     * @type {number}
+     * @memberof Segmentation
+     */
+    'area'?: number;
+    /**
+     * 
+     * @type {Array<Array<number>>}
+     * @memberof Segmentation
+     */
+    'polygons'?: Array<Array<number>>;
 }
 /**
  * 
@@ -848,40 +2099,125 @@ export interface StatusRequest {
      * @type {number}
      * @memberof StatusRequest
      */
-    max?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof StatusRequest
-     */
-    message?: string;
+    'elapsed'?: number;
     /**
      * 
      * @type {number}
      * @memberof StatusRequest
      */
-    progress?: number;
+    'eta'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof StatusRequest
+     */
+    'max'?: number;
     /**
      * 
      * @type {string}
      * @memberof StatusRequest
      */
-    status?: StatusRequestStatusEnum;
+    'message'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof StatusRequest
+     */
+    'progress'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof StatusRequest
+     */
+    'status'?: StatusRequestStatusEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof StatusRequest
+     */
+    'workerId'?: string;
 }
+
+export const StatusRequestStatusEnum = {
+    Cancelled: 'CANCELLED',
+    Done: 'DONE',
+    Err: 'ERR',
+    Idle: 'IDLE',
+    Initializing: 'INITIALIZING',
+    Running: 'RUNNING',
+    Submitted: 'SUBMITTED'
+} as const;
+
+export type StatusRequestStatusEnum = typeof StatusRequestStatusEnum[keyof typeof StatusRequestStatusEnum];
 
 /**
-    * @export
-    * @enum {string}
-    */
-export enum StatusRequestStatusEnum {
-    Cancelled = 'CANCELLED',
-    Done = 'DONE',
-    Err = 'ERR',
-    Idle = 'IDLE',
-    Initializing = 'INITIALIZING',
-    Running = 'RUNNING'
+ * 
+ * @export
+ * @interface TestProfileRequest
+ */
+export interface TestProfileRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof TestProfileRequest
+     */
+    'description'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof TestProfileRequest
+     */
+    'id'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof TestProfileRequest
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {ProfileSettings}
+     * @memberof TestProfileRequest
+     */
+    'settings'?: ProfileSettings;
 }
-
+/**
+ * 
+ * @export
+ * @interface TestProfileResponse
+ */
+export interface TestProfileResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof TestProfileResponse
+     */
+    'description'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof TestProfileResponse
+     */
+    'id'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof TestProfileResponse
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {OrganizationResponse}
+     * @memberof TestProfileResponse
+     */
+    'organization'?: OrganizationResponse;
+    /**
+     * 
+     * @type {ProfileSettings}
+     * @memberof TestProfileResponse
+     */
+    'settings'?: ProfileSettings;
+}
 /**
  * 
  * @export
@@ -890,40 +2226,46 @@ export enum StatusRequestStatusEnum {
 export interface TestRequest {
     /**
      * 
-     * @type {number}
-     * @memberof TestRequest
-     */
-    datasetId?: number;
-    /**
-     * 
      * @type {DefenseResponse}
      * @memberof TestRequest
      */
-    defense?: DefenseResponse;
+    'defense'?: DefenseResponse;
     /**
      * 
      * @type {string}
      * @memberof TestRequest
      */
-    name?: string;
+    'description'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TestRequest
+     */
+    'name'?: string;
     /**
      * 
      * @type {number}
      * @memberof TestRequest
      */
-    pipelineId?: number;
+    'pipelineId'?: number;
     /**
      * 
      * @type {number}
      * @memberof TestRequest
      */
-    projectId?: number;
+    'profileId'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof TestRequest
+     */
+    'projectId'?: number;
     /**
      * 
      * @type {TestSettings}
      * @memberof TestRequest
      */
-    testSettings?: TestSettings;
+    'testSettings'?: TestSettings;
 }
 /**
  * 
@@ -933,90 +2275,163 @@ export interface TestRequest {
 export interface TestResponse {
     /**
      * 
-     * @type {string}
-     * @memberof TestResponse
-     */
-    dataRef?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof TestResponse
-     */
-    datasetId?: number;
-    /**
-     * 
      * @type {Array<DefenseResponse>}
      * @memberof TestResponse
      */
-    defenses?: Array<DefenseResponse>;
-    /**
-     * 
-     * @type {number}
-     * @memberof TestResponse
-     */
-    id?: number;
+    'defenses'?: Array<DefenseResponse>;
     /**
      * 
      * @type {string}
      * @memberof TestResponse
      */
-    message?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof TestResponse
-     */
-    modelRef?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof TestResponse
-     */
-    name?: string;
+    'description'?: string;
     /**
      * 
      * @type {number}
      * @memberof TestResponse
      */
-    pipelineId?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof TestResponse
-     */
-    progress?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof TestResponse
-     */
-    projectId?: number;
+    'id'?: number;
     /**
      * 
      * @type {string}
      * @memberof TestResponse
      */
-    status?: TestResponseStatusEnum;
+    'name'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof TestResponse
+     */
+    'pipelineId'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof TestResponse
+     */
+    'projectId'?: number;
+    /**
+     * 
+     * @type {Array<TestRunResponse>}
+     * @memberof TestResponse
+     */
+    'testRuns'?: Array<TestRunResponse>;
     /**
      * 
      * @type {TestSettings}
      * @memberof TestResponse
      */
-    testSettings?: TestSettings;
+    'testSettings'?: TestSettings;
+}
+/**
+ * 
+ * @export
+ * @interface TestRunRequest
+ */
+export interface TestRunRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof TestRunRequest
+     */
+    'name'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface TestRunResponse
+ */
+export interface TestRunResponse {
+    /**
+     * 
+     * @type {number}
+     * @memberof TestRunResponse
+     */
+    'completedCount'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof TestRunResponse
+     */
+    'elapsed'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof TestRunResponse
+     */
+    'eta'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof TestRunResponse
+     */
+    'id'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof TestRunResponse
+     */
+    'initiator'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TestRunResponse
+     */
+    'message'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TestRunResponse
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof TestRunResponse
+     */
+    'progress'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof TestRunResponse
+     */
+    'projectId'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof TestRunResponse
+     */
+    'startTime'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TestRunResponse
+     */
+    'status'?: TestRunResponseStatusEnum;
+    /**
+     * 
+     * @type {number}
+     * @memberof TestRunResponse
+     */
+    'submitCount'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof TestRunResponse
+     */
+    'testId'?: number;
 }
 
-/**
-    * @export
-    * @enum {string}
-    */
-export enum TestResponseStatusEnum {
-    Cancelled = 'CANCELLED',
-    Done = 'DONE',
-    Err = 'ERR',
-    Idle = 'IDLE',
-    Initializing = 'INITIALIZING',
-    Running = 'RUNNING'
-}
+export const TestRunResponseStatusEnum = {
+    Cancelled: 'CANCELLED',
+    Done: 'DONE',
+    Err: 'ERR',
+    Idle: 'IDLE',
+    Initializing: 'INITIALIZING',
+    Running: 'RUNNING',
+    Submitted: 'SUBMITTED'
+} as const;
+
+export type TestRunResponseStatusEnum = typeof TestRunResponseStatusEnum[keyof typeof TestRunResponseStatusEnum];
 
 /**
  * 
@@ -1026,11 +2441,128 @@ export enum TestResponseStatusEnum {
 export interface TestSettings {
     /**
      * 
+     * @type {boolean}
+     * @memberof TestSettings
+     */
+    'approximateRobustness'?: boolean;
+    /**
+     * 
+     * @type {object}
+     * @memberof TestSettings
+     */
+    'arParams'?: object;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof TestSettings
+     */
+    'batchWiseHPO'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof TestSettings
+     */
+    'configured'?: boolean;
+    /**
+     * 
+     * @type {CraftedTestSettings}
+     * @memberof TestSettings
+     */
+    'craftedSettings'?: CraftedTestSettings;
+    /**
+     * 
      * @type {DatasetSetting}
      * @memberof TestSettings
      */
-    datasetSetting?: DatasetSetting;
+    'datasetSetting'?: DatasetSetting;
+    /**
+     * 
+     * @type {DetectionTestSettings}
+     * @memberof TestSettings
+     */
+    'detectionTestSettings'?: DetectionTestSettings;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof TestSettings
+     */
+    'epsExploration'?: boolean;
+    /**
+     * 
+     * @type {object}
+     * @memberof TestSettings
+     */
+    'epsExplorationParams'?: object;
+    /**
+     * 
+     * @type {number}
+     * @memberof TestSettings
+     */
+    'hpoId'?: number;
+    /**
+     * 
+     * @type {object}
+     * @memberof TestSettings
+     */
+    'hpoParams'?: object;
+    /**
+     * 
+     * @type {{ [key: string]: Array<Metric>; }}
+     * @memberof TestSettings
+     */
+    'metrics'?: { [key: string]: Array<Metric>; };
+    /**
+     * 
+     * @type {boolean}
+     * @memberof TestSettings
+     */
+    'optimalParameterization'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof TestSettings
+     */
+    'overlayImageOnSegMap'?: boolean;
+    /**
+     * 
+     * @type {Array<PassFailCriteria>}
+     * @memberof TestSettings
+     */
+    'passFailCriteria'?: Array<PassFailCriteria>;
+    /**
+     * 
+     * @type {number}
+     * @memberof TestSettings
+     */
+    'passPercentage'?: number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof TestSettings
+     */
+    'storeCompositeImages'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof TestSettings
+     */
+    'storeIntermediateData'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof TestSettings
+     */
+    'testType'?: TestSettingsTestTypeEnum;
 }
+
+export const TestSettingsTestTypeEnum = {
+    Crafted: 'Crafted',
+    Detection: 'Detection',
+    Robustness: 'Robustness'
+} as const;
+
+export type TestSettingsTestTypeEnum = typeof TestSettingsTestTypeEnum[keyof typeof TestSettingsTestTypeEnum];
+
 /**
  * 
  * @export
@@ -1042,19 +2574,86 @@ export interface Transform {
      * @type {number}
      * @memberof Transform
      */
-    id?: number;
+    'id'?: number;
     /**
      * 
      * @type {string}
      * @memberof Transform
      */
-    name?: string;
+    'name'?: string;
     /**
      * 
      * @type {object}
      * @memberof Transform
      */
-    params?: object;
+    'params'?: object;
+}
+/**
+ * 
+ * @export
+ * @interface TransformDefinition
+ */
+export interface TransformDefinition {
+    /**
+     * 
+     * @type {{ [key: string]: { [key: string]: object; }; }}
+     * @memberof TransformDefinition
+     */
+    'apply_mapping'?: { [key: string]: { [key: string]: object; }; };
+    /**
+     * 
+     * @type {string}
+     * @memberof TransformDefinition
+     */
+    'codebase_name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TransformDefinition
+     */
+    'converted_target_format'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TransformDefinition
+     */
+    'description'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof TransformDefinition
+     */
+    'enabled'?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof TransformDefinition
+     */
+    'id'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof TransformDefinition
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {Array<{ [key: string]: object; }>}
+     * @memberof TransformDefinition
+     */
+    'params'?: Array<{ [key: string]: object; }>;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof TransformDefinition
+     */
+    'target_format'?: Array<string>;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof TransformDefinition
+     */
+    'tasks'?: Array<string>;
 }
 /**
  * 
@@ -1067,19 +2666,31 @@ export interface UserRequest {
      * @type {string}
      * @memberof UserRequest
      */
-    jsonSettings?: string;
-    /**
-     * 
-     * @type {Array<number>}
-     * @memberof UserRequest
-     */
-    organizations?: Array<number>;
+    'feedback'?: string;
     /**
      * 
      * @type {string}
      * @memberof UserRequest
      */
-    roles?: string;
+    'jsonSettings'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof UserRequest
+     */
+    'licenseAccepted'?: boolean;
+    /**
+     * 
+     * @type {Array<number>}
+     * @memberof UserRequest
+     */
+    'organizations'?: Array<number>;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserRequest
+     */
+    'roles'?: string;
 }
 /**
  * 
@@ -1092,62 +2703,2418 @@ export interface UserResponse {
      * @type {string}
      * @memberof UserResponse
      */
-    avatar?: string;
+    'avatar'?: string;
     /**
      * 
      * @type {string}
      * @memberof UserResponse
      */
-    email?: string;
+    'email'?: string;
     /**
      * 
      * @type {number}
      * @memberof UserResponse
      */
-    id?: number;
+    'id'?: number;
     /**
      * 
      * @type {string}
      * @memberof UserResponse
      */
-    jsonSettings?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserResponse
-     */
-    lastLoginDateTime?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserResponse
-     */
-    name?: string;
-    /**
-     * 
-     * @type {Array<OrganizationResponse>}
-     * @memberof UserResponse
-     */
-    organizations?: Array<OrganizationResponse>;
+    'lastLoginDateTime'?: string;
     /**
      * 
      * @type {boolean}
      * @memberof UserResponse
      */
-    registered?: boolean;
+    'licenseAccepted'?: boolean;
     /**
      * 
      * @type {string}
      * @memberof UserResponse
      */
-    roles?: string;
+    'name'?: string;
+    /**
+     * 
+     * @type {Array<OrganizationResponse>}
+     * @memberof UserResponse
+     */
+    'organizations'?: Array<OrganizationResponse>;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof UserResponse
+     */
+    'registered'?: boolean;
     /**
      * 
      * @type {string}
      * @memberof UserResponse
      */
-    uid?: string;
+    'roles'?: string;
+    /**
+     * 
+     * @type {UserSettings}
+     * @memberof UserResponse
+     */
+    'settings'?: UserSettings;
+    /**
+     * 
+     * @type {number}
+     * @memberof UserResponse
+     */
+    'timeUsed'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserResponse
+     */
+    'uid'?: string;
 }
+/**
+ * 
+ * @export
+ * @interface UserSettings
+ */
+export interface UserSettings {
+    /**
+     * 
+     * @type {Array<number>}
+     * @memberof UserSettings
+     */
+    'favoriteProjects'?: Array<number>;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof UserSettings
+     */
+    'notifications'?: boolean;
+}
+/**
+ * 
+ * @export
+ * @interface WebHookSettings
+ */
+export interface WebHookSettings {
+    /**
+     * 
+     * @type {string}
+     * @memberof WebHookSettings
+     */
+    'contentType'?: string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof WebHookSettings
+     */
+    'events'?: Array<string>;
+}
+/**
+ * 
+ * @export
+ * @interface WebhookRequest
+ */
+export interface WebhookRequest {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof WebhookRequest
+     */
+    'enabled'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof WebhookRequest
+     */
+    'secret'?: string;
+    /**
+     * 
+     * @type {WebHookSettings}
+     * @memberof WebhookRequest
+     */
+    'settings'?: WebHookSettings;
+    /**
+     * 
+     * @type {string}
+     * @memberof WebhookRequest
+     */
+    'url'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface WebhookResponse
+ */
+export interface WebhookResponse {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof WebhookResponse
+     */
+    'enabled'?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof WebhookResponse
+     */
+    'id'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof WebhookResponse
+     */
+    'secret'?: string;
+    /**
+     * 
+     * @type {WebHookSettings}
+     * @memberof WebhookResponse
+     */
+    'settings'?: WebHookSettings;
+    /**
+     * 
+     * @type {string}
+     * @memberof WebhookResponse
+     */
+    'url'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface WorkerHeartbeatEntry
+ */
+export interface WorkerHeartbeatEntry {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof WorkerHeartbeatEntry
+     */
+    'cancel'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof WorkerHeartbeatEntry
+     */
+    'id'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof WorkerHeartbeatEntry
+     */
+    'lastUpdateTime'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof WorkerHeartbeatEntry
+     */
+    'status'?: WorkerHeartbeatEntryStatusEnum;
+}
+
+export const WorkerHeartbeatEntryStatusEnum = {
+    Cancelled: 'CANCELLED',
+    Done: 'DONE',
+    Err: 'ERR',
+    Idle: 'IDLE',
+    Initializing: 'INITIALIZING',
+    Running: 'RUNNING',
+    Submitted: 'SUBMITTED'
+} as const;
+
+export type WorkerHeartbeatEntryStatusEnum = typeof WorkerHeartbeatEntryStatusEnum[keyof typeof WorkerHeartbeatEntryStatusEnum];
+
+/**
+ * 
+ * @export
+ * @interface WorkerHeartbeatRequest
+ */
+export interface WorkerHeartbeatRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof WorkerHeartbeatRequest
+     */
+    'status'?: WorkerHeartbeatRequestStatusEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof WorkerHeartbeatRequest
+     */
+    'workerId'?: string;
+}
+
+export const WorkerHeartbeatRequestStatusEnum = {
+    Cancelled: 'CANCELLED',
+    Done: 'DONE',
+    Err: 'ERR',
+    Idle: 'IDLE',
+    Initializing: 'INITIALIZING',
+    Running: 'RUNNING',
+    Submitted: 'SUBMITTED'
+} as const;
+
+export type WorkerHeartbeatRequestStatusEnum = typeof WorkerHeartbeatRequestStatusEnum[keyof typeof WorkerHeartbeatRequestStatusEnum];
+
+
+/**
+ * BenchmarkApi - axios parameter creator
+ * @export
+ */
+export const BenchmarkApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary Add a benchmark to an organization.
+         * @param {number} organizationId The organization ID.
+         * @param {BenchmarkRequest} benchmarkRequest benchmarkRequest
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        addBenchmark: async (organizationId: number, benchmarkRequest: BenchmarkRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            assertParamExists('addBenchmark', 'organizationId', organizationId)
+            // verify required parameter 'benchmarkRequest' is not null or undefined
+            assertParamExists('addBenchmark', 'benchmarkRequest', benchmarkRequest)
+            const localVarPath = `/api/v1/benchmarks`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JWT required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            if (organizationId !== undefined) {
+                localVarQueryParameter['organizationId'] = organizationId;
+            }
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(benchmarkRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Add new test.
+         * @param {number} id The benchmark ID.
+         * @param {string} name name
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        addBenchmarkTest: async (id: number, name: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('addBenchmarkTest', 'id', id)
+            // verify required parameter 'name' is not null or undefined
+            assertParamExists('addBenchmarkTest', 'name', name)
+            const localVarPath = `/api/v1/benchmarks/{id}/addtest`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JWT required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            if (name !== undefined) {
+                localVarQueryParameter['name'] = name;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Add defense to benchmark test.
+         * @param {number} id The benchmark ID.
+         * @param {number} testId The test ID.
+         * @param {DefenseRequest} defense The defense.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        addBenchmarkTestDefense: async (id: number, testId: number, defense: DefenseRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('addBenchmarkTestDefense', 'id', id)
+            // verify required parameter 'testId' is not null or undefined
+            assertParamExists('addBenchmarkTestDefense', 'testId', testId)
+            // verify required parameter 'defense' is not null or undefined
+            assertParamExists('addBenchmarkTestDefense', 'defense', defense)
+            const localVarPath = `/api/v1/benchmarks/{id}/{testId}/defense`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)))
+                .replace(`{${"testId"}}`, encodeURIComponent(String(testId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JWT required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(defense, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Add filter to benchmark test.
+         * @param {number} id The benchmark ID.
+         * @param {number} testId The test ID.
+         * @param {FilterRequest} filterRequest filterRequest
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        addBenchmarkTestFilter: async (id: number, testId: number, filterRequest: FilterRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('addBenchmarkTestFilter', 'id', id)
+            // verify required parameter 'testId' is not null or undefined
+            assertParamExists('addBenchmarkTestFilter', 'testId', testId)
+            // verify required parameter 'filterRequest' is not null or undefined
+            assertParamExists('addBenchmarkTestFilter', 'filterRequest', filterRequest)
+            const localVarPath = `/api/v1/benchmarks/{id}/{testId}/filter`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)))
+                .replace(`{${"testId"}}`, encodeURIComponent(String(testId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JWT required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(filterRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Delete a benchmark.
+         * @param {number} id The benchmark ID.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteBenchmark: async (id: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('deleteBenchmark', 'id', id)
+            const localVarPath = `/api/v1/benchmarks/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JWT required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Delete a benchmark test.
+         * @param {number} id The benchmark ID.
+         * @param {number} testId The test ID.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteBenchmarkTest: async (id: number, testId: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('deleteBenchmarkTest', 'id', id)
+            // verify required parameter 'testId' is not null or undefined
+            assertParamExists('deleteBenchmarkTest', 'testId', testId)
+            const localVarPath = `/api/v1/benchmarks/{id}/{testId}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)))
+                .replace(`{${"testId"}}`, encodeURIComponent(String(testId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JWT required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get a benchmark.
+         * @param {number} id The benchmark ID.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getBenchmark: async (id: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('getBenchmark', 'id', id)
+            const localVarPath = `/api/v1/benchmarks/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JWT required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get benchmark test status.
+         * @param {number} id The benchmark ID.
+         * @param {number} testId The test ID.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getBenchmarkTestStatus: async (id: number, testId: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('getBenchmarkTestStatus', 'id', id)
+            // verify required parameter 'testId' is not null or undefined
+            assertParamExists('getBenchmarkTestStatus', 'testId', testId)
+            const localVarPath = `/api/v1/benchmarks/{id}/{testId}/status`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)))
+                .replace(`{${"testId"}}`, encodeURIComponent(String(testId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JWT required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get list of benchmarks.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getBenchmarks: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/v1/benchmarks`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JWT required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Remove filter from benchmark test.
+         * @param {number} filterId The filter ID.
+         * @param {number} id The benchmark ID.
+         * @param {number} testId The test ID.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        removeBenchmarkFilter: async (filterId: number, id: number, testId: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'filterId' is not null or undefined
+            assertParamExists('removeBenchmarkFilter', 'filterId', filterId)
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('removeBenchmarkFilter', 'id', id)
+            // verify required parameter 'testId' is not null or undefined
+            assertParamExists('removeBenchmarkFilter', 'testId', testId)
+            const localVarPath = `/api/v1/benchmarks/{id}/{testId}/{filterId}`
+                .replace(`{${"filterId"}}`, encodeURIComponent(String(filterId)))
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)))
+                .replace(`{${"testId"}}`, encodeURIComponent(String(testId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JWT required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Remove defense from benchmark test.
+         * @param {number} defenseId The defense ID.
+         * @param {number} id The benchmark ID.
+         * @param {number} testId The test ID.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        removeBenchmarkTestDefense: async (defenseId: number, id: number, testId: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'defenseId' is not null or undefined
+            assertParamExists('removeBenchmarkTestDefense', 'defenseId', defenseId)
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('removeBenchmarkTestDefense', 'id', id)
+            // verify required parameter 'testId' is not null or undefined
+            assertParamExists('removeBenchmarkTestDefense', 'testId', testId)
+            const localVarPath = `/api/v1/benchmarks/{id}/{testId}/defense/{defenseId}`
+                .replace(`{${"defenseId"}}`, encodeURIComponent(String(defenseId)))
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)))
+                .replace(`{${"testId"}}`, encodeURIComponent(String(testId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JWT required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Start a benchmark test.
+         * @param {number} id The benchmark ID.
+         * @param {number} testId The test ID.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        startBenchmarkTest: async (id: number, testId: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('startBenchmarkTest', 'id', id)
+            // verify required parameter 'testId' is not null or undefined
+            assertParamExists('startBenchmarkTest', 'testId', testId)
+            const localVarPath = `/api/v1/benchmarks/{id}/{testId}/start`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)))
+                .replace(`{${"testId"}}`, encodeURIComponent(String(testId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JWT required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Stop a benchmark test.
+         * @param {number} id The benchmark ID.
+         * @param {number} testId The test ID.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        stopBenchmarkTest: async (id: number, testId: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('stopBenchmarkTest', 'id', id)
+            // verify required parameter 'testId' is not null or undefined
+            assertParamExists('stopBenchmarkTest', 'testId', testId)
+            const localVarPath = `/api/v1/benchmarks/{id}/{testId}/stop`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)))
+                .replace(`{${"testId"}}`, encodeURIComponent(String(testId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JWT required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Update benchmark.
+         * @param {number} id The benchmark ID.
+         * @param {BenchmarkRequest} benchmarkRequest benchmarkRequest
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateBenchmark: async (id: number, benchmarkRequest: BenchmarkRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('updateBenchmark', 'id', id)
+            // verify required parameter 'benchmarkRequest' is not null or undefined
+            assertParamExists('updateBenchmark', 'benchmarkRequest', benchmarkRequest)
+            const localVarPath = `/api/v1/benchmarks/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JWT required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(benchmarkRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Update test.
+         * @param {number} id The benchmark ID.
+         * @param {number} testId The test ID.
+         * @param {BenchmarkTestRequest} testRequest The test update request.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateBenchmarkTest: async (id: number, testId: number, testRequest: BenchmarkTestRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('updateBenchmarkTest', 'id', id)
+            // verify required parameter 'testId' is not null or undefined
+            assertParamExists('updateBenchmarkTest', 'testId', testId)
+            // verify required parameter 'testRequest' is not null or undefined
+            assertParamExists('updateBenchmarkTest', 'testRequest', testRequest)
+            const localVarPath = `/api/v1/benchmarks/{id}/{testId}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)))
+                .replace(`{${"testId"}}`, encodeURIComponent(String(testId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JWT required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(testRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * BenchmarkApi - functional programming interface
+ * @export
+ */
+export const BenchmarkApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = BenchmarkApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary Add a benchmark to an organization.
+         * @param {number} organizationId The organization ID.
+         * @param {BenchmarkRequest} benchmarkRequest benchmarkRequest
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async addBenchmark(organizationId: number, benchmarkRequest: BenchmarkRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BenchmarkResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.addBenchmark(organizationId, benchmarkRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Add new test.
+         * @param {number} id The benchmark ID.
+         * @param {string} name name
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async addBenchmarkTest(id: number, name: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BenchmarkResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.addBenchmarkTest(id, name, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Add defense to benchmark test.
+         * @param {number} id The benchmark ID.
+         * @param {number} testId The test ID.
+         * @param {DefenseRequest} defense The defense.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async addBenchmarkTestDefense(id: number, testId: number, defense: DefenseRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BenchmarkTest>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.addBenchmarkTestDefense(id, testId, defense, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Add filter to benchmark test.
+         * @param {number} id The benchmark ID.
+         * @param {number} testId The test ID.
+         * @param {FilterRequest} filterRequest filterRequest
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async addBenchmarkTestFilter(id: number, testId: number, filterRequest: FilterRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BenchmarkTest>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.addBenchmarkTestFilter(id, testId, filterRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Delete a benchmark.
+         * @param {number} id The benchmark ID.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteBenchmark(id: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteBenchmark(id, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Delete a benchmark test.
+         * @param {number} id The benchmark ID.
+         * @param {number} testId The test ID.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteBenchmarkTest(id: number, testId: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BenchmarkResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteBenchmarkTest(id, testId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Get a benchmark.
+         * @param {number} id The benchmark ID.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getBenchmark(id: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BenchmarkResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getBenchmark(id, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Get benchmark test status.
+         * @param {number} id The benchmark ID.
+         * @param {number} testId The test ID.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getBenchmarkTestStatus(id: number, testId: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BenchmarkTestStatusResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getBenchmarkTestStatus(id, testId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Get list of benchmarks.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getBenchmarks(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<BenchmarkResponse>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getBenchmarks(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Remove filter from benchmark test.
+         * @param {number} filterId The filter ID.
+         * @param {number} id The benchmark ID.
+         * @param {number} testId The test ID.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async removeBenchmarkFilter(filterId: number, id: number, testId: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BenchmarkTest>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.removeBenchmarkFilter(filterId, id, testId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Remove defense from benchmark test.
+         * @param {number} defenseId The defense ID.
+         * @param {number} id The benchmark ID.
+         * @param {number} testId The test ID.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async removeBenchmarkTestDefense(defenseId: number, id: number, testId: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BenchmarkTest>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.removeBenchmarkTestDefense(defenseId, id, testId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Start a benchmark test.
+         * @param {number} id The benchmark ID.
+         * @param {number} testId The test ID.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async startBenchmarkTest(id: number, testId: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.startBenchmarkTest(id, testId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Stop a benchmark test.
+         * @param {number} id The benchmark ID.
+         * @param {number} testId The test ID.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async stopBenchmarkTest(id: number, testId: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.stopBenchmarkTest(id, testId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Update benchmark.
+         * @param {number} id The benchmark ID.
+         * @param {BenchmarkRequest} benchmarkRequest benchmarkRequest
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async updateBenchmark(id: number, benchmarkRequest: BenchmarkRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BenchmarkResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updateBenchmark(id, benchmarkRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Update test.
+         * @param {number} id The benchmark ID.
+         * @param {number} testId The test ID.
+         * @param {BenchmarkTestRequest} testRequest The test update request.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async updateBenchmarkTest(id: number, testId: number, testRequest: BenchmarkTestRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BenchmarkTest>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updateBenchmarkTest(id, testId, testRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * BenchmarkApi - factory interface
+ * @export
+ */
+export const BenchmarkApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = BenchmarkApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary Add a benchmark to an organization.
+         * @param {number} organizationId The organization ID.
+         * @param {BenchmarkRequest} benchmarkRequest benchmarkRequest
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        addBenchmark(organizationId: number, benchmarkRequest: BenchmarkRequest, options?: any): AxiosPromise<BenchmarkResponse> {
+            return localVarFp.addBenchmark(organizationId, benchmarkRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Add new test.
+         * @param {number} id The benchmark ID.
+         * @param {string} name name
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        addBenchmarkTest(id: number, name: string, options?: any): AxiosPromise<BenchmarkResponse> {
+            return localVarFp.addBenchmarkTest(id, name, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Add defense to benchmark test.
+         * @param {number} id The benchmark ID.
+         * @param {number} testId The test ID.
+         * @param {DefenseRequest} defense The defense.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        addBenchmarkTestDefense(id: number, testId: number, defense: DefenseRequest, options?: any): AxiosPromise<BenchmarkTest> {
+            return localVarFp.addBenchmarkTestDefense(id, testId, defense, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Add filter to benchmark test.
+         * @param {number} id The benchmark ID.
+         * @param {number} testId The test ID.
+         * @param {FilterRequest} filterRequest filterRequest
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        addBenchmarkTestFilter(id: number, testId: number, filterRequest: FilterRequest, options?: any): AxiosPromise<BenchmarkTest> {
+            return localVarFp.addBenchmarkTestFilter(id, testId, filterRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Delete a benchmark.
+         * @param {number} id The benchmark ID.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteBenchmark(id: number, options?: any): AxiosPromise<void> {
+            return localVarFp.deleteBenchmark(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Delete a benchmark test.
+         * @param {number} id The benchmark ID.
+         * @param {number} testId The test ID.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteBenchmarkTest(id: number, testId: number, options?: any): AxiosPromise<BenchmarkResponse> {
+            return localVarFp.deleteBenchmarkTest(id, testId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get a benchmark.
+         * @param {number} id The benchmark ID.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getBenchmark(id: number, options?: any): AxiosPromise<BenchmarkResponse> {
+            return localVarFp.getBenchmark(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get benchmark test status.
+         * @param {number} id The benchmark ID.
+         * @param {number} testId The test ID.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getBenchmarkTestStatus(id: number, testId: number, options?: any): AxiosPromise<BenchmarkTestStatusResponse> {
+            return localVarFp.getBenchmarkTestStatus(id, testId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get list of benchmarks.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getBenchmarks(options?: any): AxiosPromise<Array<BenchmarkResponse>> {
+            return localVarFp.getBenchmarks(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Remove filter from benchmark test.
+         * @param {number} filterId The filter ID.
+         * @param {number} id The benchmark ID.
+         * @param {number} testId The test ID.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        removeBenchmarkFilter(filterId: number, id: number, testId: number, options?: any): AxiosPromise<BenchmarkTest> {
+            return localVarFp.removeBenchmarkFilter(filterId, id, testId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Remove defense from benchmark test.
+         * @param {number} defenseId The defense ID.
+         * @param {number} id The benchmark ID.
+         * @param {number} testId The test ID.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        removeBenchmarkTestDefense(defenseId: number, id: number, testId: number, options?: any): AxiosPromise<BenchmarkTest> {
+            return localVarFp.removeBenchmarkTestDefense(defenseId, id, testId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Start a benchmark test.
+         * @param {number} id The benchmark ID.
+         * @param {number} testId The test ID.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        startBenchmarkTest(id: number, testId: number, options?: any): AxiosPromise<void> {
+            return localVarFp.startBenchmarkTest(id, testId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Stop a benchmark test.
+         * @param {number} id The benchmark ID.
+         * @param {number} testId The test ID.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        stopBenchmarkTest(id: number, testId: number, options?: any): AxiosPromise<void> {
+            return localVarFp.stopBenchmarkTest(id, testId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Update benchmark.
+         * @param {number} id The benchmark ID.
+         * @param {BenchmarkRequest} benchmarkRequest benchmarkRequest
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateBenchmark(id: number, benchmarkRequest: BenchmarkRequest, options?: any): AxiosPromise<BenchmarkResponse> {
+            return localVarFp.updateBenchmark(id, benchmarkRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Update test.
+         * @param {number} id The benchmark ID.
+         * @param {number} testId The test ID.
+         * @param {BenchmarkTestRequest} testRequest The test update request.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateBenchmarkTest(id: number, testId: number, testRequest: BenchmarkTestRequest, options?: any): AxiosPromise<BenchmarkTest> {
+            return localVarFp.updateBenchmarkTest(id, testId, testRequest, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * BenchmarkApi - object-oriented interface
+ * @export
+ * @class BenchmarkApi
+ * @extends {BaseAPI}
+ */
+export class BenchmarkApi extends BaseAPI {
+    /**
+     * 
+     * @summary Add a benchmark to an organization.
+     * @param {number} organizationId The organization ID.
+     * @param {BenchmarkRequest} benchmarkRequest benchmarkRequest
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BenchmarkApi
+     */
+    public addBenchmark(organizationId: number, benchmarkRequest: BenchmarkRequest, options?: AxiosRequestConfig) {
+        return BenchmarkApiFp(this.configuration).addBenchmark(organizationId, benchmarkRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Add new test.
+     * @param {number} id The benchmark ID.
+     * @param {string} name name
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BenchmarkApi
+     */
+    public addBenchmarkTest(id: number, name: string, options?: AxiosRequestConfig) {
+        return BenchmarkApiFp(this.configuration).addBenchmarkTest(id, name, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Add defense to benchmark test.
+     * @param {number} id The benchmark ID.
+     * @param {number} testId The test ID.
+     * @param {DefenseRequest} defense The defense.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BenchmarkApi
+     */
+    public addBenchmarkTestDefense(id: number, testId: number, defense: DefenseRequest, options?: AxiosRequestConfig) {
+        return BenchmarkApiFp(this.configuration).addBenchmarkTestDefense(id, testId, defense, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Add filter to benchmark test.
+     * @param {number} id The benchmark ID.
+     * @param {number} testId The test ID.
+     * @param {FilterRequest} filterRequest filterRequest
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BenchmarkApi
+     */
+    public addBenchmarkTestFilter(id: number, testId: number, filterRequest: FilterRequest, options?: AxiosRequestConfig) {
+        return BenchmarkApiFp(this.configuration).addBenchmarkTestFilter(id, testId, filterRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Delete a benchmark.
+     * @param {number} id The benchmark ID.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BenchmarkApi
+     */
+    public deleteBenchmark(id: number, options?: AxiosRequestConfig) {
+        return BenchmarkApiFp(this.configuration).deleteBenchmark(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Delete a benchmark test.
+     * @param {number} id The benchmark ID.
+     * @param {number} testId The test ID.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BenchmarkApi
+     */
+    public deleteBenchmarkTest(id: number, testId: number, options?: AxiosRequestConfig) {
+        return BenchmarkApiFp(this.configuration).deleteBenchmarkTest(id, testId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get a benchmark.
+     * @param {number} id The benchmark ID.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BenchmarkApi
+     */
+    public getBenchmark(id: number, options?: AxiosRequestConfig) {
+        return BenchmarkApiFp(this.configuration).getBenchmark(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get benchmark test status.
+     * @param {number} id The benchmark ID.
+     * @param {number} testId The test ID.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BenchmarkApi
+     */
+    public getBenchmarkTestStatus(id: number, testId: number, options?: AxiosRequestConfig) {
+        return BenchmarkApiFp(this.configuration).getBenchmarkTestStatus(id, testId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get list of benchmarks.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BenchmarkApi
+     */
+    public getBenchmarks(options?: AxiosRequestConfig) {
+        return BenchmarkApiFp(this.configuration).getBenchmarks(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Remove filter from benchmark test.
+     * @param {number} filterId The filter ID.
+     * @param {number} id The benchmark ID.
+     * @param {number} testId The test ID.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BenchmarkApi
+     */
+    public removeBenchmarkFilter(filterId: number, id: number, testId: number, options?: AxiosRequestConfig) {
+        return BenchmarkApiFp(this.configuration).removeBenchmarkFilter(filterId, id, testId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Remove defense from benchmark test.
+     * @param {number} defenseId The defense ID.
+     * @param {number} id The benchmark ID.
+     * @param {number} testId The test ID.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BenchmarkApi
+     */
+    public removeBenchmarkTestDefense(defenseId: number, id: number, testId: number, options?: AxiosRequestConfig) {
+        return BenchmarkApiFp(this.configuration).removeBenchmarkTestDefense(defenseId, id, testId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Start a benchmark test.
+     * @param {number} id The benchmark ID.
+     * @param {number} testId The test ID.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BenchmarkApi
+     */
+    public startBenchmarkTest(id: number, testId: number, options?: AxiosRequestConfig) {
+        return BenchmarkApiFp(this.configuration).startBenchmarkTest(id, testId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Stop a benchmark test.
+     * @param {number} id The benchmark ID.
+     * @param {number} testId The test ID.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BenchmarkApi
+     */
+    public stopBenchmarkTest(id: number, testId: number, options?: AxiosRequestConfig) {
+        return BenchmarkApiFp(this.configuration).stopBenchmarkTest(id, testId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Update benchmark.
+     * @param {number} id The benchmark ID.
+     * @param {BenchmarkRequest} benchmarkRequest benchmarkRequest
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BenchmarkApi
+     */
+    public updateBenchmark(id: number, benchmarkRequest: BenchmarkRequest, options?: AxiosRequestConfig) {
+        return BenchmarkApiFp(this.configuration).updateBenchmark(id, benchmarkRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Update test.
+     * @param {number} id The benchmark ID.
+     * @param {number} testId The test ID.
+     * @param {BenchmarkTestRequest} testRequest The test update request.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BenchmarkApi
+     */
+    public updateBenchmarkTest(id: number, testId: number, testRequest: BenchmarkTestRequest, options?: AxiosRequestConfig) {
+        return BenchmarkApiFp(this.configuration).updateBenchmarkTest(id, testId, testRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * DatasetsApi - axios parameter creator
+ * @export
+ */
+export const DatasetsApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary Make a copy of a custom dataset. To copy to a different organization, extra permissions are required.
+         * @param {number} id The dataset ID.
+         * @param {number} [orgId] Optional organization ID to copy to.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        copyDataset: async (id: number, orgId?: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('copyDataset', 'id', id)
+            const localVarPath = `/api/v1/datasets/{id}/copy`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JWT required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            if (orgId !== undefined) {
+                localVarQueryParameter['orgId'] = orgId;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Delete dataset.
+         * @param {number} id The dataset ID.
+         * @param {number} orgId The organization ID.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteCustomDataset: async (id: number, orgId: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('deleteCustomDataset', 'id', id)
+            // verify required parameter 'orgId' is not null or undefined
+            assertParamExists('deleteCustomDataset', 'orgId', orgId)
+            const localVarPath = `/api/v1/datasets/{id}/{orgId}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)))
+                .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JWT required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Download dataset data.
+         * @param {number} id The dataset ID.
+         * @param {number} orgId The organization ID.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        downloadDataset: async (id: number, orgId: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('downloadDataset', 'id', id)
+            // verify required parameter 'orgId' is not null or undefined
+            assertParamExists('downloadDataset', 'orgId', orgId)
+            const localVarPath = `/api/v1/datasets/{id}/{orgId}/data`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)))
+                .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JWT required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get dataset.
+         * @param {number} id The dataset ID.
+         * @param {number} orgId The organization ID.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getDataset: async (id: number, orgId: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('getDataset', 'id', id)
+            // verify required parameter 'orgId' is not null or undefined
+            assertParamExists('getDataset', 'orgId', orgId)
+            const localVarPath = `/api/v1/datasets/{id}/{orgId}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)))
+                .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JWT required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Retrieve dataset classes (coco dataset supported).
+         * @param {number} id The dataset ID.
+         * @param {number} orgId The organization ID.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getDatasetClasses: async (id: number, orgId: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('getDatasetClasses', 'id', id)
+            // verify required parameter 'orgId' is not null or undefined
+            assertParamExists('getDatasetClasses', 'orgId', orgId)
+            const localVarPath = `/api/v1/datasets/{id}/{orgId}/classes`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)))
+                .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JWT required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get an item from the dataset.
+         * @param {number} id The dataset ID.
+         * @param {number} idx The item index.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getDatasetItem: async (id: number, idx: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('getDatasetItem', 'id', id)
+            // verify required parameter 'idx' is not null or undefined
+            assertParamExists('getDatasetItem', 'idx', idx)
+            const localVarPath = `/api/v1/datasets/{id}/{idx}/item`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)))
+                .replace(`{${"idx"}}`, encodeURIComponent(String(idx)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JWT required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get a target from the dataset.
+         * @param {number} id The dataset ID.
+         * @param {number} idx The item index.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getDatasetTarget: async (id: number, idx: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('getDatasetTarget', 'id', id)
+            // verify required parameter 'idx' is not null or undefined
+            assertParamExists('getDatasetTarget', 'idx', idx)
+            const localVarPath = `/api/v1/datasets/{id}/{idx}/target`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)))
+                .replace(`{${"idx"}}`, encodeURIComponent(String(idx)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JWT required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get the datasets defined for this organization.
+         * @param {number} orgId The organization ID.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getDatasets: async (orgId: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'orgId' is not null or undefined
+            assertParamExists('getDatasets', 'orgId', orgId)
+            const localVarPath = `/api/v1/datasets/{orgId}`
+                .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JWT required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Update dataset.
+         * @param {number} id The dataset ID.
+         * @param {number} orgId The organization ID.
+         * @param {DatasetRequest} datasetRequest The dataset update request.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateCustomDataset: async (id: number, orgId: number, datasetRequest: DatasetRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('updateCustomDataset', 'id', id)
+            // verify required parameter 'orgId' is not null or undefined
+            assertParamExists('updateCustomDataset', 'orgId', orgId)
+            // verify required parameter 'datasetRequest' is not null or undefined
+            assertParamExists('updateCustomDataset', 'datasetRequest', datasetRequest)
+            const localVarPath = `/api/v1/datasets/{id}/{orgId}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)))
+                .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JWT required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(datasetRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Upload dataset.
+         * @param {string} description description
+         * @param {string} format format
+         * @param {string} name name
+         * @param {number} orgId The organization ID.
+         * @param {File} [file] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        uploadDataset: async (description: string, format: string, name: string, orgId: number, file?: File, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'description' is not null or undefined
+            assertParamExists('uploadDataset', 'description', description)
+            // verify required parameter 'format' is not null or undefined
+            assertParamExists('uploadDataset', 'format', format)
+            // verify required parameter 'name' is not null or undefined
+            assertParamExists('uploadDataset', 'name', name)
+            // verify required parameter 'orgId' is not null or undefined
+            assertParamExists('uploadDataset', 'orgId', orgId)
+            const localVarPath = `/api/v1/datasets/{orgId}`
+                .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+            const localVarFormParams = new ((configuration && configuration.formDataCtor) || FormData)();
+
+            // authentication JWT required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            if (description !== undefined) {
+                localVarQueryParameter['description'] = description;
+            }
+
+            if (format !== undefined) {
+                localVarQueryParameter['format'] = format;
+            }
+
+            if (name !== undefined) {
+                localVarQueryParameter['name'] = name;
+            }
+
+
+            if (file !== undefined) { 
+                localVarFormParams.append('file', file as any);
+            }
+    
+    
+            localVarHeaderParameter['Content-Type'] = 'multipart/form-data';
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = localVarFormParams;
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Upload a file to the dataset and return a reference.
+         * @param {number} id The dataset ID.
+         * @param {string} type Upload type - i.e. \&#39;transform\&#39; for transform parameters
+         * @param {number} [orgId] The organization ID.
+         * @param {File} [file] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        uploadDatasetFile: async (id: number, type: string, orgId?: number, file?: File, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('uploadDatasetFile', 'id', id)
+            // verify required parameter 'type' is not null or undefined
+            assertParamExists('uploadDatasetFile', 'type', type)
+            const localVarPath = `/api/v1/datasets/{id}/file`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+            const localVarFormParams = new ((configuration && configuration.formDataCtor) || FormData)();
+
+            // authentication JWT required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            if (orgId !== undefined) {
+                localVarQueryParameter['orgId'] = orgId;
+            }
+
+            if (type !== undefined) {
+                localVarQueryParameter['type'] = type;
+            }
+
+
+            if (file !== undefined) { 
+                localVarFormParams.append('file', file as any);
+            }
+    
+    
+            localVarHeaderParameter['Content-Type'] = 'multipart/form-data';
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = localVarFormParams;
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * DatasetsApi - functional programming interface
+ * @export
+ */
+export const DatasetsApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = DatasetsApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary Make a copy of a custom dataset. To copy to a different organization, extra permissions are required.
+         * @param {number} id The dataset ID.
+         * @param {number} [orgId] Optional organization ID to copy to.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async copyDataset(id: number, orgId?: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DataSet>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.copyDataset(id, orgId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Delete dataset.
+         * @param {number} id The dataset ID.
+         * @param {number} orgId The organization ID.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteCustomDataset(id: number, orgId: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<DataSet>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteCustomDataset(id, orgId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Download dataset data.
+         * @param {number} id The dataset ID.
+         * @param {number} orgId The organization ID.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async downloadDataset(id: number, orgId: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<File>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.downloadDataset(id, orgId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Get dataset.
+         * @param {number} id The dataset ID.
+         * @param {number} orgId The organization ID.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getDataset(id: number, orgId: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DataSet>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getDataset(id, orgId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Retrieve dataset classes (coco dataset supported).
+         * @param {number} id The dataset ID.
+         * @param {number} orgId The organization ID.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getDatasetClasses(id: number, orgId: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<string>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getDatasetClasses(id, orgId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Get an item from the dataset.
+         * @param {number} id The dataset ID.
+         * @param {number} idx The item index.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getDatasetItem(id: number, idx: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<File>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getDatasetItem(id, idx, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Get a target from the dataset.
+         * @param {number} id The dataset ID.
+         * @param {number} idx The item index.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getDatasetTarget(id: number, idx: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DatasetTarget>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getDatasetTarget(id, idx, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Get the datasets defined for this organization.
+         * @param {number} orgId The organization ID.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getDatasets(orgId: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<DataSet>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getDatasets(orgId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Update dataset.
+         * @param {number} id The dataset ID.
+         * @param {number} orgId The organization ID.
+         * @param {DatasetRequest} datasetRequest The dataset update request.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async updateCustomDataset(id: number, orgId: number, datasetRequest: DatasetRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<DataSet>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updateCustomDataset(id, orgId, datasetRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Upload dataset.
+         * @param {string} description description
+         * @param {string} format format
+         * @param {string} name name
+         * @param {number} orgId The organization ID.
+         * @param {File} [file] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async uploadDataset(description: string, format: string, name: string, orgId: number, file?: File, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<DataSet>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.uploadDataset(description, format, name, orgId, file, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Upload a file to the dataset and return a reference.
+         * @param {number} id The dataset ID.
+         * @param {string} type Upload type - i.e. \&#39;transform\&#39; for transform parameters
+         * @param {number} [orgId] The organization ID.
+         * @param {File} [file] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async uploadDatasetFile(id: number, type: string, orgId?: number, file?: File, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.uploadDatasetFile(id, type, orgId, file, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * DatasetsApi - factory interface
+ * @export
+ */
+export const DatasetsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = DatasetsApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary Make a copy of a custom dataset. To copy to a different organization, extra permissions are required.
+         * @param {number} id The dataset ID.
+         * @param {number} [orgId] Optional organization ID to copy to.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        copyDataset(id: number, orgId?: number, options?: any): AxiosPromise<DataSet> {
+            return localVarFp.copyDataset(id, orgId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Delete dataset.
+         * @param {number} id The dataset ID.
+         * @param {number} orgId The organization ID.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteCustomDataset(id: number, orgId: number, options?: any): AxiosPromise<Array<DataSet>> {
+            return localVarFp.deleteCustomDataset(id, orgId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Download dataset data.
+         * @param {number} id The dataset ID.
+         * @param {number} orgId The organization ID.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        downloadDataset(id: number, orgId: number, options?: any): AxiosPromise<File> {
+            return localVarFp.downloadDataset(id, orgId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get dataset.
+         * @param {number} id The dataset ID.
+         * @param {number} orgId The organization ID.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getDataset(id: number, orgId: number, options?: any): AxiosPromise<DataSet> {
+            return localVarFp.getDataset(id, orgId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Retrieve dataset classes (coco dataset supported).
+         * @param {number} id The dataset ID.
+         * @param {number} orgId The organization ID.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getDatasetClasses(id: number, orgId: number, options?: any): AxiosPromise<Array<string>> {
+            return localVarFp.getDatasetClasses(id, orgId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get an item from the dataset.
+         * @param {number} id The dataset ID.
+         * @param {number} idx The item index.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getDatasetItem(id: number, idx: number, options?: any): AxiosPromise<File> {
+            return localVarFp.getDatasetItem(id, idx, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get a target from the dataset.
+         * @param {number} id The dataset ID.
+         * @param {number} idx The item index.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getDatasetTarget(id: number, idx: number, options?: any): AxiosPromise<DatasetTarget> {
+            return localVarFp.getDatasetTarget(id, idx, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get the datasets defined for this organization.
+         * @param {number} orgId The organization ID.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getDatasets(orgId: number, options?: any): AxiosPromise<Array<DataSet>> {
+            return localVarFp.getDatasets(orgId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Update dataset.
+         * @param {number} id The dataset ID.
+         * @param {number} orgId The organization ID.
+         * @param {DatasetRequest} datasetRequest The dataset update request.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateCustomDataset(id: number, orgId: number, datasetRequest: DatasetRequest, options?: any): AxiosPromise<Array<DataSet>> {
+            return localVarFp.updateCustomDataset(id, orgId, datasetRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Upload dataset.
+         * @param {string} description description
+         * @param {string} format format
+         * @param {string} name name
+         * @param {number} orgId The organization ID.
+         * @param {File} [file] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        uploadDataset(description: string, format: string, name: string, orgId: number, file?: File, options?: any): AxiosPromise<Array<DataSet>> {
+            return localVarFp.uploadDataset(description, format, name, orgId, file, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Upload a file to the dataset and return a reference.
+         * @param {number} id The dataset ID.
+         * @param {string} type Upload type - i.e. \&#39;transform\&#39; for transform parameters
+         * @param {number} [orgId] The organization ID.
+         * @param {File} [file] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        uploadDatasetFile(id: number, type: string, orgId?: number, file?: File, options?: any): AxiosPromise<string> {
+            return localVarFp.uploadDatasetFile(id, type, orgId, file, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * DatasetsApi - object-oriented interface
+ * @export
+ * @class DatasetsApi
+ * @extends {BaseAPI}
+ */
+export class DatasetsApi extends BaseAPI {
+    /**
+     * 
+     * @summary Make a copy of a custom dataset. To copy to a different organization, extra permissions are required.
+     * @param {number} id The dataset ID.
+     * @param {number} [orgId] Optional organization ID to copy to.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DatasetsApi
+     */
+    public copyDataset(id: number, orgId?: number, options?: AxiosRequestConfig) {
+        return DatasetsApiFp(this.configuration).copyDataset(id, orgId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Delete dataset.
+     * @param {number} id The dataset ID.
+     * @param {number} orgId The organization ID.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DatasetsApi
+     */
+    public deleteCustomDataset(id: number, orgId: number, options?: AxiosRequestConfig) {
+        return DatasetsApiFp(this.configuration).deleteCustomDataset(id, orgId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Download dataset data.
+     * @param {number} id The dataset ID.
+     * @param {number} orgId The organization ID.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DatasetsApi
+     */
+    public downloadDataset(id: number, orgId: number, options?: AxiosRequestConfig) {
+        return DatasetsApiFp(this.configuration).downloadDataset(id, orgId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get dataset.
+     * @param {number} id The dataset ID.
+     * @param {number} orgId The organization ID.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DatasetsApi
+     */
+    public getDataset(id: number, orgId: number, options?: AxiosRequestConfig) {
+        return DatasetsApiFp(this.configuration).getDataset(id, orgId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Retrieve dataset classes (coco dataset supported).
+     * @param {number} id The dataset ID.
+     * @param {number} orgId The organization ID.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DatasetsApi
+     */
+    public getDatasetClasses(id: number, orgId: number, options?: AxiosRequestConfig) {
+        return DatasetsApiFp(this.configuration).getDatasetClasses(id, orgId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get an item from the dataset.
+     * @param {number} id The dataset ID.
+     * @param {number} idx The item index.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DatasetsApi
+     */
+    public getDatasetItem(id: number, idx: number, options?: AxiosRequestConfig) {
+        return DatasetsApiFp(this.configuration).getDatasetItem(id, idx, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get a target from the dataset.
+     * @param {number} id The dataset ID.
+     * @param {number} idx The item index.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DatasetsApi
+     */
+    public getDatasetTarget(id: number, idx: number, options?: AxiosRequestConfig) {
+        return DatasetsApiFp(this.configuration).getDatasetTarget(id, idx, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get the datasets defined for this organization.
+     * @param {number} orgId The organization ID.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DatasetsApi
+     */
+    public getDatasets(orgId: number, options?: AxiosRequestConfig) {
+        return DatasetsApiFp(this.configuration).getDatasets(orgId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Update dataset.
+     * @param {number} id The dataset ID.
+     * @param {number} orgId The organization ID.
+     * @param {DatasetRequest} datasetRequest The dataset update request.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DatasetsApi
+     */
+    public updateCustomDataset(id: number, orgId: number, datasetRequest: DatasetRequest, options?: AxiosRequestConfig) {
+        return DatasetsApiFp(this.configuration).updateCustomDataset(id, orgId, datasetRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Upload dataset.
+     * @param {string} description description
+     * @param {string} format format
+     * @param {string} name name
+     * @param {number} orgId The organization ID.
+     * @param {File} [file] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DatasetsApi
+     */
+    public uploadDataset(description: string, format: string, name: string, orgId: number, file?: File, options?: AxiosRequestConfig) {
+        return DatasetsApiFp(this.configuration).uploadDataset(description, format, name, orgId, file, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Upload a file to the dataset and return a reference.
+     * @param {number} id The dataset ID.
+     * @param {string} type Upload type - i.e. \&#39;transform\&#39; for transform parameters
+     * @param {number} [orgId] The organization ID.
+     * @param {File} [file] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DatasetsApi
+     */
+    public uploadDatasetFile(id: number, type: string, orgId?: number, file?: File, options?: AxiosRequestConfig) {
+        return DatasetsApiFp(this.configuration).uploadDatasetFile(id, type, orgId, file, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
 
 /**
  * DefensesApi - axios parameter creator
@@ -1162,7 +5129,7 @@ export const DefensesApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getDefense: async (id: number, options: any = {}): Promise<RequestArgs> => {
+        getDefense: async (id: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('getDefense', 'id', id)
             const localVarPath = `/api/v1/defenses/{id}`
@@ -1183,7 +5150,7 @@ export const DefensesApiAxiosParamCreator = function (configuration?: Configurat
 
 
     
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
@@ -1200,7 +5167,7 @@ export const DefensesApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateDefense: async (id: number, request: DefenseRequest, options: any = {}): Promise<RequestArgs> => {
+        updateDefense: async (id: number, request: DefenseRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('updateDefense', 'id', id)
             // verify required parameter 'request' is not null or undefined
@@ -1225,7 +5192,7 @@ export const DefensesApiAxiosParamCreator = function (configuration?: Configurat
     
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(request, localVarRequestOptions, configuration)
@@ -1252,7 +5219,7 @@ export const DefensesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getDefense(id: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DefenseResponse>> {
+        async getDefense(id: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DefenseResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getDefense(id, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -1264,7 +5231,7 @@ export const DefensesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async updateDefense(id: number, request: DefenseRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DefenseResponse>> {
+        async updateDefense(id: number, request: DefenseRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DefenseResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.updateDefense(id, request, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -1317,7 +5284,7 @@ export class DefensesApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof DefensesApi
      */
-    public getDefense(id: number, options?: any) {
+    public getDefense(id: number, options?: AxiosRequestConfig) {
         return DefensesApiFp(this.configuration).getDefense(id, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -1330,7 +5297,7 @@ export class DefensesApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof DefensesApi
      */
-    public updateDefense(id: number, request: DefenseRequest, options?: any) {
+    public updateDefense(id: number, request: DefenseRequest, options?: AxiosRequestConfig) {
         return DefensesApiFp(this.configuration).updateDefense(id, request, options).then((request) => request(this.axios, this.basePath));
     }
 }
@@ -1348,7 +5315,7 @@ export const KeysApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createKey: async (options: any = {}): Promise<RequestArgs> => {
+        createKey: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/v1/keys`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1366,7 +5333,7 @@ export const KeysApiAxiosParamCreator = function (configuration?: Configuration)
 
 
     
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
@@ -1382,7 +5349,7 @@ export const KeysApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteKey: async (id: number, options: any = {}): Promise<RequestArgs> => {
+        deleteKey: async (id: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('deleteKey', 'id', id)
             const localVarPath = `/api/v1/keys/{id}`
@@ -1403,7 +5370,7 @@ export const KeysApiAxiosParamCreator = function (configuration?: Configuration)
 
 
     
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
@@ -1419,7 +5386,7 @@ export const KeysApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getKey: async (id: number, options: any = {}): Promise<RequestArgs> => {
+        getKey: async (id: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('getKey', 'id', id)
             const localVarPath = `/api/v1/keys/{id}`
@@ -1440,7 +5407,7 @@ export const KeysApiAxiosParamCreator = function (configuration?: Configuration)
 
 
     
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
@@ -1455,7 +5422,7 @@ export const KeysApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getKeys: async (options: any = {}): Promise<RequestArgs> => {
+        getKeys: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/v1/keys`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1473,7 +5440,7 @@ export const KeysApiAxiosParamCreator = function (configuration?: Configuration)
 
 
     
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
@@ -1498,7 +5465,7 @@ export const KeysApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createKey(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<APIKeyResponse>> {
+        async createKey(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<APIKeyResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.createKey(options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -1509,7 +5476,7 @@ export const KeysApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteKey(id: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async deleteKey(id: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteKey(id, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -1520,7 +5487,7 @@ export const KeysApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getKey(id: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<APIKeyResponse>> {
+        async getKey(id: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<APIKeyResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getKey(id, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -1530,7 +5497,7 @@ export const KeysApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getKeys(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<APIKeyResponse>>> {
+        async getKeys(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<APIKeyResponse>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getKeys(options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -1599,7 +5566,7 @@ export class KeysApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof KeysApi
      */
-    public createKey(options?: any) {
+    public createKey(options?: AxiosRequestConfig) {
         return KeysApiFp(this.configuration).createKey(options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -1611,7 +5578,7 @@ export class KeysApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof KeysApi
      */
-    public deleteKey(id: number, options?: any) {
+    public deleteKey(id: number, options?: AxiosRequestConfig) {
         return KeysApiFp(this.configuration).deleteKey(id, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -1623,7 +5590,7 @@ export class KeysApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof KeysApi
      */
-    public getKey(id: number, options?: any) {
+    public getKey(id: number, options?: AxiosRequestConfig) {
         return KeysApiFp(this.configuration).getKey(id, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -1634,7 +5601,7 @@ export class KeysApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof KeysApi
      */
-    public getKeys(options?: any) {
+    public getKeys(options?: AxiosRequestConfig) {
         return KeysApiFp(this.configuration).getKeys(options).then((request) => request(this.axios, this.basePath));
     }
 }
@@ -1652,7 +5619,7 @@ export const LoginApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAuthUser: async (options: any = {}): Promise<RequestArgs> => {
+        getAuthUser: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/v1/login/token`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1670,7 +5637,7 @@ export const LoginApiAxiosParamCreator = function (configuration?: Configuration
 
 
     
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
@@ -1681,12 +5648,45 @@ export const LoginApiAxiosParamCreator = function (configuration?: Configuration
         },
         /**
          * 
-         * @summary Login app
+         * @summary Get the list of supported OAuth clients.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getOAuthClients: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/v1/login/sso`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JWT required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Retrieve an access token using API keys.
          * @param {LoginRequest} request request
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        login: async (request: LoginRequest, options: any = {}): Promise<RequestArgs> => {
+        login: async (request: LoginRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'request' is not null or undefined
             assertParamExists('login', 'request', request)
             const localVarPath = `/api/v1/login`;
@@ -1708,7 +5708,7 @@ export const LoginApiAxiosParamCreator = function (configuration?: Configuration
     
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(request, localVarRequestOptions, configuration)
@@ -1734,18 +5734,28 @@ export const LoginApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAuthUser(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AuthorizedUserResponse>> {
+        async getAuthUser(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AuthorizedUserResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAuthUser(options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * 
-         * @summary Login app
+         * @summary Get the list of supported OAuth clients.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getOAuthClients(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<string>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getOAuthClients(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Retrieve an access token using API keys.
          * @param {LoginRequest} request request
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async login(request: LoginRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AuthorizedUserResponse>> {
+        async login(request: LoginRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AuthorizedUserResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.login(request, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -1770,7 +5780,16 @@ export const LoginApiFactory = function (configuration?: Configuration, basePath
         },
         /**
          * 
-         * @summary Login app
+         * @summary Get the list of supported OAuth clients.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getOAuthClients(options?: any): AxiosPromise<Array<string>> {
+            return localVarFp.getOAuthClients(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Retrieve an access token using API keys.
          * @param {LoginRequest} request request
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1795,20 +5814,1239 @@ export class LoginApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof LoginApi
      */
-    public getAuthUser(options?: any) {
+    public getAuthUser(options?: AxiosRequestConfig) {
         return LoginApiFp(this.configuration).getAuthUser(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
-     * @summary Login app
+     * @summary Get the list of supported OAuth clients.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof LoginApi
+     */
+    public getOAuthClients(options?: AxiosRequestConfig) {
+        return LoginApiFp(this.configuration).getOAuthClients(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Retrieve an access token using API keys.
      * @param {LoginRequest} request request
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof LoginApi
      */
-    public login(request: LoginRequest, options?: any) {
+    public login(request: LoginRequest, options?: AxiosRequestConfig) {
         return LoginApiFp(this.configuration).login(request, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * MetricsApi - axios parameter creator
+ * @export
+ */
+export const MetricsApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary Add a metric to an organization.
+         * @param {number} id The organization ID.
+         * @param {string} name The metric name.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        addMetric: async (id: number, name: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('addMetric', 'id', id)
+            // verify required parameter 'name' is not null or undefined
+            assertParamExists('addMetric', 'name', name)
+            const localVarPath = `/api/v1/metrics`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JWT required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            if (id !== undefined) {
+                localVarQueryParameter['id'] = id;
+            }
+
+            if (name !== undefined) {
+                localVarQueryParameter['name'] = name;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Delete a metric by ID.
+         * @param {string} id The metric ID.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteMetric: async (id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('deleteMetric', 'id', id)
+            const localVarPath = `/api/v1/metrics/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JWT required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Download metric file.
+         * @param {string} id The metric ID.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        downloadMetricFile: async (id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('downloadMetricFile', 'id', id)
+            const localVarPath = `/api/v1/metrics/{id}/data`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JWT required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get a metric by ID.
+         * @param {string} id The metric ID.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMetric: async (id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('getMetric', 'id', id)
+            const localVarPath = `/api/v1/metrics/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JWT required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get the custom metrics available for this user.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMetrics: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/v1/metrics`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JWT required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Update metric by ID.
+         * @param {string} id The metric ID.
+         * @param {MetricDefinition} metric The metric update request.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateMetric: async (id: string, metric: MetricDefinition, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('updateMetric', 'id', id)
+            // verify required parameter 'metric' is not null or undefined
+            assertParamExists('updateMetric', 'metric', metric)
+            const localVarPath = `/api/v1/metrics/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JWT required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(metric, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Upload the metric implementation.
+         * @param {string} id The metric ID.
+         * @param {File} [file] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        uploadMetricFile: async (id: string, file?: File, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('uploadMetricFile', 'id', id)
+            const localVarPath = `/api/v1/metrics/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+            const localVarFormParams = new ((configuration && configuration.formDataCtor) || FormData)();
+
+            // authentication JWT required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+
+            if (file !== undefined) { 
+                localVarFormParams.append('file', file as any);
+            }
+    
+    
+            localVarHeaderParameter['Content-Type'] = 'multipart/form-data';
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = localVarFormParams;
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * MetricsApi - functional programming interface
+ * @export
+ */
+export const MetricsApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = MetricsApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary Add a metric to an organization.
+         * @param {number} id The organization ID.
+         * @param {string} name The metric name.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async addMetric(id: number, name: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MetricDefinition>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.addMetric(id, name, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Delete a metric by ID.
+         * @param {string} id The metric ID.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteMetric(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteMetric(id, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Download metric file.
+         * @param {string} id The metric ID.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async downloadMetricFile(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<File>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.downloadMetricFile(id, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Get a metric by ID.
+         * @param {string} id The metric ID.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getMetric(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MetricDefinition>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getMetric(id, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Get the custom metrics available for this user.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getMetrics(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<MetricDefinition>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getMetrics(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Update metric by ID.
+         * @param {string} id The metric ID.
+         * @param {MetricDefinition} metric The metric update request.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async updateMetric(id: string, metric: MetricDefinition, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MetricDefinition>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updateMetric(id, metric, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Upload the metric implementation.
+         * @param {string} id The metric ID.
+         * @param {File} [file] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async uploadMetricFile(id: string, file?: File, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MetricDefinition>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.uploadMetricFile(id, file, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * MetricsApi - factory interface
+ * @export
+ */
+export const MetricsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = MetricsApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary Add a metric to an organization.
+         * @param {number} id The organization ID.
+         * @param {string} name The metric name.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        addMetric(id: number, name: string, options?: any): AxiosPromise<MetricDefinition> {
+            return localVarFp.addMetric(id, name, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Delete a metric by ID.
+         * @param {string} id The metric ID.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteMetric(id: string, options?: any): AxiosPromise<void> {
+            return localVarFp.deleteMetric(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Download metric file.
+         * @param {string} id The metric ID.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        downloadMetricFile(id: string, options?: any): AxiosPromise<File> {
+            return localVarFp.downloadMetricFile(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get a metric by ID.
+         * @param {string} id The metric ID.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMetric(id: string, options?: any): AxiosPromise<MetricDefinition> {
+            return localVarFp.getMetric(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get the custom metrics available for this user.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMetrics(options?: any): AxiosPromise<Array<MetricDefinition>> {
+            return localVarFp.getMetrics(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Update metric by ID.
+         * @param {string} id The metric ID.
+         * @param {MetricDefinition} metric The metric update request.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateMetric(id: string, metric: MetricDefinition, options?: any): AxiosPromise<MetricDefinition> {
+            return localVarFp.updateMetric(id, metric, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Upload the metric implementation.
+         * @param {string} id The metric ID.
+         * @param {File} [file] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        uploadMetricFile(id: string, file?: File, options?: any): AxiosPromise<MetricDefinition> {
+            return localVarFp.uploadMetricFile(id, file, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * MetricsApi - object-oriented interface
+ * @export
+ * @class MetricsApi
+ * @extends {BaseAPI}
+ */
+export class MetricsApi extends BaseAPI {
+    /**
+     * 
+     * @summary Add a metric to an organization.
+     * @param {number} id The organization ID.
+     * @param {string} name The metric name.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MetricsApi
+     */
+    public addMetric(id: number, name: string, options?: AxiosRequestConfig) {
+        return MetricsApiFp(this.configuration).addMetric(id, name, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Delete a metric by ID.
+     * @param {string} id The metric ID.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MetricsApi
+     */
+    public deleteMetric(id: string, options?: AxiosRequestConfig) {
+        return MetricsApiFp(this.configuration).deleteMetric(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Download metric file.
+     * @param {string} id The metric ID.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MetricsApi
+     */
+    public downloadMetricFile(id: string, options?: AxiosRequestConfig) {
+        return MetricsApiFp(this.configuration).downloadMetricFile(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get a metric by ID.
+     * @param {string} id The metric ID.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MetricsApi
+     */
+    public getMetric(id: string, options?: AxiosRequestConfig) {
+        return MetricsApiFp(this.configuration).getMetric(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get the custom metrics available for this user.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MetricsApi
+     */
+    public getMetrics(options?: AxiosRequestConfig) {
+        return MetricsApiFp(this.configuration).getMetrics(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Update metric by ID.
+     * @param {string} id The metric ID.
+     * @param {MetricDefinition} metric The metric update request.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MetricsApi
+     */
+    public updateMetric(id: string, metric: MetricDefinition, options?: AxiosRequestConfig) {
+        return MetricsApiFp(this.configuration).updateMetric(id, metric, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Upload the metric implementation.
+     * @param {string} id The metric ID.
+     * @param {File} [file] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MetricsApi
+     */
+    public uploadMetricFile(id: string, file?: File, options?: AxiosRequestConfig) {
+        return MetricsApiFp(this.configuration).uploadMetricFile(id, file, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * ModelApi - axios parameter creator
+ * @export
+ */
+export const ModelApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary Add a model to an organization.
+         * @param {number} id The organization ID.
+         * @param {string} name The model name.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        addModel: async (id: number, name: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('addModel', 'id', id)
+            // verify required parameter 'name' is not null or undefined
+            assertParamExists('addModel', 'name', name)
+            const localVarPath = `/api/v1/models`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JWT required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            if (id !== undefined) {
+                localVarQueryParameter['id'] = id;
+            }
+
+            if (name !== undefined) {
+                localVarQueryParameter['name'] = name;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Make a copy of a model. To copy to a different organization, extra permissions are required.
+         * @param {number} id The model ID.
+         * @param {number} [orgId] Optional destination organization ID to copy to.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        copyModel: async (id: number, orgId?: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('copyModel', 'id', id)
+            const localVarPath = `/api/v1/models/{id}/copy`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JWT required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            if (orgId !== undefined) {
+                localVarQueryParameter['orgId'] = orgId;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Delete a model by ID.
+         * @param {number} id The model ID.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteModel: async (id: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('deleteModel', 'id', id)
+            const localVarPath = `/api/v1/models/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JWT required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Download model data.
+         * @param {'Model' | 'WrapperScript'} dataType The data type.
+         * @param {number} id The model ID.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        downloadModelData: async (dataType: 'Model' | 'WrapperScript', id: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'dataType' is not null or undefined
+            assertParamExists('downloadModelData', 'dataType', dataType)
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('downloadModelData', 'id', id)
+            const localVarPath = `/api/v1/models/{id}/data`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JWT required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            if (dataType !== undefined) {
+                localVarQueryParameter['dataType'] = dataType;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get a model by ID.
+         * @param {number} id The model ID.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getModel: async (id: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('getModel', 'id', id)
+            const localVarPath = `/api/v1/models/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JWT required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get the models available for this user.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getModels: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/v1/models`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JWT required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Update model by ID.
+         * @param {number} id The model ID.
+         * @param {ModelRequest} model The model update request.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateModel: async (id: number, model: ModelRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('updateModel', 'id', id)
+            // verify required parameter 'model' is not null or undefined
+            assertParamExists('updateModel', 'model', model)
+            const localVarPath = `/api/v1/models/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JWT required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(model, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Upload model data.
+         * @param {'Model' | 'WrapperScript'} dataType dataType
+         * @param {number} modelId The model ID.
+         * @param {File} [file] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        uploadModelData: async (dataType: 'Model' | 'WrapperScript', modelId: number, file?: File, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'dataType' is not null or undefined
+            assertParamExists('uploadModelData', 'dataType', dataType)
+            // verify required parameter 'modelId' is not null or undefined
+            assertParamExists('uploadModelData', 'modelId', modelId)
+            const localVarPath = `/api/v1/models/{modelId}/modeldata`
+                .replace(`{${"modelId"}}`, encodeURIComponent(String(modelId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+            const localVarFormParams = new ((configuration && configuration.formDataCtor) || FormData)();
+
+            // authentication JWT required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            if (dataType !== undefined) {
+                localVarQueryParameter['dataType'] = dataType;
+            }
+
+
+            if (file !== undefined) { 
+                localVarFormParams.append('file', file as any);
+            }
+    
+    
+            localVarHeaderParameter['Content-Type'] = 'multipart/form-data';
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = localVarFormParams;
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * ModelApi - functional programming interface
+ * @export
+ */
+export const ModelApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = ModelApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary Add a model to an organization.
+         * @param {number} id The organization ID.
+         * @param {string} name The model name.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async addModel(id: number, name: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ModelResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.addModel(id, name, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Make a copy of a model. To copy to a different organization, extra permissions are required.
+         * @param {number} id The model ID.
+         * @param {number} [orgId] Optional destination organization ID to copy to.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async copyModel(id: number, orgId?: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ModelResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.copyModel(id, orgId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Delete a model by ID.
+         * @param {number} id The model ID.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteModel(id: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteModel(id, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Download model data.
+         * @param {'Model' | 'WrapperScript'} dataType The data type.
+         * @param {number} id The model ID.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async downloadModelData(dataType: 'Model' | 'WrapperScript', id: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<File>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.downloadModelData(dataType, id, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Get a model by ID.
+         * @param {number} id The model ID.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getModel(id: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ModelResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getModel(id, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Get the models available for this user.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getModels(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ModelResponse>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getModels(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Update model by ID.
+         * @param {number} id The model ID.
+         * @param {ModelRequest} model The model update request.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async updateModel(id: number, model: ModelRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ModelResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updateModel(id, model, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Upload model data.
+         * @param {'Model' | 'WrapperScript'} dataType dataType
+         * @param {number} modelId The model ID.
+         * @param {File} [file] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async uploadModelData(dataType: 'Model' | 'WrapperScript', modelId: number, file?: File, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ModelResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.uploadModelData(dataType, modelId, file, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * ModelApi - factory interface
+ * @export
+ */
+export const ModelApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = ModelApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary Add a model to an organization.
+         * @param {number} id The organization ID.
+         * @param {string} name The model name.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        addModel(id: number, name: string, options?: any): AxiosPromise<ModelResponse> {
+            return localVarFp.addModel(id, name, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Make a copy of a model. To copy to a different organization, extra permissions are required.
+         * @param {number} id The model ID.
+         * @param {number} [orgId] Optional destination organization ID to copy to.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        copyModel(id: number, orgId?: number, options?: any): AxiosPromise<ModelResponse> {
+            return localVarFp.copyModel(id, orgId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Delete a model by ID.
+         * @param {number} id The model ID.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteModel(id: number, options?: any): AxiosPromise<void> {
+            return localVarFp.deleteModel(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Download model data.
+         * @param {'Model' | 'WrapperScript'} dataType The data type.
+         * @param {number} id The model ID.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        downloadModelData(dataType: 'Model' | 'WrapperScript', id: number, options?: any): AxiosPromise<File> {
+            return localVarFp.downloadModelData(dataType, id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get a model by ID.
+         * @param {number} id The model ID.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getModel(id: number, options?: any): AxiosPromise<ModelResponse> {
+            return localVarFp.getModel(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get the models available for this user.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getModels(options?: any): AxiosPromise<Array<ModelResponse>> {
+            return localVarFp.getModels(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Update model by ID.
+         * @param {number} id The model ID.
+         * @param {ModelRequest} model The model update request.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateModel(id: number, model: ModelRequest, options?: any): AxiosPromise<ModelResponse> {
+            return localVarFp.updateModel(id, model, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Upload model data.
+         * @param {'Model' | 'WrapperScript'} dataType dataType
+         * @param {number} modelId The model ID.
+         * @param {File} [file] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        uploadModelData(dataType: 'Model' | 'WrapperScript', modelId: number, file?: File, options?: any): AxiosPromise<ModelResponse> {
+            return localVarFp.uploadModelData(dataType, modelId, file, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * ModelApi - object-oriented interface
+ * @export
+ * @class ModelApi
+ * @extends {BaseAPI}
+ */
+export class ModelApi extends BaseAPI {
+    /**
+     * 
+     * @summary Add a model to an organization.
+     * @param {number} id The organization ID.
+     * @param {string} name The model name.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ModelApi
+     */
+    public addModel(id: number, name: string, options?: AxiosRequestConfig) {
+        return ModelApiFp(this.configuration).addModel(id, name, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Make a copy of a model. To copy to a different organization, extra permissions are required.
+     * @param {number} id The model ID.
+     * @param {number} [orgId] Optional destination organization ID to copy to.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ModelApi
+     */
+    public copyModel(id: number, orgId?: number, options?: AxiosRequestConfig) {
+        return ModelApiFp(this.configuration).copyModel(id, orgId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Delete a model by ID.
+     * @param {number} id The model ID.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ModelApi
+     */
+    public deleteModel(id: number, options?: AxiosRequestConfig) {
+        return ModelApiFp(this.configuration).deleteModel(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Download model data.
+     * @param {'Model' | 'WrapperScript'} dataType The data type.
+     * @param {number} id The model ID.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ModelApi
+     */
+    public downloadModelData(dataType: 'Model' | 'WrapperScript', id: number, options?: AxiosRequestConfig) {
+        return ModelApiFp(this.configuration).downloadModelData(dataType, id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get a model by ID.
+     * @param {number} id The model ID.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ModelApi
+     */
+    public getModel(id: number, options?: AxiosRequestConfig) {
+        return ModelApiFp(this.configuration).getModel(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get the models available for this user.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ModelApi
+     */
+    public getModels(options?: AxiosRequestConfig) {
+        return ModelApiFp(this.configuration).getModels(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Update model by ID.
+     * @param {number} id The model ID.
+     * @param {ModelRequest} model The model update request.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ModelApi
+     */
+    public updateModel(id: number, model: ModelRequest, options?: AxiosRequestConfig) {
+        return ModelApiFp(this.configuration).updateModel(id, model, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Upload model data.
+     * @param {'Model' | 'WrapperScript'} dataType dataType
+     * @param {number} modelId The model ID.
+     * @param {File} [file] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ModelApi
+     */
+    public uploadModelData(dataType: 'Model' | 'WrapperScript', modelId: number, file?: File, options?: AxiosRequestConfig) {
+        return ModelApiFp(this.configuration).uploadModelData(dataType, modelId, file, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -1826,7 +7064,7 @@ export const OrganizationApiAxiosParamCreator = function (configuration?: Config
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        addOrganization: async (organization: OrganizationRequest, options: any = {}): Promise<RequestArgs> => {
+        addOrganization: async (organization: OrganizationRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'organization' is not null or undefined
             assertParamExists('addOrganization', 'organization', organization)
             const localVarPath = `/api/v1/organizations`;
@@ -1848,7 +7086,7 @@ export const OrganizationApiAxiosParamCreator = function (configuration?: Config
     
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(organization, localVarRequestOptions, configuration)
@@ -1860,19 +7098,18 @@ export const OrganizationApiAxiosParamCreator = function (configuration?: Config
         },
         /**
          * 
-         * @summary Delete dataset.
-         * @param {number} datasetId The dataset ID.
+         * @summary Make a copy of the organization to another organization (requires admin permissions).
          * @param {number} id The organization ID.
+         * @param {OrganizationRequest} organizationRequest Optional new organization information.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteCustomDataset: async (datasetId: number, id: number, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'datasetId' is not null or undefined
-            assertParamExists('deleteCustomDataset', 'datasetId', datasetId)
+        copyOrganization: async (id: number, organizationRequest: OrganizationRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('deleteCustomDataset', 'id', id)
-            const localVarPath = `/api/v1/organizations/{id}/datasets/{datasetId}`
-                .replace(`{${"datasetId"}}`, encodeURIComponent(String(datasetId)))
+            assertParamExists('copyOrganization', 'id', id)
+            // verify required parameter 'organizationRequest' is not null or undefined
+            assertParamExists('copyOrganization', 'organizationRequest', organizationRequest)
+            const localVarPath = `/api/v1/organizations/{id}/copy`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1881,7 +7118,7 @@ export const OrganizationApiAxiosParamCreator = function (configuration?: Config
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -1890,9 +7127,12 @@ export const OrganizationApiAxiosParamCreator = function (configuration?: Config
 
 
     
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(organizationRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1906,7 +7146,7 @@ export const OrganizationApiAxiosParamCreator = function (configuration?: Config
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteOrganization: async (id: number, options: any = {}): Promise<RequestArgs> => {
+        deleteOrganization: async (id: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('deleteOrganization', 'id', id)
             const localVarPath = `/api/v1/organizations/{id}`
@@ -1927,7 +7167,7 @@ export const OrganizationApiAxiosParamCreator = function (configuration?: Config
 
 
     
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
@@ -1938,19 +7178,72 @@ export const OrganizationApiAxiosParamCreator = function (configuration?: Config
         },
         /**
          * 
-         * @summary Download dataset data.
-         * @param {number} datasetId datasetId
-         * @param {number} id id
+         * @summary Delete organization file.
+         * @param {number} id The organization ID.
+         * @param {string} ref File reference
+         * @param {string} type File type - i.e. \&#39;classmapping\&#39;
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        downloadDataset: async (datasetId: number, id: number, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'datasetId' is not null or undefined
-            assertParamExists('downloadDataset', 'datasetId', datasetId)
+        deleteOrganizationFile: async (id: number, ref: string, type: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('downloadDataset', 'id', id)
-            const localVarPath = `/api/v1/organizations/{id}/datasets/{datasetId}`
-                .replace(`{${"datasetId"}}`, encodeURIComponent(String(datasetId)))
+            assertParamExists('deleteOrganizationFile', 'id', id)
+            // verify required parameter 'ref' is not null or undefined
+            assertParamExists('deleteOrganizationFile', 'ref', ref)
+            // verify required parameter 'type' is not null or undefined
+            assertParamExists('deleteOrganizationFile', 'type', type)
+            const localVarPath = `/api/v1/organizations/{id}/file`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JWT required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            if (ref !== undefined) {
+                localVarQueryParameter['ref'] = ref;
+            }
+
+            if (type !== undefined) {
+                localVarQueryParameter['type'] = type;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Download organization file.
+         * @param {number} id The organization ID.
+         * @param {string} ref File reference
+         * @param {string} type Download type - i.e. \&#39;classmapping\&#39;
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        downloadOrganizationFile: async (id: number, ref: string, type: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('downloadOrganizationFile', 'id', id)
+            // verify required parameter 'ref' is not null or undefined
+            assertParamExists('downloadOrganizationFile', 'ref', ref)
+            // verify required parameter 'type' is not null or undefined
+            assertParamExists('downloadOrganizationFile', 'type', type)
+            const localVarPath = `/api/v1/organizations/{id}/file`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1966,9 +7259,17 @@ export const OrganizationApiAxiosParamCreator = function (configuration?: Config
             // authentication JWT required
             await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
 
+            if (ref !== undefined) {
+                localVarQueryParameter['ref'] = ref;
+            }
+
+            if (type !== undefined) {
+                localVarQueryParameter['type'] = type;
+            }
+
 
     
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
@@ -1979,15 +7280,15 @@ export const OrganizationApiAxiosParamCreator = function (configuration?: Config
         },
         /**
          * 
-         * @summary Get the datasets defined for this organization.
+         * @summary Get the assets defined for this organization.
          * @param {number} id The organization ID.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getDatasets: async (id: number, options: any = {}): Promise<RequestArgs> => {
+        getAssetDefinitions: async (id: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('getDatasets', 'id', id)
-            const localVarPath = `/api/v1/organizations/{id}/datasets`
+            assertParamExists('getAssetDefinitions', 'id', id)
+            const localVarPath = `/api/v1/organizations/{id}/assets`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -2005,7 +7306,7 @@ export const OrganizationApiAxiosParamCreator = function (configuration?: Config
 
 
     
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
@@ -2016,15 +7317,15 @@ export const OrganizationApiAxiosParamCreator = function (configuration?: Config
         },
         /**
          * 
-         * @summary Get the attacks defined for this organization.
+         * @summary Get the hyper-parameter optimization methods defined for this organization.
          * @param {number} id id
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getDefinedAttacks: async (id: number, options: any = {}): Promise<RequestArgs> => {
+        getDefinedHPO: async (id: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('getDefinedAttacks', 'id', id)
-            const localVarPath = `/api/v1/organizations/{id}/attacks`
+            assertParamExists('getDefinedHPO', 'id', id)
+            const localVarPath = `/api/v1/organizations/{id}/hpo`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -2042,118 +7343,7 @@ export const OrganizationApiAxiosParamCreator = function (configuration?: Config
 
 
     
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Get the defenses defined for this organization.
-         * @param {number} id id
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getDefinedDefenses: async (id: number, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'id' is not null or undefined
-            assertParamExists('getDefinedDefenses', 'id', id)
-            const localVarPath = `/api/v1/organizations/{id}/defenses`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication JWT required
-            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Get the metrics defined for this organization.
-         * @param {number} id id
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getDefinedMetrics: async (id: number, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'id' is not null or undefined
-            assertParamExists('getDefinedMetrics', 'id', id)
-            const localVarPath = `/api/v1/organizations/{id}/metrics`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication JWT required
-            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Get the noises defined for this organization.
-         * @param {number} id id
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getDefinedNoises: async (id: number, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'id' is not null or undefined
-            assertParamExists('getDefinedNoises', 'id', id)
-            const localVarPath = `/api/v1/organizations/{id}/noises`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication JWT required
-            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
@@ -2169,7 +7359,7 @@ export const OrganizationApiAxiosParamCreator = function (configuration?: Config
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getDefinedTransforms: async (id: number, options: any = {}): Promise<RequestArgs> => {
+        getDefinedTransforms: async (id: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('getDefinedTransforms', 'id', id)
             const localVarPath = `/api/v1/organizations/{id}/transforms`
@@ -2190,7 +7380,44 @@ export const OrganizationApiAxiosParamCreator = function (configuration?: Config
 
 
     
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get all members (admin access rights required).
+         * @param {number} id id
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMembers: async (id: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('getMembers', 'id', id)
+            const localVarPath = `/api/v1/organizations/{id}/members`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JWT required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
@@ -2206,7 +7433,7 @@ export const OrganizationApiAxiosParamCreator = function (configuration?: Config
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getOrganization: async (id: number, options: any = {}): Promise<RequestArgs> => {
+        getOrganization: async (id: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('getOrganization', 'id', id)
             const localVarPath = `/api/v1/organizations/{id}`
@@ -2227,7 +7454,7 @@ export const OrganizationApiAxiosParamCreator = function (configuration?: Config
 
 
     
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
@@ -2238,11 +7465,62 @@ export const OrganizationApiAxiosParamCreator = function (configuration?: Config
         },
         /**
          * 
-         * @summary Get organizations.
+         * @summary Get organization file project usage.
+         * @param {number} id The organization ID.
+         * @param {string} ref File reference
+         * @param {string} type File type - i.e. \&#39;classmapping\&#39;
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getOrganizations: async (options: any = {}): Promise<RequestArgs> => {
+        getOrganizationFileUsage: async (id: number, ref: string, type: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('getOrganizationFileUsage', 'id', id)
+            // verify required parameter 'ref' is not null or undefined
+            assertParamExists('getOrganizationFileUsage', 'ref', ref)
+            // verify required parameter 'type' is not null or undefined
+            assertParamExists('getOrganizationFileUsage', 'type', type)
+            const localVarPath = `/api/v1/organizations/{id}/file/usage`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JWT required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            if (ref !== undefined) {
+                localVarQueryParameter['ref'] = ref;
+            }
+
+            if (type !== undefined) {
+                localVarQueryParameter['type'] = type;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get all organizations - (requires admin permissions).
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getOrganizations: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/v1/organizations`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -2260,7 +7538,7 @@ export const OrganizationApiAxiosParamCreator = function (configuration?: Config
 
 
     
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
@@ -2271,22 +7549,24 @@ export const OrganizationApiAxiosParamCreator = function (configuration?: Config
         },
         /**
          * 
-         * @summary Update dataset.
-         * @param {number} datasetId The dataset ID.
+         * @summary Rename organization file.
          * @param {number} id The organization ID.
-         * @param {DatasetRequest} datasetRequest The dataset update request.
+         * @param {string} name File name
+         * @param {string} ref File reference
+         * @param {string} type File type - i.e. \&#39;classmapping\&#39;
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateCustomDataset: async (datasetId: number, id: number, datasetRequest: DatasetRequest, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'datasetId' is not null or undefined
-            assertParamExists('updateCustomDataset', 'datasetId', datasetId)
+        renameOrganizationFile: async (id: number, name: string, ref: string, type: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('updateCustomDataset', 'id', id)
-            // verify required parameter 'datasetRequest' is not null or undefined
-            assertParamExists('updateCustomDataset', 'datasetRequest', datasetRequest)
-            const localVarPath = `/api/v1/organizations/{id}/datasets/{datasetId}`
-                .replace(`{${"datasetId"}}`, encodeURIComponent(String(datasetId)))
+            assertParamExists('renameOrganizationFile', 'id', id)
+            // verify required parameter 'name' is not null or undefined
+            assertParamExists('renameOrganizationFile', 'name', name)
+            // verify required parameter 'ref' is not null or undefined
+            assertParamExists('renameOrganizationFile', 'ref', ref)
+            // verify required parameter 'type' is not null or undefined
+            assertParamExists('renameOrganizationFile', 'type', type)
+            const localVarPath = `/api/v1/organizations/{id}/file`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -2302,14 +7582,60 @@ export const OrganizationApiAxiosParamCreator = function (configuration?: Config
             // authentication JWT required
             await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
 
+            if (name !== undefined) {
+                localVarQueryParameter['name'] = name;
+            }
+
+            if (ref !== undefined) {
+                localVarQueryParameter['ref'] = ref;
+            }
+
+            if (type !== undefined) {
+                localVarQueryParameter['type'] = type;
+            }
+
 
     
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(datasetRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Update storage and accounting information for this organization (admin rights).
+         * @param {number} id The organization ID.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateOrgStats: async (id: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('updateOrgStats', 'id', id)
+            const localVarPath = `/api/v1/organizations/{id}/stat`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JWT required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -2324,7 +7650,7 @@ export const OrganizationApiAxiosParamCreator = function (configuration?: Config
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateOrganization: async (id: number, request: OrganizationRequest, options: any = {}): Promise<RequestArgs> => {
+        updateOrganization: async (id: number, request: OrganizationRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('updateOrganization', 'id', id)
             // verify required parameter 'request' is not null or undefined
@@ -2349,7 +7675,7 @@ export const OrganizationApiAxiosParamCreator = function (configuration?: Config
     
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(request, localVarRequestOptions, configuration)
@@ -2361,25 +7687,21 @@ export const OrganizationApiAxiosParamCreator = function (configuration?: Config
         },
         /**
          * 
-         * @summary Upload dataset.
-         * @param {string} description description
-         * @param {'Coco' | 'Custom' | 'Ksv' | 'VOCDetection' | 'VOCSegmentation'} format format
+         * @summary Upload a file to the organization and return a reference.
          * @param {number} id The organization ID.
-         * @param {string} name name
-         * @param {any} [file] 
+         * @param {string} type Upload type - i.e. \&#39;classmapping\&#39;
+         * @param {number} [datasetId] The dataset ID.
+         * @param {string} [ref] Reference (supplied when updating)
+         * @param {File} [file] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        uploadDataset: async (description: string, format: 'Coco' | 'Custom' | 'Ksv' | 'VOCDetection' | 'VOCSegmentation', id: number, name: string, file?: any, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'description' is not null or undefined
-            assertParamExists('uploadDataset', 'description', description)
-            // verify required parameter 'format' is not null or undefined
-            assertParamExists('uploadDataset', 'format', format)
+        uploadOrganizationFile: async (id: number, type: string, datasetId?: number, ref?: string, file?: File, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('uploadDataset', 'id', id)
-            // verify required parameter 'name' is not null or undefined
-            assertParamExists('uploadDataset', 'name', name)
-            const localVarPath = `/api/v1/organizations/{id}/datasets`
+            assertParamExists('uploadOrganizationFile', 'id', id)
+            // verify required parameter 'type' is not null or undefined
+            assertParamExists('uploadOrganizationFile', 'type', type)
+            const localVarPath = `/api/v1/organizations/{id}/file`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -2396,16 +7718,16 @@ export const OrganizationApiAxiosParamCreator = function (configuration?: Config
             // authentication JWT required
             await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
 
-            if (description !== undefined) {
-                localVarQueryParameter['description'] = description;
+            if (datasetId !== undefined) {
+                localVarQueryParameter['datasetId'] = datasetId;
             }
 
-            if (format !== undefined) {
-                localVarQueryParameter['format'] = format;
+            if (ref !== undefined) {
+                localVarQueryParameter['ref'] = ref;
             }
 
-            if (name !== undefined) {
-                localVarQueryParameter['name'] = name;
+            if (type !== undefined) {
+                localVarQueryParameter['type'] = type;
             }
 
 
@@ -2416,7 +7738,7 @@ export const OrganizationApiAxiosParamCreator = function (configuration?: Config
     
             localVarHeaderParameter['Content-Type'] = 'multipart/form-data';
     
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = localVarFormParams;
@@ -2443,20 +7765,20 @@ export const OrganizationApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async addOrganization(organization: OrganizationRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrganizationResponse>> {
+        async addOrganization(organization: OrganizationRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrganizationResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.addOrganization(organization, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * 
-         * @summary Delete dataset.
-         * @param {number} datasetId The dataset ID.
+         * @summary Make a copy of the organization to another organization (requires admin permissions).
          * @param {number} id The organization ID.
+         * @param {OrganizationRequest} organizationRequest Optional new organization information.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteCustomDataset(datasetId: number, id: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<DataSet>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteCustomDataset(datasetId, id, options);
+        async copyOrganization(id: number, organizationRequest: OrganizationRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrganizationResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.copyOrganization(id, organizationRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -2466,75 +7788,56 @@ export const OrganizationApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteOrganization(id: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async deleteOrganization(id: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteOrganization(id, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * 
-         * @summary Download dataset data.
-         * @param {number} datasetId datasetId
-         * @param {number} id id
+         * @summary Delete organization file.
+         * @param {number} id The organization ID.
+         * @param {string} ref File reference
+         * @param {string} type File type - i.e. \&#39;classmapping\&#39;
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async downloadDataset(datasetId: number, id: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.downloadDataset(datasetId, id, options);
+        async deleteOrganizationFile(id: number, ref: string, type: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteOrganizationFile(id, ref, type, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * 
-         * @summary Get the datasets defined for this organization.
+         * @summary Download organization file.
+         * @param {number} id The organization ID.
+         * @param {string} ref File reference
+         * @param {string} type Download type - i.e. \&#39;classmapping\&#39;
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async downloadOrganizationFile(id: number, ref: string, type: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<File>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.downloadOrganizationFile(id, ref, type, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Get the assets defined for this organization.
          * @param {number} id The organization ID.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getDatasets(id: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<DataSet>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getDatasets(id, options);
+        async getAssetDefinitions(id: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AssetsResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAssetDefinitions(id, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * 
-         * @summary Get the attacks defined for this organization.
+         * @summary Get the hyper-parameter optimization methods defined for this organization.
          * @param {number} id id
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getDefinedAttacks(id: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getDefinedAttacks(id, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
-         * @summary Get the defenses defined for this organization.
-         * @param {number} id id
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getDefinedDefenses(id: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getDefinedDefenses(id, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
-         * @summary Get the metrics defined for this organization.
-         * @param {number} id id
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getDefinedMetrics(id: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getDefinedMetrics(id, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
-         * @summary Get the noises defined for this organization.
-         * @param {number} id id
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getDefinedNoises(id: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getDefinedNoises(id, options);
+        async getDefinedHPO(id: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<HPODefinition>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getDefinedHPO(id, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -2544,8 +7847,19 @@ export const OrganizationApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getDefinedTransforms(id: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
+        async getDefinedTransforms(id: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<TransformDefinition>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getDefinedTransforms(id, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Get all members (admin access rights required).
+         * @param {number} id id
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getMembers(id: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<UserResponse>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getMembers(id, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -2555,31 +7869,56 @@ export const OrganizationApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getOrganization(id: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrganizationResponse>> {
+        async getOrganization(id: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrganizationResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getOrganization(id, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * 
-         * @summary Get organizations.
+         * @summary Get organization file project usage.
+         * @param {number} id The organization ID.
+         * @param {string} ref File reference
+         * @param {string} type File type - i.e. \&#39;classmapping\&#39;
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getOrganizations(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<OrganizationResponse>>> {
+        async getOrganizationFileUsage(id: number, ref: string, type: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<number>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getOrganizationFileUsage(id, ref, type, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Get all organizations - (requires admin permissions).
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getOrganizations(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<OrganizationResponse>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getOrganizations(options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * 
-         * @summary Update dataset.
-         * @param {number} datasetId The dataset ID.
+         * @summary Rename organization file.
          * @param {number} id The organization ID.
-         * @param {DatasetRequest} datasetRequest The dataset update request.
+         * @param {string} name File name
+         * @param {string} ref File reference
+         * @param {string} type File type - i.e. \&#39;classmapping\&#39;
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async updateCustomDataset(datasetId: number, id: number, datasetRequest: DatasetRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<DataSet>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.updateCustomDataset(datasetId, id, datasetRequest, options);
+        async renameOrganizationFile(id: number, name: string, ref: string, type: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.renameOrganizationFile(id, name, ref, type, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Update storage and accounting information for this organization (admin rights).
+         * @param {number} id The organization ID.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async updateOrgStats(id: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updateOrgStats(id, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -2590,23 +7929,23 @@ export const OrganizationApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async updateOrganization(id: number, request: OrganizationRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrganizationResponse>> {
+        async updateOrganization(id: number, request: OrganizationRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrganizationResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.updateOrganization(id, request, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * 
-         * @summary Upload dataset.
-         * @param {string} description description
-         * @param {'Coco' | 'Custom' | 'Ksv' | 'VOCDetection' | 'VOCSegmentation'} format format
+         * @summary Upload a file to the organization and return a reference.
          * @param {number} id The organization ID.
-         * @param {string} name name
-         * @param {any} [file] 
+         * @param {string} type Upload type - i.e. \&#39;classmapping\&#39;
+         * @param {number} [datasetId] The dataset ID.
+         * @param {string} [ref] Reference (supplied when updating)
+         * @param {File} [file] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async uploadDataset(description: string, format: 'Coco' | 'Custom' | 'Ksv' | 'VOCDetection' | 'VOCSegmentation', id: number, name: string, file?: any, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<DataSet>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.uploadDataset(description, format, id, name, file, options);
+        async uploadOrganizationFile(id: number, type: string, datasetId?: number, ref?: string, file?: File, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.uploadOrganizationFile(id, type, datasetId, ref, file, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -2631,14 +7970,14 @@ export const OrganizationApiFactory = function (configuration?: Configuration, b
         },
         /**
          * 
-         * @summary Delete dataset.
-         * @param {number} datasetId The dataset ID.
+         * @summary Make a copy of the organization to another organization (requires admin permissions).
          * @param {number} id The organization ID.
+         * @param {OrganizationRequest} organizationRequest Optional new organization information.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteCustomDataset(datasetId: number, id: number, options?: any): AxiosPromise<Array<DataSet>> {
-            return localVarFp.deleteCustomDataset(datasetId, id, options).then((request) => request(axios, basePath));
+        copyOrganization(id: number, organizationRequest: OrganizationRequest, options?: any): AxiosPromise<OrganizationResponse> {
+            return localVarFp.copyOrganization(id, organizationRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -2652,64 +7991,47 @@ export const OrganizationApiFactory = function (configuration?: Configuration, b
         },
         /**
          * 
-         * @summary Download dataset data.
-         * @param {number} datasetId datasetId
-         * @param {number} id id
+         * @summary Delete organization file.
+         * @param {number} id The organization ID.
+         * @param {string} ref File reference
+         * @param {string} type File type - i.e. \&#39;classmapping\&#39;
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        downloadDataset(datasetId: number, id: number, options?: any): AxiosPromise<any> {
-            return localVarFp.downloadDataset(datasetId, id, options).then((request) => request(axios, basePath));
+        deleteOrganizationFile(id: number, ref: string, type: string, options?: any): AxiosPromise<void> {
+            return localVarFp.deleteOrganizationFile(id, ref, type, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @summary Get the datasets defined for this organization.
+         * @summary Download organization file.
+         * @param {number} id The organization ID.
+         * @param {string} ref File reference
+         * @param {string} type Download type - i.e. \&#39;classmapping\&#39;
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        downloadOrganizationFile(id: number, ref: string, type: string, options?: any): AxiosPromise<File> {
+            return localVarFp.downloadOrganizationFile(id, ref, type, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get the assets defined for this organization.
          * @param {number} id The organization ID.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getDatasets(id: number, options?: any): AxiosPromise<Array<DataSet>> {
-            return localVarFp.getDatasets(id, options).then((request) => request(axios, basePath));
+        getAssetDefinitions(id: number, options?: any): AxiosPromise<AssetsResponse> {
+            return localVarFp.getAssetDefinitions(id, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @summary Get the attacks defined for this organization.
+         * @summary Get the hyper-parameter optimization methods defined for this organization.
          * @param {number} id id
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getDefinedAttacks(id: number, options?: any): AxiosPromise<string> {
-            return localVarFp.getDefinedAttacks(id, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary Get the defenses defined for this organization.
-         * @param {number} id id
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getDefinedDefenses(id: number, options?: any): AxiosPromise<string> {
-            return localVarFp.getDefinedDefenses(id, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary Get the metrics defined for this organization.
-         * @param {number} id id
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getDefinedMetrics(id: number, options?: any): AxiosPromise<string> {
-            return localVarFp.getDefinedMetrics(id, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary Get the noises defined for this organization.
-         * @param {number} id id
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getDefinedNoises(id: number, options?: any): AxiosPromise<string> {
-            return localVarFp.getDefinedNoises(id, options).then((request) => request(axios, basePath));
+        getDefinedHPO(id: number, options?: any): AxiosPromise<Array<HPODefinition>> {
+            return localVarFp.getDefinedHPO(id, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -2718,8 +8040,18 @@ export const OrganizationApiFactory = function (configuration?: Configuration, b
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getDefinedTransforms(id: number, options?: any): AxiosPromise<string> {
+        getDefinedTransforms(id: number, options?: any): AxiosPromise<Array<TransformDefinition>> {
             return localVarFp.getDefinedTransforms(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get all members (admin access rights required).
+         * @param {number} id id
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMembers(id: number, options?: any): AxiosPromise<Array<UserResponse>> {
+            return localVarFp.getMembers(id, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -2733,7 +8065,19 @@ export const OrganizationApiFactory = function (configuration?: Configuration, b
         },
         /**
          * 
-         * @summary Get organizations.
+         * @summary Get organization file project usage.
+         * @param {number} id The organization ID.
+         * @param {string} ref File reference
+         * @param {string} type File type - i.e. \&#39;classmapping\&#39;
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getOrganizationFileUsage(id: number, ref: string, type: string, options?: any): AxiosPromise<Array<number>> {
+            return localVarFp.getOrganizationFileUsage(id, ref, type, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get all organizations - (requires admin permissions).
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -2742,15 +8086,26 @@ export const OrganizationApiFactory = function (configuration?: Configuration, b
         },
         /**
          * 
-         * @summary Update dataset.
-         * @param {number} datasetId The dataset ID.
+         * @summary Rename organization file.
          * @param {number} id The organization ID.
-         * @param {DatasetRequest} datasetRequest The dataset update request.
+         * @param {string} name File name
+         * @param {string} ref File reference
+         * @param {string} type File type - i.e. \&#39;classmapping\&#39;
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateCustomDataset(datasetId: number, id: number, datasetRequest: DatasetRequest, options?: any): AxiosPromise<Array<DataSet>> {
-            return localVarFp.updateCustomDataset(datasetId, id, datasetRequest, options).then((request) => request(axios, basePath));
+        renameOrganizationFile(id: number, name: string, ref: string, type: string, options?: any): AxiosPromise<void> {
+            return localVarFp.renameOrganizationFile(id, name, ref, type, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Update storage and accounting information for this organization (admin rights).
+         * @param {number} id The organization ID.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateOrgStats(id: number, options?: any): AxiosPromise<void> {
+            return localVarFp.updateOrgStats(id, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -2765,17 +8120,17 @@ export const OrganizationApiFactory = function (configuration?: Configuration, b
         },
         /**
          * 
-         * @summary Upload dataset.
-         * @param {string} description description
-         * @param {'Coco' | 'Custom' | 'Ksv' | 'VOCDetection' | 'VOCSegmentation'} format format
+         * @summary Upload a file to the organization and return a reference.
          * @param {number} id The organization ID.
-         * @param {string} name name
-         * @param {any} [file] 
+         * @param {string} type Upload type - i.e. \&#39;classmapping\&#39;
+         * @param {number} [datasetId] The dataset ID.
+         * @param {string} [ref] Reference (supplied when updating)
+         * @param {File} [file] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        uploadDataset(description: string, format: 'Coco' | 'Custom' | 'Ksv' | 'VOCDetection' | 'VOCSegmentation', id: number, name: string, file?: any, options?: any): AxiosPromise<Array<DataSet>> {
-            return localVarFp.uploadDataset(description, format, id, name, file, options).then((request) => request(axios, basePath));
+        uploadOrganizationFile(id: number, type: string, datasetId?: number, ref?: string, file?: File, options?: any): AxiosPromise<string> {
+            return localVarFp.uploadOrganizationFile(id, type, datasetId, ref, file, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -2795,21 +8150,21 @@ export class OrganizationApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof OrganizationApi
      */
-    public addOrganization(organization: OrganizationRequest, options?: any) {
+    public addOrganization(organization: OrganizationRequest, options?: AxiosRequestConfig) {
         return OrganizationApiFp(this.configuration).addOrganization(organization, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
-     * @summary Delete dataset.
-     * @param {number} datasetId The dataset ID.
+     * @summary Make a copy of the organization to another organization (requires admin permissions).
      * @param {number} id The organization ID.
+     * @param {OrganizationRequest} organizationRequest Optional new organization information.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OrganizationApi
      */
-    public deleteCustomDataset(datasetId: number, id: number, options?: any) {
-        return OrganizationApiFp(this.configuration).deleteCustomDataset(datasetId, id, options).then((request) => request(this.axios, this.basePath));
+    public copyOrganization(id: number, organizationRequest: OrganizationRequest, options?: AxiosRequestConfig) {
+        return OrganizationApiFp(this.configuration).copyOrganization(id, organizationRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2820,81 +8175,60 @@ export class OrganizationApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof OrganizationApi
      */
-    public deleteOrganization(id: number, options?: any) {
+    public deleteOrganization(id: number, options?: AxiosRequestConfig) {
         return OrganizationApiFp(this.configuration).deleteOrganization(id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
-     * @summary Download dataset data.
-     * @param {number} datasetId datasetId
-     * @param {number} id id
+     * @summary Delete organization file.
+     * @param {number} id The organization ID.
+     * @param {string} ref File reference
+     * @param {string} type File type - i.e. \&#39;classmapping\&#39;
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OrganizationApi
      */
-    public downloadDataset(datasetId: number, id: number, options?: any) {
-        return OrganizationApiFp(this.configuration).downloadDataset(datasetId, id, options).then((request) => request(this.axios, this.basePath));
+    public deleteOrganizationFile(id: number, ref: string, type: string, options?: AxiosRequestConfig) {
+        return OrganizationApiFp(this.configuration).deleteOrganizationFile(id, ref, type, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
-     * @summary Get the datasets defined for this organization.
+     * @summary Download organization file.
+     * @param {number} id The organization ID.
+     * @param {string} ref File reference
+     * @param {string} type Download type - i.e. \&#39;classmapping\&#39;
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrganizationApi
+     */
+    public downloadOrganizationFile(id: number, ref: string, type: string, options?: AxiosRequestConfig) {
+        return OrganizationApiFp(this.configuration).downloadOrganizationFile(id, ref, type, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get the assets defined for this organization.
      * @param {number} id The organization ID.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OrganizationApi
      */
-    public getDatasets(id: number, options?: any) {
-        return OrganizationApiFp(this.configuration).getDatasets(id, options).then((request) => request(this.axios, this.basePath));
+    public getAssetDefinitions(id: number, options?: AxiosRequestConfig) {
+        return OrganizationApiFp(this.configuration).getAssetDefinitions(id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
-     * @summary Get the attacks defined for this organization.
+     * @summary Get the hyper-parameter optimization methods defined for this organization.
      * @param {number} id id
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OrganizationApi
      */
-    public getDefinedAttacks(id: number, options?: any) {
-        return OrganizationApiFp(this.configuration).getDefinedAttacks(id, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary Get the defenses defined for this organization.
-     * @param {number} id id
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof OrganizationApi
-     */
-    public getDefinedDefenses(id: number, options?: any) {
-        return OrganizationApiFp(this.configuration).getDefinedDefenses(id, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary Get the metrics defined for this organization.
-     * @param {number} id id
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof OrganizationApi
-     */
-    public getDefinedMetrics(id: number, options?: any) {
-        return OrganizationApiFp(this.configuration).getDefinedMetrics(id, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary Get the noises defined for this organization.
-     * @param {number} id id
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof OrganizationApi
-     */
-    public getDefinedNoises(id: number, options?: any) {
-        return OrganizationApiFp(this.configuration).getDefinedNoises(id, options).then((request) => request(this.axios, this.basePath));
+    public getDefinedHPO(id: number, options?: AxiosRequestConfig) {
+        return OrganizationApiFp(this.configuration).getDefinedHPO(id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2905,8 +8239,20 @@ export class OrganizationApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof OrganizationApi
      */
-    public getDefinedTransforms(id: number, options?: any) {
+    public getDefinedTransforms(id: number, options?: AxiosRequestConfig) {
         return OrganizationApiFp(this.configuration).getDefinedTransforms(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get all members (admin access rights required).
+     * @param {number} id id
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrganizationApi
+     */
+    public getMembers(id: number, options?: AxiosRequestConfig) {
+        return OrganizationApiFp(this.configuration).getMembers(id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2917,33 +8263,60 @@ export class OrganizationApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof OrganizationApi
      */
-    public getOrganization(id: number, options?: any) {
+    public getOrganization(id: number, options?: AxiosRequestConfig) {
         return OrganizationApiFp(this.configuration).getOrganization(id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
-     * @summary Get organizations.
+     * @summary Get organization file project usage.
+     * @param {number} id The organization ID.
+     * @param {string} ref File reference
+     * @param {string} type File type - i.e. \&#39;classmapping\&#39;
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OrganizationApi
      */
-    public getOrganizations(options?: any) {
+    public getOrganizationFileUsage(id: number, ref: string, type: string, options?: AxiosRequestConfig) {
+        return OrganizationApiFp(this.configuration).getOrganizationFileUsage(id, ref, type, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get all organizations - (requires admin permissions).
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrganizationApi
+     */
+    public getOrganizations(options?: AxiosRequestConfig) {
         return OrganizationApiFp(this.configuration).getOrganizations(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
-     * @summary Update dataset.
-     * @param {number} datasetId The dataset ID.
+     * @summary Rename organization file.
      * @param {number} id The organization ID.
-     * @param {DatasetRequest} datasetRequest The dataset update request.
+     * @param {string} name File name
+     * @param {string} ref File reference
+     * @param {string} type File type - i.e. \&#39;classmapping\&#39;
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OrganizationApi
      */
-    public updateCustomDataset(datasetId: number, id: number, datasetRequest: DatasetRequest, options?: any) {
-        return OrganizationApiFp(this.configuration).updateCustomDataset(datasetId, id, datasetRequest, options).then((request) => request(this.axios, this.basePath));
+    public renameOrganizationFile(id: number, name: string, ref: string, type: string, options?: AxiosRequestConfig) {
+        return OrganizationApiFp(this.configuration).renameOrganizationFile(id, name, ref, type, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Update storage and accounting information for this organization (admin rights).
+     * @param {number} id The organization ID.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrganizationApi
+     */
+    public updateOrgStats(id: number, options?: AxiosRequestConfig) {
+        return OrganizationApiFp(this.configuration).updateOrgStats(id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2955,24 +8328,778 @@ export class OrganizationApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof OrganizationApi
      */
-    public updateOrganization(id: number, request: OrganizationRequest, options?: any) {
+    public updateOrganization(id: number, request: OrganizationRequest, options?: AxiosRequestConfig) {
         return OrganizationApiFp(this.configuration).updateOrganization(id, request, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
-     * @summary Upload dataset.
-     * @param {string} description description
-     * @param {'Coco' | 'Custom' | 'Ksv' | 'VOCDetection' | 'VOCSegmentation'} format format
+     * @summary Upload a file to the organization and return a reference.
      * @param {number} id The organization ID.
-     * @param {string} name name
-     * @param {any} [file] 
+     * @param {string} type Upload type - i.e. \&#39;classmapping\&#39;
+     * @param {number} [datasetId] The dataset ID.
+     * @param {string} [ref] Reference (supplied when updating)
+     * @param {File} [file] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OrganizationApi
      */
-    public uploadDataset(description: string, format: 'Coco' | 'Custom' | 'Ksv' | 'VOCDetection' | 'VOCSegmentation', id: number, name: string, file?: any, options?: any) {
-        return OrganizationApiFp(this.configuration).uploadDataset(description, format, id, name, file, options).then((request) => request(this.axios, this.basePath));
+    public uploadOrganizationFile(id: number, type: string, datasetId?: number, ref?: string, file?: File, options?: AxiosRequestConfig) {
+        return OrganizationApiFp(this.configuration).uploadOrganizationFile(id, type, datasetId, ref, file, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * PlatformApi - axios parameter creator
+ * @export
+ */
+export const PlatformApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary Administrative call to cancel a worker job (admin rights required)
+         * @param {string} id id
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        cancelWorker: async (id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('cancelWorker', 'id', id)
+            const localVarPath = `/api/v1/platform/cancel`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JWT required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            if (id !== undefined) {
+                localVarQueryParameter['id'] = id;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Delete platform file (only admins).
+         * @param {string} ref File reference
+         * @param {string} type File type - i.e. \&#39;asset\&#39;
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deletePlatformFile: async (ref: string, type: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'ref' is not null or undefined
+            assertParamExists('deletePlatformFile', 'ref', ref)
+            // verify required parameter 'type' is not null or undefined
+            assertParamExists('deletePlatformFile', 'type', type)
+            const localVarPath = `/api/v1/platform/file`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JWT required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            if (ref !== undefined) {
+                localVarQueryParameter['ref'] = ref;
+            }
+
+            if (type !== undefined) {
+                localVarQueryParameter['type'] = type;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Download platform file.
+         * @param {string} ref File reference
+         * @param {string} type Download type - i.e. \&#39;asset\&#39;
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        downloadPlatformFile: async (ref: string, type: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'ref' is not null or undefined
+            assertParamExists('downloadPlatformFile', 'ref', ref)
+            // verify required parameter 'type' is not null or undefined
+            assertParamExists('downloadPlatformFile', 'type', type)
+            const localVarPath = `/api/v1/platform/file`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JWT required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            if (ref !== undefined) {
+                localVarQueryParameter['ref'] = ref;
+            }
+
+            if (type !== undefined) {
+                localVarQueryParameter['type'] = type;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get the list of environments.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getEnvironments: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/v1/platform/environments`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JWT required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get worker queue information.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getQueueInfo: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/v1/platform/workerqueue`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JWT required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Stat platform file (only admins).
+         * @param {string} ref File reference
+         * @param {string} type File type - i.e. \&#39;asset\&#39;
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        statPlatformFile: async (ref: string, type: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'ref' is not null or undefined
+            assertParamExists('statPlatformFile', 'ref', ref)
+            // verify required parameter 'type' is not null or undefined
+            assertParamExists('statPlatformFile', 'type', type)
+            const localVarPath = `/api/v1/platform/file/stat`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JWT required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            if (ref !== undefined) {
+                localVarQueryParameter['ref'] = ref;
+            }
+
+            if (type !== undefined) {
+                localVarQueryParameter['type'] = type;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Upload a file part to the platform.
+         * @param {string} ref File reference
+         * @param {number} state File upload state: 1 - part, 2 - done.
+         * @param {File} [file] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        uploadFilePart: async (ref: string, state: number, file?: File, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'ref' is not null or undefined
+            assertParamExists('uploadFilePart', 'ref', ref)
+            // verify required parameter 'state' is not null or undefined
+            assertParamExists('uploadFilePart', 'state', state)
+            const localVarPath = `/api/v1/platform/filepart`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+            const localVarFormParams = new ((configuration && configuration.formDataCtor) || FormData)();
+
+            // authentication JWT required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            if (ref !== undefined) {
+                localVarQueryParameter['ref'] = ref;
+            }
+
+            if (state !== undefined) {
+                localVarQueryParameter['state'] = state;
+            }
+
+
+            if (file !== undefined) { 
+                localVarFormParams.append('file', file as any);
+            }
+    
+    
+            localVarHeaderParameter['Content-Type'] = 'multipart/form-data';
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = localVarFormParams;
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Upload a file to the platform and return a reference (only admins).
+         * @param {string} type Upload type - i.e. \&#39;asset\&#39;
+         * @param {boolean} [chunked] Chunked upload
+         * @param {string} [description] File description
+         * @param {File} [file] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        uploadPlatformFile: async (type: string, chunked?: boolean, description?: string, file?: File, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'type' is not null or undefined
+            assertParamExists('uploadPlatformFile', 'type', type)
+            const localVarPath = `/api/v1/platform/file`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+            const localVarFormParams = new ((configuration && configuration.formDataCtor) || FormData)();
+
+            // authentication JWT required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            if (chunked !== undefined) {
+                localVarQueryParameter['chunked'] = chunked;
+            }
+
+            if (description !== undefined) {
+                localVarQueryParameter['description'] = description;
+            }
+
+            if (type !== undefined) {
+                localVarQueryParameter['type'] = type;
+            }
+
+
+            if (file !== undefined) { 
+                localVarFormParams.append('file', file as any);
+            }
+    
+    
+            localVarHeaderParameter['Content-Type'] = 'multipart/form-data';
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = localVarFormParams;
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Worker heartbeat - can only be called by a worker instance.
+         * @param {WorkerHeartbeatRequest} request request
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        workerHeartbeat: async (request: WorkerHeartbeatRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'request' is not null or undefined
+            assertParamExists('workerHeartbeat', 'request', request)
+            const localVarPath = `/api/v1/platform/heartbeat`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JWT required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(request, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * PlatformApi - functional programming interface
+ * @export
+ */
+export const PlatformApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = PlatformApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary Administrative call to cancel a worker job (admin rights required)
+         * @param {string} id id
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async cancelWorker(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cancelWorker(id, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Delete platform file (only admins).
+         * @param {string} ref File reference
+         * @param {string} type File type - i.e. \&#39;asset\&#39;
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deletePlatformFile(ref: string, type: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deletePlatformFile(ref, type, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Download platform file.
+         * @param {string} ref File reference
+         * @param {string} type Download type - i.e. \&#39;asset\&#39;
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async downloadPlatformFile(ref: string, type: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<File>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.downloadPlatformFile(ref, type, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Get the list of environments.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getEnvironments(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<EnvironmentResponse>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getEnvironments(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Get worker queue information.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getQueueInfo(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<QueueInfoResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getQueueInfo(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Stat platform file (only admins).
+         * @param {string} ref File reference
+         * @param {string} type File type - i.e. \&#39;asset\&#39;
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async statPlatformFile(ref: string, type: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FileStatResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.statPlatformFile(ref, type, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Upload a file part to the platform.
+         * @param {string} ref File reference
+         * @param {number} state File upload state: 1 - part, 2 - done.
+         * @param {File} [file] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async uploadFilePart(ref: string, state: number, file?: File, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.uploadFilePart(ref, state, file, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Upload a file to the platform and return a reference (only admins).
+         * @param {string} type Upload type - i.e. \&#39;asset\&#39;
+         * @param {boolean} [chunked] Chunked upload
+         * @param {string} [description] File description
+         * @param {File} [file] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async uploadPlatformFile(type: string, chunked?: boolean, description?: string, file?: File, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.uploadPlatformFile(type, chunked, description, file, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Worker heartbeat - can only be called by a worker instance.
+         * @param {WorkerHeartbeatRequest} request request
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async workerHeartbeat(request: WorkerHeartbeatRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<boolean>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.workerHeartbeat(request, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * PlatformApi - factory interface
+ * @export
+ */
+export const PlatformApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = PlatformApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary Administrative call to cancel a worker job (admin rights required)
+         * @param {string} id id
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        cancelWorker(id: string, options?: any): AxiosPromise<void> {
+            return localVarFp.cancelWorker(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Delete platform file (only admins).
+         * @param {string} ref File reference
+         * @param {string} type File type - i.e. \&#39;asset\&#39;
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deletePlatformFile(ref: string, type: string, options?: any): AxiosPromise<void> {
+            return localVarFp.deletePlatformFile(ref, type, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Download platform file.
+         * @param {string} ref File reference
+         * @param {string} type Download type - i.e. \&#39;asset\&#39;
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        downloadPlatformFile(ref: string, type: string, options?: any): AxiosPromise<File> {
+            return localVarFp.downloadPlatformFile(ref, type, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get the list of environments.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getEnvironments(options?: any): AxiosPromise<Array<EnvironmentResponse>> {
+            return localVarFp.getEnvironments(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get worker queue information.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getQueueInfo(options?: any): AxiosPromise<QueueInfoResponse> {
+            return localVarFp.getQueueInfo(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Stat platform file (only admins).
+         * @param {string} ref File reference
+         * @param {string} type File type - i.e. \&#39;asset\&#39;
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        statPlatformFile(ref: string, type: string, options?: any): AxiosPromise<FileStatResponse> {
+            return localVarFp.statPlatformFile(ref, type, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Upload a file part to the platform.
+         * @param {string} ref File reference
+         * @param {number} state File upload state: 1 - part, 2 - done.
+         * @param {File} [file] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        uploadFilePart(ref: string, state: number, file?: File, options?: any): AxiosPromise<string> {
+            return localVarFp.uploadFilePart(ref, state, file, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Upload a file to the platform and return a reference (only admins).
+         * @param {string} type Upload type - i.e. \&#39;asset\&#39;
+         * @param {boolean} [chunked] Chunked upload
+         * @param {string} [description] File description
+         * @param {File} [file] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        uploadPlatformFile(type: string, chunked?: boolean, description?: string, file?: File, options?: any): AxiosPromise<string> {
+            return localVarFp.uploadPlatformFile(type, chunked, description, file, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Worker heartbeat - can only be called by a worker instance.
+         * @param {WorkerHeartbeatRequest} request request
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        workerHeartbeat(request: WorkerHeartbeatRequest, options?: any): AxiosPromise<boolean> {
+            return localVarFp.workerHeartbeat(request, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * PlatformApi - object-oriented interface
+ * @export
+ * @class PlatformApi
+ * @extends {BaseAPI}
+ */
+export class PlatformApi extends BaseAPI {
+    /**
+     * 
+     * @summary Administrative call to cancel a worker job (admin rights required)
+     * @param {string} id id
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PlatformApi
+     */
+    public cancelWorker(id: string, options?: AxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).cancelWorker(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Delete platform file (only admins).
+     * @param {string} ref File reference
+     * @param {string} type File type - i.e. \&#39;asset\&#39;
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PlatformApi
+     */
+    public deletePlatformFile(ref: string, type: string, options?: AxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).deletePlatformFile(ref, type, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Download platform file.
+     * @param {string} ref File reference
+     * @param {string} type Download type - i.e. \&#39;asset\&#39;
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PlatformApi
+     */
+    public downloadPlatformFile(ref: string, type: string, options?: AxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).downloadPlatformFile(ref, type, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get the list of environments.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PlatformApi
+     */
+    public getEnvironments(options?: AxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).getEnvironments(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get worker queue information.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PlatformApi
+     */
+    public getQueueInfo(options?: AxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).getQueueInfo(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Stat platform file (only admins).
+     * @param {string} ref File reference
+     * @param {string} type File type - i.e. \&#39;asset\&#39;
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PlatformApi
+     */
+    public statPlatformFile(ref: string, type: string, options?: AxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).statPlatformFile(ref, type, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Upload a file part to the platform.
+     * @param {string} ref File reference
+     * @param {number} state File upload state: 1 - part, 2 - done.
+     * @param {File} [file] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PlatformApi
+     */
+    public uploadFilePart(ref: string, state: number, file?: File, options?: AxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).uploadFilePart(ref, state, file, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Upload a file to the platform and return a reference (only admins).
+     * @param {string} type Upload type - i.e. \&#39;asset\&#39;
+     * @param {boolean} [chunked] Chunked upload
+     * @param {string} [description] File description
+     * @param {File} [file] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PlatformApi
+     */
+    public uploadPlatformFile(type: string, chunked?: boolean, description?: string, file?: File, options?: AxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).uploadPlatformFile(type, chunked, description, file, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Worker heartbeat - can only be called by a worker instance.
+     * @param {WorkerHeartbeatRequest} request request
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PlatformApi
+     */
+    public workerHeartbeat(request: WorkerHeartbeatRequest, options?: AxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).workerHeartbeat(request, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -2991,7 +9118,7 @@ export const ProjectApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        addProject: async (organizationId: number, project: ProjectRequest, options: any = {}): Promise<RequestArgs> => {
+        addProject: async (organizationId: number, project: ProjectRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'organizationId' is not null or undefined
             assertParamExists('addProject', 'organizationId', organizationId)
             // verify required parameter 'project' is not null or undefined
@@ -3019,7 +9146,7 @@ export const ProjectApiAxiosParamCreator = function (configuration?: Configurati
     
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(project, localVarRequestOptions, configuration)
@@ -3031,13 +9158,109 @@ export const ProjectApiAxiosParamCreator = function (configuration?: Configurati
         },
         /**
          * 
+         * @summary Make a copy of the project available to (optionally) another organization.
+         * @param {number} id The project ID.
+         * @param {ProjectRequest} newProject Optional new project information.
+         * @param {number} [destOrgId] The optional destination organization id.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        copyProject: async (id: number, newProject: ProjectRequest, destOrgId?: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('copyProject', 'id', id)
+            // verify required parameter 'newProject' is not null or undefined
+            assertParamExists('copyProject', 'newProject', newProject)
+            const localVarPath = `/api/v1/projects/{id}/copy`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JWT required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            if (destOrgId !== undefined) {
+                localVarQueryParameter['destOrgId'] = destOrgId;
+            }
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(newProject, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Make a copy of the project model available to the organization.
+         * @param {number} id The project ID.
+         * @param {ModelRequest} model New model information.
+         * @param {number} [destModelId] The optional destination model id.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        copyProjectModel: async (id: number, model: ModelRequest, destModelId?: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('copyProjectModel', 'id', id)
+            // verify required parameter 'model' is not null or undefined
+            assertParamExists('copyProjectModel', 'model', model)
+            const localVarPath = `/api/v1/projects/{id}/copymodel`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JWT required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            if (destModelId !== undefined) {
+                localVarQueryParameter['destModelId'] = destModelId;
+            }
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(model, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Delete project model data.
-         * @param {'Dataset' | 'Model' | 'WrapperScript'} dataType dataType
+         * @param {'Model' | 'WrapperScript'} dataType dataType
          * @param {number} id The project ID.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteData: async (dataType: 'Dataset' | 'Model' | 'WrapperScript', id: number, options: any = {}): Promise<RequestArgs> => {
+        deleteData: async (dataType: 'Model' | 'WrapperScript', id: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'dataType' is not null or undefined
             assertParamExists('deleteData', 'dataType', dataType)
             // verify required parameter 'id' is not null or undefined
@@ -3064,7 +9287,7 @@ export const ProjectApiAxiosParamCreator = function (configuration?: Configurati
 
 
     
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
@@ -3080,7 +9303,7 @@ export const ProjectApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteProject: async (id: number, options: any = {}): Promise<RequestArgs> => {
+        deleteProject: async (id: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('deleteProject', 'id', id)
             const localVarPath = `/api/v1/projects/{id}`
@@ -3101,7 +9324,7 @@ export const ProjectApiAxiosParamCreator = function (configuration?: Configurati
 
 
     
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
@@ -3113,12 +9336,12 @@ export const ProjectApiAxiosParamCreator = function (configuration?: Configurati
         /**
          * 
          * @summary Download project data.
-         * @param {'Dataset' | 'Model' | 'WrapperScript'} dataType dataType
+         * @param {'Model' | 'WrapperScript'} dataType dataType
          * @param {number} id The project ID.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        downloadProjectData: async (dataType: 'Dataset' | 'Model' | 'WrapperScript', id: number, options: any = {}): Promise<RequestArgs> => {
+        downloadProjectData: async (dataType: 'Model' | 'WrapperScript', id: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'dataType' is not null or undefined
             assertParamExists('downloadProjectData', 'dataType', dataType)
             // verify required parameter 'id' is not null or undefined
@@ -3145,7 +9368,7 @@ export const ProjectApiAxiosParamCreator = function (configuration?: Configurati
 
 
     
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
@@ -3161,7 +9384,7 @@ export const ProjectApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getProject: async (id: number, options: any = {}): Promise<RequestArgs> => {
+        getProject: async (id: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('getProject', 'id', id)
             const localVarPath = `/api/v1/projects/{id}`
@@ -3182,7 +9405,7 @@ export const ProjectApiAxiosParamCreator = function (configuration?: Configurati
 
 
     
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
@@ -3194,10 +9417,11 @@ export const ProjectApiAxiosParamCreator = function (configuration?: Configurati
         /**
          * 
          * @summary Get list of projects.
+         * @param {number} [organizationId] The optional organization ID.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getProjects: async (options: any = {}): Promise<RequestArgs> => {
+        getProjects: async (organizationId?: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/v1/projects`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -3213,9 +9437,13 @@ export const ProjectApiAxiosParamCreator = function (configuration?: Configurati
             // authentication JWT required
             await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
 
+            if (organizationId !== undefined) {
+                localVarQueryParameter['organizationId'] = organizationId;
+            }
+
 
     
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
@@ -3232,7 +9460,7 @@ export const ProjectApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateProject: async (id: number, projectRequest: ProjectRequest, options: any = {}): Promise<RequestArgs> => {
+        updateProject: async (id: number, projectRequest: ProjectRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('updateProject', 'id', id)
             // verify required parameter 'projectRequest' is not null or undefined
@@ -3257,7 +9485,7 @@ export const ProjectApiAxiosParamCreator = function (configuration?: Configurati
     
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(projectRequest, localVarRequestOptions, configuration)
@@ -3270,13 +9498,13 @@ export const ProjectApiAxiosParamCreator = function (configuration?: Configurati
         /**
          * 
          * @summary Upload project data.
-         * @param {'Dataset' | 'Model' | 'WrapperScript'} dataType dataType
+         * @param {'Model' | 'WrapperScript'} dataType dataType
          * @param {number} id The project ID.
-         * @param {any} [file] 
+         * @param {File} [file] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        uploadProjectData: async (dataType: 'Dataset' | 'Model' | 'WrapperScript', id: number, file?: any, options: any = {}): Promise<RequestArgs> => {
+        uploadProjectData: async (dataType: 'Model' | 'WrapperScript', id: number, file?: File, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'dataType' is not null or undefined
             assertParamExists('uploadProjectData', 'dataType', dataType)
             // verify required parameter 'id' is not null or undefined
@@ -3310,10 +9538,107 @@ export const ProjectApiAxiosParamCreator = function (configuration?: Configurati
     
             localVarHeaderParameter['Content-Type'] = 'multipart/form-data';
     
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = localVarFormParams;
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Upload a file to the project and return a reference.
+         * @param {number} id The project ID.
+         * @param {string} type Upload type - \&#39;transform\&#39; for transform parameters
+         * @param {File} [file] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        uploadProjectFile: async (id: number, type: string, file?: File, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('uploadProjectFile', 'id', id)
+            // verify required parameter 'type' is not null or undefined
+            assertParamExists('uploadProjectFile', 'type', type)
+            const localVarPath = `/api/v1/projects/{id}/files`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+            const localVarFormParams = new ((configuration && configuration.formDataCtor) || FormData)();
+
+            // authentication JWT required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            if (type !== undefined) {
+                localVarQueryParameter['type'] = type;
+            }
+
+
+            if (file !== undefined) { 
+                localVarFormParams.append('file', file as any);
+            }
+    
+    
+            localVarHeaderParameter['Content-Type'] = 'multipart/form-data';
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = localVarFormParams;
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Use an existing model to configure the project.
+         * @param {number} id The project ID.
+         * @param {number} modelId The model ID.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        useModel: async (id: number, modelId: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('useModel', 'id', id)
+            // verify required parameter 'modelId' is not null or undefined
+            assertParamExists('useModel', 'modelId', modelId)
+            const localVarPath = `/api/v1/projects/{id}/usemodel`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JWT required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            if (modelId !== undefined) {
+                localVarQueryParameter['modelId'] = modelId;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -3327,7 +9652,7 @@ export const ProjectApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        verifyProject: async (id: number, options: any = {}): Promise<RequestArgs> => {
+        verifyProject: async (id: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('verifyProject', 'id', id)
             const localVarPath = `/api/v1/projects/{id}/verify`
@@ -3348,7 +9673,7 @@ export const ProjectApiAxiosParamCreator = function (configuration?: Configurati
 
 
     
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
@@ -3375,19 +9700,45 @@ export const ProjectApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async addProject(organizationId: number, project: ProjectRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProjectResponse>> {
+        async addProject(organizationId: number, project: ProjectRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProjectResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.addProject(organizationId, project, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * 
+         * @summary Make a copy of the project available to (optionally) another organization.
+         * @param {number} id The project ID.
+         * @param {ProjectRequest} newProject Optional new project information.
+         * @param {number} [destOrgId] The optional destination organization id.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async copyProject(id: number, newProject: ProjectRequest, destOrgId?: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProjectResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.copyProject(id, newProject, destOrgId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Make a copy of the project model available to the organization.
+         * @param {number} id The project ID.
+         * @param {ModelRequest} model New model information.
+         * @param {number} [destModelId] The optional destination model id.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async copyProjectModel(id: number, model: ModelRequest, destModelId?: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.copyProjectModel(id, model, destModelId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @summary Delete project model data.
-         * @param {'Dataset' | 'Model' | 'WrapperScript'} dataType dataType
+         * @param {'Model' | 'WrapperScript'} dataType dataType
          * @param {number} id The project ID.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteData(dataType: 'Dataset' | 'Model' | 'WrapperScript', id: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProjectResponse>> {
+        async deleteData(dataType: 'Model' | 'WrapperScript', id: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProjectResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteData(dataType, id, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -3398,19 +9749,19 @@ export const ProjectApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteProject(id: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async deleteProject(id: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteProject(id, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * 
          * @summary Download project data.
-         * @param {'Dataset' | 'Model' | 'WrapperScript'} dataType dataType
+         * @param {'Model' | 'WrapperScript'} dataType dataType
          * @param {number} id The project ID.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async downloadProjectData(dataType: 'Dataset' | 'Model' | 'WrapperScript', id: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
+        async downloadProjectData(dataType: 'Model' | 'WrapperScript', id: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<File>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.downloadProjectData(dataType, id, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -3421,18 +9772,19 @@ export const ProjectApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getProject(id: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProjectResponse>> {
+        async getProject(id: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProjectResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getProject(id, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * 
          * @summary Get list of projects.
+         * @param {number} [organizationId] The optional organization ID.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getProjects(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ProjectResponse>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getProjects(options);
+        async getProjects(organizationId?: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ProjectResponse>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getProjects(organizationId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -3443,21 +9795,46 @@ export const ProjectApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async updateProject(id: number, projectRequest: ProjectRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProjectResponse>> {
+        async updateProject(id: number, projectRequest: ProjectRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProjectResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.updateProject(id, projectRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * 
          * @summary Upload project data.
-         * @param {'Dataset' | 'Model' | 'WrapperScript'} dataType dataType
+         * @param {'Model' | 'WrapperScript'} dataType dataType
          * @param {number} id The project ID.
-         * @param {any} [file] 
+         * @param {File} [file] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async uploadProjectData(dataType: 'Dataset' | 'Model' | 'WrapperScript', id: number, file?: any, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProjectResponse>> {
+        async uploadProjectData(dataType: 'Model' | 'WrapperScript', id: number, file?: File, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProjectResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.uploadProjectData(dataType, id, file, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Upload a file to the project and return a reference.
+         * @param {number} id The project ID.
+         * @param {string} type Upload type - \&#39;transform\&#39; for transform parameters
+         * @param {File} [file] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async uploadProjectFile(id: number, type: string, file?: File, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.uploadProjectFile(id, type, file, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Use an existing model to configure the project.
+         * @param {number} id The project ID.
+         * @param {number} modelId The model ID.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async useModel(id: number, modelId: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProjectResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.useModel(id, modelId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -3467,7 +9844,7 @@ export const ProjectApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async verifyProject(id: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProjectResponse>> {
+        async verifyProject(id: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProjectResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.verifyProject(id, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -3494,13 +9871,37 @@ export const ProjectApiFactory = function (configuration?: Configuration, basePa
         },
         /**
          * 
+         * @summary Make a copy of the project available to (optionally) another organization.
+         * @param {number} id The project ID.
+         * @param {ProjectRequest} newProject Optional new project information.
+         * @param {number} [destOrgId] The optional destination organization id.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        copyProject(id: number, newProject: ProjectRequest, destOrgId?: number, options?: any): AxiosPromise<ProjectResponse> {
+            return localVarFp.copyProject(id, newProject, destOrgId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Make a copy of the project model available to the organization.
+         * @param {number} id The project ID.
+         * @param {ModelRequest} model New model information.
+         * @param {number} [destModelId] The optional destination model id.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        copyProjectModel(id: number, model: ModelRequest, destModelId?: number, options?: any): AxiosPromise<void> {
+            return localVarFp.copyProjectModel(id, model, destModelId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Delete project model data.
-         * @param {'Dataset' | 'Model' | 'WrapperScript'} dataType dataType
+         * @param {'Model' | 'WrapperScript'} dataType dataType
          * @param {number} id The project ID.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteData(dataType: 'Dataset' | 'Model' | 'WrapperScript', id: number, options?: any): AxiosPromise<ProjectResponse> {
+        deleteData(dataType: 'Model' | 'WrapperScript', id: number, options?: any): AxiosPromise<ProjectResponse> {
             return localVarFp.deleteData(dataType, id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -3516,12 +9917,12 @@ export const ProjectApiFactory = function (configuration?: Configuration, basePa
         /**
          * 
          * @summary Download project data.
-         * @param {'Dataset' | 'Model' | 'WrapperScript'} dataType dataType
+         * @param {'Model' | 'WrapperScript'} dataType dataType
          * @param {number} id The project ID.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        downloadProjectData(dataType: 'Dataset' | 'Model' | 'WrapperScript', id: number, options?: any): AxiosPromise<any> {
+        downloadProjectData(dataType: 'Model' | 'WrapperScript', id: number, options?: any): AxiosPromise<File> {
             return localVarFp.downloadProjectData(dataType, id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -3537,11 +9938,12 @@ export const ProjectApiFactory = function (configuration?: Configuration, basePa
         /**
          * 
          * @summary Get list of projects.
+         * @param {number} [organizationId] The optional organization ID.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getProjects(options?: any): AxiosPromise<Array<ProjectResponse>> {
-            return localVarFp.getProjects(options).then((request) => request(axios, basePath));
+        getProjects(organizationId?: number, options?: any): AxiosPromise<Array<ProjectResponse>> {
+            return localVarFp.getProjects(organizationId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -3557,14 +9959,37 @@ export const ProjectApiFactory = function (configuration?: Configuration, basePa
         /**
          * 
          * @summary Upload project data.
-         * @param {'Dataset' | 'Model' | 'WrapperScript'} dataType dataType
+         * @param {'Model' | 'WrapperScript'} dataType dataType
          * @param {number} id The project ID.
-         * @param {any} [file] 
+         * @param {File} [file] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        uploadProjectData(dataType: 'Dataset' | 'Model' | 'WrapperScript', id: number, file?: any, options?: any): AxiosPromise<ProjectResponse> {
+        uploadProjectData(dataType: 'Model' | 'WrapperScript', id: number, file?: File, options?: any): AxiosPromise<ProjectResponse> {
             return localVarFp.uploadProjectData(dataType, id, file, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Upload a file to the project and return a reference.
+         * @param {number} id The project ID.
+         * @param {string} type Upload type - \&#39;transform\&#39; for transform parameters
+         * @param {File} [file] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        uploadProjectFile(id: number, type: string, file?: File, options?: any): AxiosPromise<string> {
+            return localVarFp.uploadProjectFile(id, type, file, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Use an existing model to configure the project.
+         * @param {number} id The project ID.
+         * @param {number} modelId The model ID.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        useModel(id: number, modelId: number, options?: any): AxiosPromise<ProjectResponse> {
+            return localVarFp.useModel(id, modelId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -3595,20 +10020,48 @@ export class ProjectApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof ProjectApi
      */
-    public addProject(organizationId: number, project: ProjectRequest, options?: any) {
+    public addProject(organizationId: number, project: ProjectRequest, options?: AxiosRequestConfig) {
         return ProjectApiFp(this.configuration).addProject(organizationId, project, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
+     * @summary Make a copy of the project available to (optionally) another organization.
+     * @param {number} id The project ID.
+     * @param {ProjectRequest} newProject Optional new project information.
+     * @param {number} [destOrgId] The optional destination organization id.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ProjectApi
+     */
+    public copyProject(id: number, newProject: ProjectRequest, destOrgId?: number, options?: AxiosRequestConfig) {
+        return ProjectApiFp(this.configuration).copyProject(id, newProject, destOrgId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Make a copy of the project model available to the organization.
+     * @param {number} id The project ID.
+     * @param {ModelRequest} model New model information.
+     * @param {number} [destModelId] The optional destination model id.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ProjectApi
+     */
+    public copyProjectModel(id: number, model: ModelRequest, destModelId?: number, options?: AxiosRequestConfig) {
+        return ProjectApiFp(this.configuration).copyProjectModel(id, model, destModelId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
      * @summary Delete project model data.
-     * @param {'Dataset' | 'Model' | 'WrapperScript'} dataType dataType
+     * @param {'Model' | 'WrapperScript'} dataType dataType
      * @param {number} id The project ID.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ProjectApi
      */
-    public deleteData(dataType: 'Dataset' | 'Model' | 'WrapperScript', id: number, options?: any) {
+    public deleteData(dataType: 'Model' | 'WrapperScript', id: number, options?: AxiosRequestConfig) {
         return ProjectApiFp(this.configuration).deleteData(dataType, id, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -3620,20 +10073,20 @@ export class ProjectApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof ProjectApi
      */
-    public deleteProject(id: number, options?: any) {
+    public deleteProject(id: number, options?: AxiosRequestConfig) {
         return ProjectApiFp(this.configuration).deleteProject(id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
      * @summary Download project data.
-     * @param {'Dataset' | 'Model' | 'WrapperScript'} dataType dataType
+     * @param {'Model' | 'WrapperScript'} dataType dataType
      * @param {number} id The project ID.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ProjectApi
      */
-    public downloadProjectData(dataType: 'Dataset' | 'Model' | 'WrapperScript', id: number, options?: any) {
+    public downloadProjectData(dataType: 'Model' | 'WrapperScript', id: number, options?: AxiosRequestConfig) {
         return ProjectApiFp(this.configuration).downloadProjectData(dataType, id, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -3645,19 +10098,20 @@ export class ProjectApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof ProjectApi
      */
-    public getProject(id: number, options?: any) {
+    public getProject(id: number, options?: AxiosRequestConfig) {
         return ProjectApiFp(this.configuration).getProject(id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
      * @summary Get list of projects.
+     * @param {number} [organizationId] The optional organization ID.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ProjectApi
      */
-    public getProjects(options?: any) {
-        return ProjectApiFp(this.configuration).getProjects(options).then((request) => request(this.axios, this.basePath));
+    public getProjects(organizationId?: number, options?: AxiosRequestConfig) {
+        return ProjectApiFp(this.configuration).getProjects(organizationId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3669,22 +10123,49 @@ export class ProjectApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof ProjectApi
      */
-    public updateProject(id: number, projectRequest: ProjectRequest, options?: any) {
+    public updateProject(id: number, projectRequest: ProjectRequest, options?: AxiosRequestConfig) {
         return ProjectApiFp(this.configuration).updateProject(id, projectRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
      * @summary Upload project data.
-     * @param {'Dataset' | 'Model' | 'WrapperScript'} dataType dataType
+     * @param {'Model' | 'WrapperScript'} dataType dataType
      * @param {number} id The project ID.
-     * @param {any} [file] 
+     * @param {File} [file] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ProjectApi
      */
-    public uploadProjectData(dataType: 'Dataset' | 'Model' | 'WrapperScript', id: number, file?: any, options?: any) {
+    public uploadProjectData(dataType: 'Model' | 'WrapperScript', id: number, file?: File, options?: AxiosRequestConfig) {
         return ProjectApiFp(this.configuration).uploadProjectData(dataType, id, file, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Upload a file to the project and return a reference.
+     * @param {number} id The project ID.
+     * @param {string} type Upload type - \&#39;transform\&#39; for transform parameters
+     * @param {File} [file] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ProjectApi
+     */
+    public uploadProjectFile(id: number, type: string, file?: File, options?: AxiosRequestConfig) {
+        return ProjectApiFp(this.configuration).uploadProjectFile(id, type, file, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Use an existing model to configure the project.
+     * @param {number} id The project ID.
+     * @param {number} modelId The model ID.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ProjectApi
+     */
+    public useModel(id: number, modelId: number, options?: AxiosRequestConfig) {
+        return ProjectApiFp(this.configuration).useModel(id, modelId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3695,7 +10176,7 @@ export class ProjectApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof ProjectApi
      */
-    public verifyProject(id: number, options?: any) {
+    public verifyProject(id: number, options?: AxiosRequestConfig) {
         return ProjectApiFp(this.configuration).verifyProject(id, options).then((request) => request(this.axios, this.basePath));
     }
 }
@@ -3714,7 +10195,7 @@ export const RegisterApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        register: async (request: RegisterRequest, options: any = {}): Promise<RequestArgs> => {
+        register: async (request: RegisterRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'request' is not null or undefined
             assertParamExists('register', 'request', request)
             const localVarPath = `/api/v1/register`;
@@ -3736,7 +10217,7 @@ export const RegisterApiAxiosParamCreator = function (configuration?: Configurat
     
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(request, localVarRequestOptions, configuration)
@@ -3748,12 +10229,12 @@ export const RegisterApiAxiosParamCreator = function (configuration?: Configurat
         },
         /**
          * 
-         * @summary Send user invite
+         * @summary Send user invite - admin permissions required.
          * @param {InviteRequest} request request
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        sendInvite: async (request: InviteRequest, options: any = {}): Promise<RequestArgs> => {
+        sendInvite: async (request: InviteRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'request' is not null or undefined
             assertParamExists('sendInvite', 'request', request)
             const localVarPath = `/api/v1/register/invite`;
@@ -3775,7 +10256,7 @@ export const RegisterApiAxiosParamCreator = function (configuration?: Configurat
     
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(request, localVarRequestOptions, configuration)
@@ -3802,18 +10283,18 @@ export const RegisterApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async register(request: RegisterRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AuthorizedUserResponse>> {
+        async register(request: RegisterRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AuthorizedUserResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.register(request, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * 
-         * @summary Send user invite
+         * @summary Send user invite - admin permissions required.
          * @param {InviteRequest} request request
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async sendInvite(request: InviteRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async sendInvite(request: InviteRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.sendInvite(request, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -3839,7 +10320,7 @@ export const RegisterApiFactory = function (configuration?: Configuration, baseP
         },
         /**
          * 
-         * @summary Send user invite
+         * @summary Send user invite - admin permissions required.
          * @param {InviteRequest} request request
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -3865,19 +10346,19 @@ export class RegisterApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof RegisterApi
      */
-    public register(request: RegisterRequest, options?: any) {
+    public register(request: RegisterRequest, options?: AxiosRequestConfig) {
         return RegisterApiFp(this.configuration).register(request, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
-     * @summary Send user invite
+     * @summary Send user invite - admin permissions required.
      * @param {InviteRequest} request request
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof RegisterApi
      */
-    public sendInvite(request: InviteRequest, options?: any) {
+    public sendInvite(request: InviteRequest, options?: AxiosRequestConfig) {
         return RegisterApiFp(this.configuration).sendInvite(request, options).then((request) => request(this.axios, this.basePath));
     }
 }
@@ -3896,7 +10377,7 @@ export const ReportsApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        addReport: async (report: ReportRequest, options: any = {}): Promise<RequestArgs> => {
+        addReport: async (report: ReportRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'report' is not null or undefined
             assertParamExists('addReport', 'report', report)
             const localVarPath = `/api/v1/reports`;
@@ -3918,7 +10399,7 @@ export const ReportsApiAxiosParamCreator = function (configuration?: Configurati
     
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(report, localVarRequestOptions, configuration)
@@ -3935,7 +10416,7 @@ export const ReportsApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteReport: async (id: number, options: any = {}): Promise<RequestArgs> => {
+        deleteReport: async (id: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('deleteReport', 'id', id)
             const localVarPath = `/api/v1/reports/{id}`
@@ -3956,7 +10437,7 @@ export const ReportsApiAxiosParamCreator = function (configuration?: Configurati
 
 
     
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
@@ -3972,7 +10453,7 @@ export const ReportsApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        downloadReportData: async (id: number, options: any = {}): Promise<RequestArgs> => {
+        downloadReportData: async (id: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('downloadReportData', 'id', id)
             const localVarPath = `/api/v1/reports/{id}/download`
@@ -3993,7 +10474,7 @@ export const ReportsApiAxiosParamCreator = function (configuration?: Configurati
 
 
     
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
@@ -4009,7 +10490,7 @@ export const ReportsApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getReport: async (reportId: number, options: any = {}): Promise<RequestArgs> => {
+        getReport: async (reportId: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'reportId' is not null or undefined
             assertParamExists('getReport', 'reportId', reportId)
             const localVarPath = `/api/v1/reports/{reportId}`
@@ -4030,7 +10511,88 @@ export const ReportsApiAxiosParamCreator = function (configuration?: Configurati
 
 
     
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get file from report.
+         * @param {string} fileName fileName
+         * @param {number} id id
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getReportFile: async (fileName: string, id: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'fileName' is not null or undefined
+            assertParamExists('getReportFile', 'fileName', fileName)
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('getReportFile', 'id', id)
+            const localVarPath = `/api/v1/reports/{id}/file`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JWT required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            if (fileName !== undefined) {
+                localVarQueryParameter['fileName'] = fileName;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get meta data.
+         * @param {number} id id
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getReportMetaData: async (id: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('getReportMetaData', 'id', id)
+            const localVarPath = `/api/v1/reports/{id}/meta`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JWT required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
@@ -4046,7 +10608,7 @@ export const ReportsApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getReports: async (testId: number, options: any = {}): Promise<RequestArgs> => {
+        getReports: async (testId: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'testId' is not null or undefined
             assertParamExists('getReports', 'testId', testId)
             const localVarPath = `/api/v1/reports`;
@@ -4070,7 +10632,7 @@ export const ReportsApiAxiosParamCreator = function (configuration?: Configurati
 
 
     
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
@@ -4090,7 +10652,7 @@ export const ReportsApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        viewData: async (aidx: number, didx: number, id: number, idx: number, tag: string, options: any = {}): Promise<RequestArgs> => {
+        viewData: async (aidx: number, didx: number, id: number, idx: number, tag: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'aidx' is not null or undefined
             assertParamExists('viewData', 'aidx', aidx)
             // verify required parameter 'didx' is not null or undefined
@@ -4123,7 +10685,7 @@ export const ReportsApiAxiosParamCreator = function (configuration?: Configurati
 
 
     
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
@@ -4149,7 +10711,7 @@ export const ReportsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async addReport(report: ReportRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ReportResponse>> {
+        async addReport(report: ReportRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ReportResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.addReport(report, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -4160,7 +10722,7 @@ export const ReportsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteReport(id: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async deleteReport(id: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteReport(id, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -4171,7 +10733,7 @@ export const ReportsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async downloadReportData(id: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
+        async downloadReportData(id: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<File>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.downloadReportData(id, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -4182,8 +10744,31 @@ export const ReportsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getReport(reportId: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ReportResponse>> {
+        async getReport(reportId: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ReportResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getReport(reportId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Get file from report.
+         * @param {string} fileName fileName
+         * @param {number} id id
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getReportFile(fileName: string, id: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<File>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getReportFile(fileName, id, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Get meta data.
+         * @param {number} id id
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getReportMetaData(id: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<File>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getReportMetaData(id, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -4193,7 +10778,7 @@ export const ReportsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getReports(testId: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ReportResponse>>> {
+        async getReports(testId: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ReportResponse>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getReports(testId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -4208,7 +10793,7 @@ export const ReportsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async viewData(aidx: number, didx: number, id: number, idx: number, tag: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
+        async viewData(aidx: number, didx: number, id: number, idx: number, tag: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<File>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.viewData(aidx, didx, id, idx, tag, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -4249,7 +10834,7 @@ export const ReportsApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        downloadReportData(id: number, options?: any): AxiosPromise<any> {
+        downloadReportData(id: number, options?: any): AxiosPromise<File> {
             return localVarFp.downloadReportData(id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -4261,6 +10846,27 @@ export const ReportsApiFactory = function (configuration?: Configuration, basePa
          */
         getReport(reportId: number, options?: any): AxiosPromise<ReportResponse> {
             return localVarFp.getReport(reportId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get file from report.
+         * @param {string} fileName fileName
+         * @param {number} id id
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getReportFile(fileName: string, id: number, options?: any): AxiosPromise<File> {
+            return localVarFp.getReportFile(fileName, id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get meta data.
+         * @param {number} id id
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getReportMetaData(id: number, options?: any): AxiosPromise<File> {
+            return localVarFp.getReportMetaData(id, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -4283,7 +10889,7 @@ export const ReportsApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        viewData(aidx: number, didx: number, id: number, idx: number, tag: string, options?: any): AxiosPromise<any> {
+        viewData(aidx: number, didx: number, id: number, idx: number, tag: string, options?: any): AxiosPromise<File> {
             return localVarFp.viewData(aidx, didx, id, idx, tag, options).then((request) => request(axios, basePath));
         },
     };
@@ -4304,7 +10910,7 @@ export class ReportsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof ReportsApi
      */
-    public addReport(report: ReportRequest, options?: any) {
+    public addReport(report: ReportRequest, options?: AxiosRequestConfig) {
         return ReportsApiFp(this.configuration).addReport(report, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -4316,7 +10922,7 @@ export class ReportsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof ReportsApi
      */
-    public deleteReport(id: number, options?: any) {
+    public deleteReport(id: number, options?: AxiosRequestConfig) {
         return ReportsApiFp(this.configuration).deleteReport(id, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -4328,7 +10934,7 @@ export class ReportsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof ReportsApi
      */
-    public downloadReportData(id: number, options?: any) {
+    public downloadReportData(id: number, options?: AxiosRequestConfig) {
         return ReportsApiFp(this.configuration).downloadReportData(id, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -4340,8 +10946,33 @@ export class ReportsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof ReportsApi
      */
-    public getReport(reportId: number, options?: any) {
+    public getReport(reportId: number, options?: AxiosRequestConfig) {
         return ReportsApiFp(this.configuration).getReport(reportId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get file from report.
+     * @param {string} fileName fileName
+     * @param {number} id id
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ReportsApi
+     */
+    public getReportFile(fileName: string, id: number, options?: AxiosRequestConfig) {
+        return ReportsApiFp(this.configuration).getReportFile(fileName, id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get meta data.
+     * @param {number} id id
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ReportsApi
+     */
+    public getReportMetaData(id: number, options?: AxiosRequestConfig) {
+        return ReportsApiFp(this.configuration).getReportMetaData(id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4352,7 +10983,7 @@ export class ReportsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof ReportsApi
      */
-    public getReports(testId: number, options?: any) {
+    public getReports(testId: number, options?: AxiosRequestConfig) {
         return ReportsApiFp(this.configuration).getReports(testId, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -4368,7 +10999,7 @@ export class ReportsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof ReportsApi
      */
-    public viewData(aidx: number, didx: number, id: number, idx: number, tag: string, options?: any) {
+    public viewData(aidx: number, didx: number, id: number, idx: number, tag: string, options?: AxiosRequestConfig) {
         return ReportsApiFp(this.configuration).viewData(aidx, didx, id, idx, tag, options).then((request) => request(this.axios, this.basePath));
     }
 }
@@ -4382,56 +11013,13 @@ export const TestApiAxiosParamCreator = function (configuration?: Configuration)
     return {
         /**
          * 
-         * @summary Add attack.
-         * @param {number} testId testId
-         * @param {FilterRequest} attackRequest attackRequest
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        addAttack: async (testId: number, attackRequest: FilterRequest, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'testId' is not null or undefined
-            assertParamExists('addAttack', 'testId', testId)
-            // verify required parameter 'attackRequest' is not null or undefined
-            assertParamExists('addAttack', 'attackRequest', attackRequest)
-            const localVarPath = `/api/v1/tests/{testId}/attack`
-                .replace(`{${"testId"}}`, encodeURIComponent(String(testId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication JWT required
-            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(attackRequest, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
          * @summary Add defense.
          * @param {number} testId The test id.
-         * @param {DefenseRequest} defenseRequest defenseRequest
+         * @param {DefenseRequest} defenseRequest The defense object
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        addDefense: async (testId: number, defenseRequest: DefenseRequest, options: any = {}): Promise<RequestArgs> => {
+        addDefense: async (testId: number, defenseRequest: DefenseRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'testId' is not null or undefined
             assertParamExists('addDefense', 'testId', testId)
             // verify required parameter 'defenseRequest' is not null or undefined
@@ -4456,7 +11044,7 @@ export const TestApiAxiosParamCreator = function (configuration?: Configuration)
     
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(defenseRequest, localVarRequestOptions, configuration)
@@ -4468,18 +11056,18 @@ export const TestApiAxiosParamCreator = function (configuration?: Configuration)
         },
         /**
          * 
-         * @summary Add noise.
-         * @param {number} id id
-         * @param {FilterRequest} filterRequest filterRequest
+         * @summary Add a filter.
+         * @param {number} id The test id.
+         * @param {FilterRequest} attackRequest attackRequest
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        addNoise: async (id: number, filterRequest: FilterRequest, options: any = {}): Promise<RequestArgs> => {
+        addFilter: async (id: number, attackRequest: FilterRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('addNoise', 'id', id)
-            // verify required parameter 'filterRequest' is not null or undefined
-            assertParamExists('addNoise', 'filterRequest', filterRequest)
-            const localVarPath = `/api/v1/tests/{id}/noise`
+            assertParamExists('addFilter', 'id', id)
+            // verify required parameter 'attackRequest' is not null or undefined
+            assertParamExists('addFilter', 'attackRequest', attackRequest)
+            const localVarPath = `/api/v1/tests/{id}/filter`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -4499,10 +11087,10 @@ export const TestApiAxiosParamCreator = function (configuration?: Configuration)
     
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(filterRequest, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(attackRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -4511,12 +11099,12 @@ export const TestApiAxiosParamCreator = function (configuration?: Configuration)
         },
         /**
          * 
-         * @summary Add new test.
+         * @summary Add a new test.
          * @param {TestRequest} test test
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        addTest: async (test: TestRequest, options: any = {}): Promise<RequestArgs> => {
+        addTest: async (test: TestRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'test' is not null or undefined
             assertParamExists('addTest', 'test', test)
             const localVarPath = `/api/v1/tests`;
@@ -4538,7 +11126,7 @@ export const TestApiAxiosParamCreator = function (configuration?: Configuration)
     
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(test, localVarRequestOptions, configuration)
@@ -4555,7 +11143,7 @@ export const TestApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteTest: async (id: number, options: any = {}): Promise<RequestArgs> => {
+        deleteTest: async (id: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('deleteTest', 'id', id)
             const localVarPath = `/api/v1/tests/{id}`
@@ -4576,7 +11164,7 @@ export const TestApiAxiosParamCreator = function (configuration?: Configuration)
 
 
     
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
@@ -4592,7 +11180,7 @@ export const TestApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getDefenses: async (testId: number, options: any = {}): Promise<RequestArgs> => {
+        getDefenses: async (testId: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'testId' is not null or undefined
             assertParamExists('getDefenses', 'testId', testId)
             const localVarPath = `/api/v1/tests/{testId}/defenses`
@@ -4613,7 +11201,7 @@ export const TestApiAxiosParamCreator = function (configuration?: Configuration)
 
 
     
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
@@ -4629,7 +11217,7 @@ export const TestApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getStatus: async (testId: number, options: any = {}): Promise<RequestArgs> => {
+        getStatus: async (testId: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'testId' is not null or undefined
             assertParamExists('getStatus', 'testId', testId)
             const localVarPath = `/api/v1/tests/{testId}/status`
@@ -4650,7 +11238,7 @@ export const TestApiAxiosParamCreator = function (configuration?: Configuration)
 
 
     
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
@@ -4661,12 +11249,12 @@ export const TestApiAxiosParamCreator = function (configuration?: Configuration)
         },
         /**
          * 
-         * @summary Get tests.
-         * @param {number} projectId projectId
+         * @summary Get tests for a project.
+         * @param {number} projectId The project id.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTests: async (projectId: number, options: any = {}): Promise<RequestArgs> => {
+        getTests: async (projectId: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'projectId' is not null or undefined
             assertParamExists('getTests', 'projectId', projectId)
             const localVarPath = `/api/v1/tests`;
@@ -4690,7 +11278,7 @@ export const TestApiAxiosParamCreator = function (configuration?: Configuration)
 
 
     
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
@@ -4707,7 +11295,7 @@ export const TestApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        removeDefense: async (id: number, testId: number, options: any = {}): Promise<RequestArgs> => {
+        removeDefense: async (id: number, testId: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('removeDefense', 'id', id)
             // verify required parameter 'testId' is not null or undefined
@@ -4731,7 +11319,7 @@ export const TestApiAxiosParamCreator = function (configuration?: Configuration)
 
 
     
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
@@ -4742,13 +11330,13 @@ export const TestApiAxiosParamCreator = function (configuration?: Configuration)
         },
         /**
          * 
-         * @summary Remove filter.
+         * @summary Remove a filter.
          * @param {number} id The filter id.
          * @param {number} testId The test id.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        removeFilter: async (id: number, testId: number, options: any = {}): Promise<RequestArgs> => {
+        removeFilter: async (id: number, testId: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('removeFilter', 'id', id)
             // verify required parameter 'testId' is not null or undefined
@@ -4772,7 +11360,7 @@ export const TestApiAxiosParamCreator = function (configuration?: Configuration)
 
 
     
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
@@ -4784,11 +11372,11 @@ export const TestApiAxiosParamCreator = function (configuration?: Configuration)
         /**
          * 
          * @summary Start a test.
-         * @param {number} testId testId
+         * @param {number} testId The test id.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        startTest: async (testId: number, options: any = {}): Promise<RequestArgs> => {
+        startTest: async (testId: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'testId' is not null or undefined
             assertParamExists('startTest', 'testId', testId)
             const localVarPath = `/api/v1/tests/{testId}/start`
@@ -4809,7 +11397,7 @@ export const TestApiAxiosParamCreator = function (configuration?: Configuration)
 
 
     
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
@@ -4820,12 +11408,12 @@ export const TestApiAxiosParamCreator = function (configuration?: Configuration)
         },
         /**
          * 
-         * @summary Stop a test.
+         * @summary Stop all the running jobs in a test.
          * @param {number} id id
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        stopTest: async (id: number, options: any = {}): Promise<RequestArgs> => {
+        stopTest: async (id: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('stopTest', 'id', id)
             const localVarPath = `/api/v1/tests/{id}/stop`
@@ -4846,7 +11434,7 @@ export const TestApiAxiosParamCreator = function (configuration?: Configuration)
 
 
     
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
@@ -4857,13 +11445,19 @@ export const TestApiAxiosParamCreator = function (configuration?: Configuration)
         },
         /**
          * 
-         * @summary Update test status.
+         * @summary Update test status - can only be called by worker instance.
+         * @param {number} runId runId
+         * @param {number} taskId taskId
          * @param {number} testId testId
          * @param {StatusRequest} status status
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateStatus: async (testId: number, status: StatusRequest, options: any = {}): Promise<RequestArgs> => {
+        updateStatus: async (runId: number, taskId: number, testId: number, status: StatusRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'runId' is not null or undefined
+            assertParamExists('updateStatus', 'runId', runId)
+            // verify required parameter 'taskId' is not null or undefined
+            assertParamExists('updateStatus', 'taskId', taskId)
             // verify required parameter 'testId' is not null or undefined
             assertParamExists('updateStatus', 'testId', testId)
             // verify required parameter 'status' is not null or undefined
@@ -4884,11 +11478,19 @@ export const TestApiAxiosParamCreator = function (configuration?: Configuration)
             // authentication JWT required
             await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
 
+            if (runId !== undefined) {
+                localVarQueryParameter['runId'] = runId;
+            }
+
+            if (taskId !== undefined) {
+                localVarQueryParameter['taskId'] = taskId;
+            }
+
 
     
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(status, localVarRequestOptions, configuration)
@@ -4906,7 +11508,7 @@ export const TestApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateTest: async (id: number, testRequest: TestRequest, options: any = {}): Promise<RequestArgs> => {
+        updateTest: async (id: number, testRequest: TestRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('updateTest', 'id', id)
             // verify required parameter 'testRequest' is not null or undefined
@@ -4931,7 +11533,7 @@ export const TestApiAxiosParamCreator = function (configuration?: Configuration)
     
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(testRequest, localVarRequestOptions, configuration)
@@ -4943,19 +11545,18 @@ export const TestApiAxiosParamCreator = function (configuration?: Configuration)
         },
         /**
          * 
-         * @summary Upload data.
-         * @param {'Dataset' | 'Model' | 'WrapperScript'} dataType dataType
-         * @param {number} id id
-         * @param {any} [file] 
+         * @summary Update test run.
+         * @param {number} id The test run ID.
+         * @param {TestRunRequest} request request
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        uploadData: async (dataType: 'Dataset' | 'Model' | 'WrapperScript', id: number, file?: any, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'dataType' is not null or undefined
-            assertParamExists('uploadData', 'dataType', dataType)
+        updateTestRun: async (id: number, request: TestRunRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('uploadData', 'id', id)
-            const localVarPath = `/api/v1/tests/{id}/data`
+            assertParamExists('updateTestRun', 'id', id)
+            // verify required parameter 'request' is not null or undefined
+            assertParamExists('updateTestRun', 'request', request)
+            const localVarPath = `/api/v1/tests/testrun/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -4964,30 +11565,21 @@ export const TestApiAxiosParamCreator = function (configuration?: Configuration)
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-            const localVarFormParams = new ((configuration && configuration.formDataCtor) || FormData)();
 
             // authentication JWT required
             await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
 
-            if (dataType !== undefined) {
-                localVarQueryParameter['dataType'] = dataType;
-            }
 
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
 
-            if (file !== undefined) { 
-                localVarFormParams.append('file', file as any);
-            }
-    
-    
-            localVarHeaderParameter['Content-Type'] = 'multipart/form-data';
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = localVarFormParams;
+            localVarRequestOptions.data = serializeDataIfNeeded(request, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -5006,48 +11598,36 @@ export const TestApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
-         * @summary Add attack.
-         * @param {number} testId testId
-         * @param {FilterRequest} attackRequest attackRequest
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async addAttack(testId: number, attackRequest: FilterRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TestResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.addAttack(testId, attackRequest, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
          * @summary Add defense.
          * @param {number} testId The test id.
-         * @param {DefenseRequest} defenseRequest defenseRequest
+         * @param {DefenseRequest} defenseRequest The defense object
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async addDefense(testId: number, defenseRequest: DefenseRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TestResponse>> {
+        async addDefense(testId: number, defenseRequest: DefenseRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TestResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.addDefense(testId, defenseRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * 
-         * @summary Add noise.
-         * @param {number} id id
-         * @param {FilterRequest} filterRequest filterRequest
+         * @summary Add a filter.
+         * @param {number} id The test id.
+         * @param {FilterRequest} attackRequest attackRequest
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async addNoise(id: number, filterRequest: FilterRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TestResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.addNoise(id, filterRequest, options);
+        async addFilter(id: number, attackRequest: FilterRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TestResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.addFilter(id, attackRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * 
-         * @summary Add new test.
+         * @summary Add a new test.
          * @param {TestRequest} test test
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async addTest(test: TestRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TestResponse>> {
+        async addTest(test: TestRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TestResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.addTest(test, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -5058,7 +11638,7 @@ export const TestApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteTest(id: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async deleteTest(id: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteTest(id, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -5069,7 +11649,7 @@ export const TestApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getDefenses(testId: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<DefenseResponse>>> {
+        async getDefenses(testId: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<DefenseResponse>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getDefenses(testId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -5080,18 +11660,18 @@ export const TestApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getStatus(testId: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TestResponse>> {
+        async getStatus(testId: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TestResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getStatus(testId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * 
-         * @summary Get tests.
-         * @param {number} projectId projectId
+         * @summary Get tests for a project.
+         * @param {number} projectId The project id.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getTests(projectId: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<TestResponse>>> {
+        async getTests(projectId: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<TestResponse>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getTests(projectId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -5103,54 +11683,56 @@ export const TestApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async removeDefense(id: number, testId: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TestResponse>> {
+        async removeDefense(id: number, testId: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TestResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.removeDefense(id, testId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * 
-         * @summary Remove filter.
+         * @summary Remove a filter.
          * @param {number} id The filter id.
          * @param {number} testId The test id.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async removeFilter(id: number, testId: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TestResponse>> {
+        async removeFilter(id: number, testId: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TestResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.removeFilter(id, testId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * 
          * @summary Start a test.
-         * @param {number} testId testId
+         * @param {number} testId The test id.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async startTest(testId: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async startTest(testId: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.startTest(testId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * 
-         * @summary Stop a test.
+         * @summary Stop all the running jobs in a test.
          * @param {number} id id
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async stopTest(id: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async stopTest(id: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.stopTest(id, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * 
-         * @summary Update test status.
+         * @summary Update test status - can only be called by worker instance.
+         * @param {number} runId runId
+         * @param {number} taskId taskId
          * @param {number} testId testId
          * @param {StatusRequest} status status
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async updateStatus(testId: number, status: StatusRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<boolean>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.updateStatus(testId, status, options);
+        async updateStatus(runId: number, taskId: number, testId: number, status: StatusRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<boolean>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updateStatus(runId, taskId, testId, status, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -5161,21 +11743,20 @@ export const TestApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async updateTest(id: number, testRequest: TestRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TestResponse>> {
+        async updateTest(id: number, testRequest: TestRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TestResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.updateTest(id, testRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * 
-         * @summary Upload data.
-         * @param {'Dataset' | 'Model' | 'WrapperScript'} dataType dataType
-         * @param {number} id id
-         * @param {any} [file] 
+         * @summary Update test run.
+         * @param {number} id The test run ID.
+         * @param {TestRunRequest} request request
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async uploadData(dataType: 'Dataset' | 'Model' | 'WrapperScript', id: number, file?: any, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TestResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.uploadData(dataType, id, file, options);
+        async updateTestRun(id: number, request: TestRunRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TestRunResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updateTestRun(id, request, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -5190,20 +11771,9 @@ export const TestApiFactory = function (configuration?: Configuration, basePath?
     return {
         /**
          * 
-         * @summary Add attack.
-         * @param {number} testId testId
-         * @param {FilterRequest} attackRequest attackRequest
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        addAttack(testId: number, attackRequest: FilterRequest, options?: any): AxiosPromise<TestResponse> {
-            return localVarFp.addAttack(testId, attackRequest, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
          * @summary Add defense.
          * @param {number} testId The test id.
-         * @param {DefenseRequest} defenseRequest defenseRequest
+         * @param {DefenseRequest} defenseRequest The defense object
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -5212,18 +11782,18 @@ export const TestApiFactory = function (configuration?: Configuration, basePath?
         },
         /**
          * 
-         * @summary Add noise.
-         * @param {number} id id
-         * @param {FilterRequest} filterRequest filterRequest
+         * @summary Add a filter.
+         * @param {number} id The test id.
+         * @param {FilterRequest} attackRequest attackRequest
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        addNoise(id: number, filterRequest: FilterRequest, options?: any): AxiosPromise<TestResponse> {
-            return localVarFp.addNoise(id, filterRequest, options).then((request) => request(axios, basePath));
+        addFilter(id: number, attackRequest: FilterRequest, options?: any): AxiosPromise<TestResponse> {
+            return localVarFp.addFilter(id, attackRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @summary Add new test.
+         * @summary Add a new test.
          * @param {TestRequest} test test
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -5263,8 +11833,8 @@ export const TestApiFactory = function (configuration?: Configuration, basePath?
         },
         /**
          * 
-         * @summary Get tests.
-         * @param {number} projectId projectId
+         * @summary Get tests for a project.
+         * @param {number} projectId The project id.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -5284,7 +11854,7 @@ export const TestApiFactory = function (configuration?: Configuration, basePath?
         },
         /**
          * 
-         * @summary Remove filter.
+         * @summary Remove a filter.
          * @param {number} id The filter id.
          * @param {number} testId The test id.
          * @param {*} [options] Override http request option.
@@ -5296,7 +11866,7 @@ export const TestApiFactory = function (configuration?: Configuration, basePath?
         /**
          * 
          * @summary Start a test.
-         * @param {number} testId testId
+         * @param {number} testId The test id.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -5305,7 +11875,7 @@ export const TestApiFactory = function (configuration?: Configuration, basePath?
         },
         /**
          * 
-         * @summary Stop a test.
+         * @summary Stop all the running jobs in a test.
          * @param {number} id id
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -5315,14 +11885,16 @@ export const TestApiFactory = function (configuration?: Configuration, basePath?
         },
         /**
          * 
-         * @summary Update test status.
+         * @summary Update test status - can only be called by worker instance.
+         * @param {number} runId runId
+         * @param {number} taskId taskId
          * @param {number} testId testId
          * @param {StatusRequest} status status
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateStatus(testId: number, status: StatusRequest, options?: any): AxiosPromise<boolean> {
-            return localVarFp.updateStatus(testId, status, options).then((request) => request(axios, basePath));
+        updateStatus(runId: number, taskId: number, testId: number, status: StatusRequest, options?: any): AxiosPromise<boolean> {
+            return localVarFp.updateStatus(runId, taskId, testId, status, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -5337,15 +11909,14 @@ export const TestApiFactory = function (configuration?: Configuration, basePath?
         },
         /**
          * 
-         * @summary Upload data.
-         * @param {'Dataset' | 'Model' | 'WrapperScript'} dataType dataType
-         * @param {number} id id
-         * @param {any} [file] 
+         * @summary Update test run.
+         * @param {number} id The test run ID.
+         * @param {TestRunRequest} request request
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        uploadData(dataType: 'Dataset' | 'Model' | 'WrapperScript', id: number, file?: any, options?: any): AxiosPromise<TestResponse> {
-            return localVarFp.uploadData(dataType, id, file, options).then((request) => request(axios, basePath));
+        updateTestRun(id: number, request: TestRunRequest, options?: any): AxiosPromise<TestRunResponse> {
+            return localVarFp.updateTestRun(id, request, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -5359,52 +11930,39 @@ export const TestApiFactory = function (configuration?: Configuration, basePath?
 export class TestApi extends BaseAPI {
     /**
      * 
-     * @summary Add attack.
-     * @param {number} testId testId
-     * @param {FilterRequest} attackRequest attackRequest
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof TestApi
-     */
-    public addAttack(testId: number, attackRequest: FilterRequest, options?: any) {
-        return TestApiFp(this.configuration).addAttack(testId, attackRequest, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
      * @summary Add defense.
      * @param {number} testId The test id.
-     * @param {DefenseRequest} defenseRequest defenseRequest
+     * @param {DefenseRequest} defenseRequest The defense object
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TestApi
      */
-    public addDefense(testId: number, defenseRequest: DefenseRequest, options?: any) {
+    public addDefense(testId: number, defenseRequest: DefenseRequest, options?: AxiosRequestConfig) {
         return TestApiFp(this.configuration).addDefense(testId, defenseRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
-     * @summary Add noise.
-     * @param {number} id id
-     * @param {FilterRequest} filterRequest filterRequest
+     * @summary Add a filter.
+     * @param {number} id The test id.
+     * @param {FilterRequest} attackRequest attackRequest
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TestApi
      */
-    public addNoise(id: number, filterRequest: FilterRequest, options?: any) {
-        return TestApiFp(this.configuration).addNoise(id, filterRequest, options).then((request) => request(this.axios, this.basePath));
+    public addFilter(id: number, attackRequest: FilterRequest, options?: AxiosRequestConfig) {
+        return TestApiFp(this.configuration).addFilter(id, attackRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
-     * @summary Add new test.
+     * @summary Add a new test.
      * @param {TestRequest} test test
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TestApi
      */
-    public addTest(test: TestRequest, options?: any) {
+    public addTest(test: TestRequest, options?: AxiosRequestConfig) {
         return TestApiFp(this.configuration).addTest(test, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -5416,7 +11974,7 @@ export class TestApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof TestApi
      */
-    public deleteTest(id: number, options?: any) {
+    public deleteTest(id: number, options?: AxiosRequestConfig) {
         return TestApiFp(this.configuration).deleteTest(id, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -5428,7 +11986,7 @@ export class TestApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof TestApi
      */
-    public getDefenses(testId: number, options?: any) {
+    public getDefenses(testId: number, options?: AxiosRequestConfig) {
         return TestApiFp(this.configuration).getDefenses(testId, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -5440,19 +11998,19 @@ export class TestApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof TestApi
      */
-    public getStatus(testId: number, options?: any) {
+    public getStatus(testId: number, options?: AxiosRequestConfig) {
         return TestApiFp(this.configuration).getStatus(testId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
-     * @summary Get tests.
-     * @param {number} projectId projectId
+     * @summary Get tests for a project.
+     * @param {number} projectId The project id.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TestApi
      */
-    public getTests(projectId: number, options?: any) {
+    public getTests(projectId: number, options?: AxiosRequestConfig) {
         return TestApiFp(this.configuration).getTests(projectId, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -5465,58 +12023,60 @@ export class TestApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof TestApi
      */
-    public removeDefense(id: number, testId: number, options?: any) {
+    public removeDefense(id: number, testId: number, options?: AxiosRequestConfig) {
         return TestApiFp(this.configuration).removeDefense(id, testId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
-     * @summary Remove filter.
+     * @summary Remove a filter.
      * @param {number} id The filter id.
      * @param {number} testId The test id.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TestApi
      */
-    public removeFilter(id: number, testId: number, options?: any) {
+    public removeFilter(id: number, testId: number, options?: AxiosRequestConfig) {
         return TestApiFp(this.configuration).removeFilter(id, testId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
      * @summary Start a test.
-     * @param {number} testId testId
+     * @param {number} testId The test id.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TestApi
      */
-    public startTest(testId: number, options?: any) {
+    public startTest(testId: number, options?: AxiosRequestConfig) {
         return TestApiFp(this.configuration).startTest(testId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
-     * @summary Stop a test.
+     * @summary Stop all the running jobs in a test.
      * @param {number} id id
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TestApi
      */
-    public stopTest(id: number, options?: any) {
+    public stopTest(id: number, options?: AxiosRequestConfig) {
         return TestApiFp(this.configuration).stopTest(id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
-     * @summary Update test status.
+     * @summary Update test status - can only be called by worker instance.
+     * @param {number} runId runId
+     * @param {number} taskId taskId
      * @param {number} testId testId
      * @param {StatusRequest} status status
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TestApi
      */
-    public updateStatus(testId: number, status: StatusRequest, options?: any) {
-        return TestApiFp(this.configuration).updateStatus(testId, status, options).then((request) => request(this.axios, this.basePath));
+    public updateStatus(runId: number, taskId: number, testId: number, status: StatusRequest, options?: AxiosRequestConfig) {
+        return TestApiFp(this.configuration).updateStatus(runId, taskId, testId, status, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -5528,22 +12088,1381 @@ export class TestApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof TestApi
      */
-    public updateTest(id: number, testRequest: TestRequest, options?: any) {
+    public updateTest(id: number, testRequest: TestRequest, options?: AxiosRequestConfig) {
         return TestApiFp(this.configuration).updateTest(id, testRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
-     * @summary Upload data.
-     * @param {'Dataset' | 'Model' | 'WrapperScript'} dataType dataType
-     * @param {number} id id
-     * @param {any} [file] 
+     * @summary Update test run.
+     * @param {number} id The test run ID.
+     * @param {TestRunRequest} request request
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TestApi
      */
-    public uploadData(dataType: 'Dataset' | 'Model' | 'WrapperScript', id: number, file?: any, options?: any) {
-        return TestApiFp(this.configuration).uploadData(dataType, id, file, options).then((request) => request(this.axios, this.basePath));
+    public updateTestRun(id: number, request: TestRunRequest, options?: AxiosRequestConfig) {
+        return TestApiFp(this.configuration).updateTestRun(id, request, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * TestProfilesApi - axios parameter creator
+ * @export
+ */
+export const TestProfilesApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary Add a profile to an organization using the provided test id as a template.
+         * @param {number} id The organization ID.
+         * @param {string} name The profile name.
+         * @param {number} testId The test ID from which the settings will be copied.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        addProfile: async (id: number, name: string, testId: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('addProfile', 'id', id)
+            // verify required parameter 'name' is not null or undefined
+            assertParamExists('addProfile', 'name', name)
+            // verify required parameter 'testId' is not null or undefined
+            assertParamExists('addProfile', 'testId', testId)
+            const localVarPath = `/api/v1/profiles/{testId}`
+                .replace(`{${"testId"}}`, encodeURIComponent(String(testId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JWT required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            if (id !== undefined) {
+                localVarQueryParameter['id'] = id;
+            }
+
+            if (name !== undefined) {
+                localVarQueryParameter['name'] = name;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Add a defense to the profile
+         * @param {number} id The profile ID.
+         * @param {DefenseRequest} defense The defense object
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        addTestProfileDefense: async (id: number, defense: DefenseRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('addTestProfileDefense', 'id', id)
+            // verify required parameter 'defense' is not null or undefined
+            assertParamExists('addTestProfileDefense', 'defense', defense)
+            const localVarPath = `/api/v1/profiles/{id}/adddefense`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JWT required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(defense, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Add a filter to the profile
+         * @param {number} id The profile ID.
+         * @param {FilterRequest} filter The filter to add.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        addTestProfileFilter: async (id: number, filter: FilterRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('addTestProfileFilter', 'id', id)
+            // verify required parameter 'filter' is not null or undefined
+            assertParamExists('addTestProfileFilter', 'filter', filter)
+            const localVarPath = `/api/v1/profiles/{id}/addfilter`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JWT required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(filter, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Make a copy of a profile. To copy to a different organization, extra permissions are required.
+         * @param {number} id The profile ID.
+         * @param {number} [orgId] Optional destination organization ID to copy to.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        copyProfile: async (id: number, orgId?: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('copyProfile', 'id', id)
+            const localVarPath = `/api/v1/profiles/{id}/copy`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JWT required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            if (orgId !== undefined) {
+                localVarQueryParameter['orgId'] = orgId;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Create a new test profile
+         * @param {number} orgId The organization ID.
+         * @param {TestProfileRequest} profile The profile object.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createTestProfile: async (orgId: number, profile: TestProfileRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'orgId' is not null or undefined
+            assertParamExists('createTestProfile', 'orgId', orgId)
+            // verify required parameter 'profile' is not null or undefined
+            assertParamExists('createTestProfile', 'profile', profile)
+            const localVarPath = `/api/v1/profiles`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JWT required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            if (orgId !== undefined) {
+                localVarQueryParameter['orgId'] = orgId;
+            }
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(profile, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Delete a profile by ID.
+         * @param {number} id The profile ID.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteProfile: async (id: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('deleteProfile', 'id', id)
+            const localVarPath = `/api/v1/profiles/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JWT required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get the test profile.
+         * @param {number} id The profile ID.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getTestProfile: async (id: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('getTestProfile', 'id', id)
+            const localVarPath = `/api/v1/profiles/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JWT required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get the profiles available for this user.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getTestProfiles: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/v1/profiles`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JWT required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Remove defense from test profile.
+         * @param {number} defenseId The defense ID.
+         * @param {number} id The profile ID.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        removeTestProfileDefense: async (defenseId: number, id: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'defenseId' is not null or undefined
+            assertParamExists('removeTestProfileDefense', 'defenseId', defenseId)
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('removeTestProfileDefense', 'id', id)
+            const localVarPath = `/api/v1/profiles/{id}/defense/{defenseId}`
+                .replace(`{${"defenseId"}}`, encodeURIComponent(String(defenseId)))
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JWT required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Update profile by ID.
+         * @param {number} id The profile ID.
+         * @param {TestProfileRequest} profile The profile update request.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateTestProfile: async (id: number, profile: TestProfileRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('updateTestProfile', 'id', id)
+            // verify required parameter 'profile' is not null or undefined
+            assertParamExists('updateTestProfile', 'profile', profile)
+            const localVarPath = `/api/v1/profiles/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JWT required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(profile, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * TestProfilesApi - functional programming interface
+ * @export
+ */
+export const TestProfilesApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = TestProfilesApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary Add a profile to an organization using the provided test id as a template.
+         * @param {number} id The organization ID.
+         * @param {string} name The profile name.
+         * @param {number} testId The test ID from which the settings will be copied.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async addProfile(id: number, name: string, testId: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TestProfileResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.addProfile(id, name, testId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Add a defense to the profile
+         * @param {number} id The profile ID.
+         * @param {DefenseRequest} defense The defense object
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async addTestProfileDefense(id: number, defense: DefenseRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TestProfileResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.addTestProfileDefense(id, defense, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Add a filter to the profile
+         * @param {number} id The profile ID.
+         * @param {FilterRequest} filter The filter to add.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async addTestProfileFilter(id: number, filter: FilterRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TestProfileResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.addTestProfileFilter(id, filter, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Make a copy of a profile. To copy to a different organization, extra permissions are required.
+         * @param {number} id The profile ID.
+         * @param {number} [orgId] Optional destination organization ID to copy to.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async copyProfile(id: number, orgId?: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TestProfileResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.copyProfile(id, orgId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Create a new test profile
+         * @param {number} orgId The organization ID.
+         * @param {TestProfileRequest} profile The profile object.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createTestProfile(orgId: number, profile: TestProfileRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TestProfileResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createTestProfile(orgId, profile, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Delete a profile by ID.
+         * @param {number} id The profile ID.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteProfile(id: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteProfile(id, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Get the test profile.
+         * @param {number} id The profile ID.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getTestProfile(id: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TestProfileResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getTestProfile(id, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Get the profiles available for this user.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getTestProfiles(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<TestProfileResponse>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getTestProfiles(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Remove defense from test profile.
+         * @param {number} defenseId The defense ID.
+         * @param {number} id The profile ID.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async removeTestProfileDefense(defenseId: number, id: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TestProfileResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.removeTestProfileDefense(defenseId, id, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Update profile by ID.
+         * @param {number} id The profile ID.
+         * @param {TestProfileRequest} profile The profile update request.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async updateTestProfile(id: number, profile: TestProfileRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TestProfileResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updateTestProfile(id, profile, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * TestProfilesApi - factory interface
+ * @export
+ */
+export const TestProfilesApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = TestProfilesApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary Add a profile to an organization using the provided test id as a template.
+         * @param {number} id The organization ID.
+         * @param {string} name The profile name.
+         * @param {number} testId The test ID from which the settings will be copied.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        addProfile(id: number, name: string, testId: number, options?: any): AxiosPromise<TestProfileResponse> {
+            return localVarFp.addProfile(id, name, testId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Add a defense to the profile
+         * @param {number} id The profile ID.
+         * @param {DefenseRequest} defense The defense object
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        addTestProfileDefense(id: number, defense: DefenseRequest, options?: any): AxiosPromise<TestProfileResponse> {
+            return localVarFp.addTestProfileDefense(id, defense, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Add a filter to the profile
+         * @param {number} id The profile ID.
+         * @param {FilterRequest} filter The filter to add.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        addTestProfileFilter(id: number, filter: FilterRequest, options?: any): AxiosPromise<TestProfileResponse> {
+            return localVarFp.addTestProfileFilter(id, filter, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Make a copy of a profile. To copy to a different organization, extra permissions are required.
+         * @param {number} id The profile ID.
+         * @param {number} [orgId] Optional destination organization ID to copy to.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        copyProfile(id: number, orgId?: number, options?: any): AxiosPromise<TestProfileResponse> {
+            return localVarFp.copyProfile(id, orgId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Create a new test profile
+         * @param {number} orgId The organization ID.
+         * @param {TestProfileRequest} profile The profile object.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createTestProfile(orgId: number, profile: TestProfileRequest, options?: any): AxiosPromise<TestProfileResponse> {
+            return localVarFp.createTestProfile(orgId, profile, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Delete a profile by ID.
+         * @param {number} id The profile ID.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteProfile(id: number, options?: any): AxiosPromise<void> {
+            return localVarFp.deleteProfile(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get the test profile.
+         * @param {number} id The profile ID.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getTestProfile(id: number, options?: any): AxiosPromise<TestProfileResponse> {
+            return localVarFp.getTestProfile(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get the profiles available for this user.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getTestProfiles(options?: any): AxiosPromise<Array<TestProfileResponse>> {
+            return localVarFp.getTestProfiles(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Remove defense from test profile.
+         * @param {number} defenseId The defense ID.
+         * @param {number} id The profile ID.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        removeTestProfileDefense(defenseId: number, id: number, options?: any): AxiosPromise<TestProfileResponse> {
+            return localVarFp.removeTestProfileDefense(defenseId, id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Update profile by ID.
+         * @param {number} id The profile ID.
+         * @param {TestProfileRequest} profile The profile update request.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateTestProfile(id: number, profile: TestProfileRequest, options?: any): AxiosPromise<TestProfileResponse> {
+            return localVarFp.updateTestProfile(id, profile, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * TestProfilesApi - object-oriented interface
+ * @export
+ * @class TestProfilesApi
+ * @extends {BaseAPI}
+ */
+export class TestProfilesApi extends BaseAPI {
+    /**
+     * 
+     * @summary Add a profile to an organization using the provided test id as a template.
+     * @param {number} id The organization ID.
+     * @param {string} name The profile name.
+     * @param {number} testId The test ID from which the settings will be copied.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TestProfilesApi
+     */
+    public addProfile(id: number, name: string, testId: number, options?: AxiosRequestConfig) {
+        return TestProfilesApiFp(this.configuration).addProfile(id, name, testId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Add a defense to the profile
+     * @param {number} id The profile ID.
+     * @param {DefenseRequest} defense The defense object
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TestProfilesApi
+     */
+    public addTestProfileDefense(id: number, defense: DefenseRequest, options?: AxiosRequestConfig) {
+        return TestProfilesApiFp(this.configuration).addTestProfileDefense(id, defense, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Add a filter to the profile
+     * @param {number} id The profile ID.
+     * @param {FilterRequest} filter The filter to add.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TestProfilesApi
+     */
+    public addTestProfileFilter(id: number, filter: FilterRequest, options?: AxiosRequestConfig) {
+        return TestProfilesApiFp(this.configuration).addTestProfileFilter(id, filter, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Make a copy of a profile. To copy to a different organization, extra permissions are required.
+     * @param {number} id The profile ID.
+     * @param {number} [orgId] Optional destination organization ID to copy to.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TestProfilesApi
+     */
+    public copyProfile(id: number, orgId?: number, options?: AxiosRequestConfig) {
+        return TestProfilesApiFp(this.configuration).copyProfile(id, orgId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Create a new test profile
+     * @param {number} orgId The organization ID.
+     * @param {TestProfileRequest} profile The profile object.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TestProfilesApi
+     */
+    public createTestProfile(orgId: number, profile: TestProfileRequest, options?: AxiosRequestConfig) {
+        return TestProfilesApiFp(this.configuration).createTestProfile(orgId, profile, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Delete a profile by ID.
+     * @param {number} id The profile ID.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TestProfilesApi
+     */
+    public deleteProfile(id: number, options?: AxiosRequestConfig) {
+        return TestProfilesApiFp(this.configuration).deleteProfile(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get the test profile.
+     * @param {number} id The profile ID.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TestProfilesApi
+     */
+    public getTestProfile(id: number, options?: AxiosRequestConfig) {
+        return TestProfilesApiFp(this.configuration).getTestProfile(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get the profiles available for this user.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TestProfilesApi
+     */
+    public getTestProfiles(options?: AxiosRequestConfig) {
+        return TestProfilesApiFp(this.configuration).getTestProfiles(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Remove defense from test profile.
+     * @param {number} defenseId The defense ID.
+     * @param {number} id The profile ID.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TestProfilesApi
+     */
+    public removeTestProfileDefense(defenseId: number, id: number, options?: AxiosRequestConfig) {
+        return TestProfilesApiFp(this.configuration).removeTestProfileDefense(defenseId, id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Update profile by ID.
+     * @param {number} id The profile ID.
+     * @param {TestProfileRequest} profile The profile update request.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TestProfilesApi
+     */
+    public updateTestProfile(id: number, profile: TestProfileRequest, options?: AxiosRequestConfig) {
+        return TestProfilesApiFp(this.configuration).updateTestProfile(id, profile, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * TransformApi - axios parameter creator
+ * @export
+ */
+export const TransformApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary Add a transform to an organization.
+         * @param {number} id The organization ID.
+         * @param {string} name The transform name.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        addTransform: async (id: number, name: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('addTransform', 'id', id)
+            // verify required parameter 'name' is not null or undefined
+            assertParamExists('addTransform', 'name', name)
+            const localVarPath = `/api/v1/transforms`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JWT required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            if (id !== undefined) {
+                localVarQueryParameter['id'] = id;
+            }
+
+            if (name !== undefined) {
+                localVarQueryParameter['name'] = name;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Delete a transform by ID.
+         * @param {number} id The transform ID.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteTransform: async (id: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('deleteTransform', 'id', id)
+            const localVarPath = `/api/v1/transforms/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JWT required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Download transform file.
+         * @param {number} id The transform ID.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        downloadFile: async (id: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('downloadFile', 'id', id)
+            const localVarPath = `/api/v1/transforms/{id}/data`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JWT required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get a transform by ID.
+         * @param {number} id The transform ID.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getTransform: async (id: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('getTransform', 'id', id)
+            const localVarPath = `/api/v1/transforms/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JWT required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get the transforms available for this user.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getTransforms: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/v1/transforms`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JWT required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Update transform by ID.
+         * @param {number} id The transform ID.
+         * @param {TransformDefinition} model The transform update request.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateTransform: async (id: number, model: TransformDefinition, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('updateTransform', 'id', id)
+            // verify required parameter 'model' is not null or undefined
+            assertParamExists('updateTransform', 'model', model)
+            const localVarPath = `/api/v1/transforms/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JWT required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(model, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Upload the data file for the transform.
+         * @param {number} id The transform ID.
+         * @param {File} [file] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        uploadFile: async (id: number, file?: File, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('uploadFile', 'id', id)
+            const localVarPath = `/api/v1/transforms/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+            const localVarFormParams = new ((configuration && configuration.formDataCtor) || FormData)();
+
+            // authentication JWT required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+
+            if (file !== undefined) { 
+                localVarFormParams.append('file', file as any);
+            }
+    
+    
+            localVarHeaderParameter['Content-Type'] = 'multipart/form-data';
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = localVarFormParams;
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * TransformApi - functional programming interface
+ * @export
+ */
+export const TransformApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = TransformApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary Add a transform to an organization.
+         * @param {number} id The organization ID.
+         * @param {string} name The transform name.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async addTransform(id: number, name: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TransformDefinition>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.addTransform(id, name, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Delete a transform by ID.
+         * @param {number} id The transform ID.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteTransform(id: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteTransform(id, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Download transform file.
+         * @param {number} id The transform ID.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async downloadFile(id: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<File>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.downloadFile(id, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Get a transform by ID.
+         * @param {number} id The transform ID.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getTransform(id: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TransformDefinition>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getTransform(id, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Get the transforms available for this user.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getTransforms(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<TransformDefinition>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getTransforms(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Update transform by ID.
+         * @param {number} id The transform ID.
+         * @param {TransformDefinition} model The transform update request.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async updateTransform(id: number, model: TransformDefinition, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TransformDefinition>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updateTransform(id, model, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Upload the data file for the transform.
+         * @param {number} id The transform ID.
+         * @param {File} [file] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async uploadFile(id: number, file?: File, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TransformDefinition>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.uploadFile(id, file, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * TransformApi - factory interface
+ * @export
+ */
+export const TransformApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = TransformApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary Add a transform to an organization.
+         * @param {number} id The organization ID.
+         * @param {string} name The transform name.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        addTransform(id: number, name: string, options?: any): AxiosPromise<TransformDefinition> {
+            return localVarFp.addTransform(id, name, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Delete a transform by ID.
+         * @param {number} id The transform ID.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteTransform(id: number, options?: any): AxiosPromise<void> {
+            return localVarFp.deleteTransform(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Download transform file.
+         * @param {number} id The transform ID.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        downloadFile(id: number, options?: any): AxiosPromise<File> {
+            return localVarFp.downloadFile(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get a transform by ID.
+         * @param {number} id The transform ID.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getTransform(id: number, options?: any): AxiosPromise<TransformDefinition> {
+            return localVarFp.getTransform(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get the transforms available for this user.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getTransforms(options?: any): AxiosPromise<Array<TransformDefinition>> {
+            return localVarFp.getTransforms(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Update transform by ID.
+         * @param {number} id The transform ID.
+         * @param {TransformDefinition} model The transform update request.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateTransform(id: number, model: TransformDefinition, options?: any): AxiosPromise<TransformDefinition> {
+            return localVarFp.updateTransform(id, model, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Upload the data file for the transform.
+         * @param {number} id The transform ID.
+         * @param {File} [file] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        uploadFile(id: number, file?: File, options?: any): AxiosPromise<TransformDefinition> {
+            return localVarFp.uploadFile(id, file, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * TransformApi - object-oriented interface
+ * @export
+ * @class TransformApi
+ * @extends {BaseAPI}
+ */
+export class TransformApi extends BaseAPI {
+    /**
+     * 
+     * @summary Add a transform to an organization.
+     * @param {number} id The organization ID.
+     * @param {string} name The transform name.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TransformApi
+     */
+    public addTransform(id: number, name: string, options?: AxiosRequestConfig) {
+        return TransformApiFp(this.configuration).addTransform(id, name, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Delete a transform by ID.
+     * @param {number} id The transform ID.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TransformApi
+     */
+    public deleteTransform(id: number, options?: AxiosRequestConfig) {
+        return TransformApiFp(this.configuration).deleteTransform(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Download transform file.
+     * @param {number} id The transform ID.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TransformApi
+     */
+    public downloadFile(id: number, options?: AxiosRequestConfig) {
+        return TransformApiFp(this.configuration).downloadFile(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get a transform by ID.
+     * @param {number} id The transform ID.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TransformApi
+     */
+    public getTransform(id: number, options?: AxiosRequestConfig) {
+        return TransformApiFp(this.configuration).getTransform(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get the transforms available for this user.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TransformApi
+     */
+    public getTransforms(options?: AxiosRequestConfig) {
+        return TransformApiFp(this.configuration).getTransforms(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Update transform by ID.
+     * @param {number} id The transform ID.
+     * @param {TransformDefinition} model The transform update request.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TransformApi
+     */
+    public updateTransform(id: number, model: TransformDefinition, options?: AxiosRequestConfig) {
+        return TransformApiFp(this.configuration).updateTransform(id, model, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Upload the data file for the transform.
+     * @param {number} id The transform ID.
+     * @param {File} [file] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TransformApi
+     */
+    public uploadFile(id: number, file?: File, options?: AxiosRequestConfig) {
+        return TransformApiFp(this.configuration).uploadFile(id, file, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -5561,7 +13480,7 @@ export const UsersApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteUser: async (id: number, options: any = {}): Promise<RequestArgs> => {
+        deleteUser: async (id: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('deleteUser', 'id', id)
             const localVarPath = `/api/v1/users/{id}`
@@ -5582,7 +13501,7 @@ export const UsersApiAxiosParamCreator = function (configuration?: Configuration
 
 
     
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
@@ -5597,7 +13516,7 @@ export const UsersApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getLoggedInUser: async (options: any = {}): Promise<RequestArgs> => {
+        getLoggedInUser: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/v1/users/me`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -5615,7 +13534,7 @@ export const UsersApiAxiosParamCreator = function (configuration?: Configuration
 
 
     
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
@@ -5631,7 +13550,7 @@ export const UsersApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getUser: async (id: number, options: any = {}): Promise<RequestArgs> => {
+        getUser: async (id: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('getUser', 'id', id)
             const localVarPath = `/api/v1/users/{id}`
@@ -5652,7 +13571,7 @@ export const UsersApiAxiosParamCreator = function (configuration?: Configuration
 
 
     
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
@@ -5663,11 +13582,48 @@ export const UsersApiAxiosParamCreator = function (configuration?: Configuration
         },
         /**
          * 
-         * @summary Get all users.
+         * @summary Get user logs.
+         * @param {number} id id
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getUsers: async (options: any = {}): Promise<RequestArgs> => {
+        getUserLogs: async (id: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('getUserLogs', 'id', id)
+            const localVarPath = `/api/v1/users/{id}/logs`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JWT required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get all users (access rights required).
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getUsers: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/v1/users`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -5685,7 +13641,7 @@ export const UsersApiAxiosParamCreator = function (configuration?: Configuration
 
 
     
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
@@ -5696,12 +13652,51 @@ export const UsersApiAxiosParamCreator = function (configuration?: Configuration
         },
         /**
          * 
-         * @summary Update profile of currently authenticated user.
-         * @param {UserRequest} userRequest userRequest
+         * @summary Send user feedback.
+         * @param {UserRequest} userRequest The user request.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateProfile: async (userRequest: UserRequest, options: any = {}): Promise<RequestArgs> => {
+        sendFeedback: async (userRequest: UserRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'userRequest' is not null or undefined
+            assertParamExists('sendFeedback', 'userRequest', userRequest)
+            const localVarPath = `/api/v1/users/feedback`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JWT required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(userRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Update profile of currently authenticated user.
+         * @param {UserRequest} userRequest The user update request.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateProfile: async (userRequest: UserRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'userRequest' is not null or undefined
             assertParamExists('updateProfile', 'userRequest', userRequest)
             const localVarPath = `/api/v1/users`;
@@ -5723,7 +13718,7 @@ export const UsersApiAxiosParamCreator = function (configuration?: Configuration
     
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(userRequest, localVarRequestOptions, configuration)
@@ -5735,13 +13730,13 @@ export const UsersApiAxiosParamCreator = function (configuration?: Configuration
         },
         /**
          * 
-         * @summary Update user.
-         * @param {number} id id
+         * @summary Update user by user id - (admin permission required)
+         * @param {number} id The user ID.
          * @param {UserRequest} userRequest userRequest
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateUser: async (id: number, userRequest: UserRequest, options: any = {}): Promise<RequestArgs> => {
+        updateUser: async (id: number, userRequest: UserRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('updateUser', 'id', id)
             // verify required parameter 'userRequest' is not null or undefined
@@ -5766,7 +13761,7 @@ export const UsersApiAxiosParamCreator = function (configuration?: Configuration
     
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(userRequest, localVarRequestOptions, configuration)
@@ -5793,7 +13788,7 @@ export const UsersApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteUser(id: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async deleteUser(id: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteUser(id, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -5803,7 +13798,7 @@ export const UsersApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getLoggedInUser(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserResponse>> {
+        async getLoggedInUser(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getLoggedInUser(options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -5814,40 +13809,62 @@ export const UsersApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getUser(id: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserResponse>> {
+        async getUser(id: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getUser(id, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * 
-         * @summary Get all users.
+         * @summary Get user logs.
+         * @param {number} id id
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getUsers(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<UserResponse>>> {
+        async getUserLogs(id: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<LogEntryResponse>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getUserLogs(id, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Get all users (access rights required).
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getUsers(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<UserResponse>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getUsers(options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * 
-         * @summary Update profile of currently authenticated user.
-         * @param {UserRequest} userRequest userRequest
+         * @summary Send user feedback.
+         * @param {UserRequest} userRequest The user request.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async updateProfile(userRequest: UserRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserResponse>> {
+        async sendFeedback(userRequest: UserRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.sendFeedback(userRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Update profile of currently authenticated user.
+         * @param {UserRequest} userRequest The user update request.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async updateProfile(userRequest: UserRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.updateProfile(userRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * 
-         * @summary Update user.
-         * @param {number} id id
+         * @summary Update user by user id - (admin permission required)
+         * @param {number} id The user ID.
          * @param {UserRequest} userRequest userRequest
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async updateUser(id: number, userRequest: UserRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserResponse>> {
+        async updateUser(id: number, userRequest: UserRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.updateUser(id, userRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -5892,7 +13909,17 @@ export const UsersApiFactory = function (configuration?: Configuration, basePath
         },
         /**
          * 
-         * @summary Get all users.
+         * @summary Get user logs.
+         * @param {number} id id
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getUserLogs(id: number, options?: any): AxiosPromise<Array<LogEntryResponse>> {
+            return localVarFp.getUserLogs(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get all users (access rights required).
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -5901,8 +13928,18 @@ export const UsersApiFactory = function (configuration?: Configuration, basePath
         },
         /**
          * 
+         * @summary Send user feedback.
+         * @param {UserRequest} userRequest The user request.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        sendFeedback(userRequest: UserRequest, options?: any): AxiosPromise<void> {
+            return localVarFp.sendFeedback(userRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Update profile of currently authenticated user.
-         * @param {UserRequest} userRequest userRequest
+         * @param {UserRequest} userRequest The user update request.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -5911,8 +13948,8 @@ export const UsersApiFactory = function (configuration?: Configuration, basePath
         },
         /**
          * 
-         * @summary Update user.
-         * @param {number} id id
+         * @summary Update user by user id - (admin permission required)
+         * @param {number} id The user ID.
          * @param {UserRequest} userRequest userRequest
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -5938,7 +13975,7 @@ export class UsersApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof UsersApi
      */
-    public deleteUser(id: number, options?: any) {
+    public deleteUser(id: number, options?: AxiosRequestConfig) {
         return UsersApiFp(this.configuration).deleteUser(id, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -5949,7 +13986,7 @@ export class UsersApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof UsersApi
      */
-    public getLoggedInUser(options?: any) {
+    public getLoggedInUser(options?: AxiosRequestConfig) {
         return UsersApiFp(this.configuration).getLoggedInUser(options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -5961,44 +13998,575 @@ export class UsersApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof UsersApi
      */
-    public getUser(id: number, options?: any) {
+    public getUser(id: number, options?: AxiosRequestConfig) {
         return UsersApiFp(this.configuration).getUser(id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
-     * @summary Get all users.
+     * @summary Get user logs.
+     * @param {number} id id
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UsersApi
      */
-    public getUsers(options?: any) {
+    public getUserLogs(id: number, options?: AxiosRequestConfig) {
+        return UsersApiFp(this.configuration).getUserLogs(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get all users (access rights required).
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UsersApi
+     */
+    public getUsers(options?: AxiosRequestConfig) {
         return UsersApiFp(this.configuration).getUsers(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
-     * @summary Update profile of currently authenticated user.
-     * @param {UserRequest} userRequest userRequest
+     * @summary Send user feedback.
+     * @param {UserRequest} userRequest The user request.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UsersApi
      */
-    public updateProfile(userRequest: UserRequest, options?: any) {
+    public sendFeedback(userRequest: UserRequest, options?: AxiosRequestConfig) {
+        return UsersApiFp(this.configuration).sendFeedback(userRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Update profile of currently authenticated user.
+     * @param {UserRequest} userRequest The user update request.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UsersApi
+     */
+    public updateProfile(userRequest: UserRequest, options?: AxiosRequestConfig) {
         return UsersApiFp(this.configuration).updateProfile(userRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
-     * @summary Update user.
-     * @param {number} id id
+     * @summary Update user by user id - (admin permission required)
+     * @param {number} id The user ID.
      * @param {UserRequest} userRequest userRequest
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UsersApi
      */
-    public updateUser(id: number, userRequest: UserRequest, options?: any) {
+    public updateUser(id: number, userRequest: UserRequest, options?: AxiosRequestConfig) {
         return UsersApiFp(this.configuration).updateUser(id, userRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * VersionsApi - axios parameter creator
+ * @export
+ */
+export const VersionsApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary Get platform version
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getPlatformVersion: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/v1/versions`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JWT required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * VersionsApi - functional programming interface
+ * @export
+ */
+export const VersionsApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = VersionsApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary Get platform version
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getPlatformVersion(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getPlatformVersion(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * VersionsApi - factory interface
+ * @export
+ */
+export const VersionsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = VersionsApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary Get platform version
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getPlatformVersion(options?: any): AxiosPromise<string> {
+            return localVarFp.getPlatformVersion(options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * VersionsApi - object-oriented interface
+ * @export
+ * @class VersionsApi
+ * @extends {BaseAPI}
+ */
+export class VersionsApi extends BaseAPI {
+    /**
+     * 
+     * @summary Get platform version
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof VersionsApi
+     */
+    public getPlatformVersion(options?: AxiosRequestConfig) {
+        return VersionsApiFp(this.configuration).getPlatformVersion(options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * WebhooksApi - axios parameter creator
+ * @export
+ */
+export const WebhooksApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary Create a webhook for a test.
+         * @param {number} testId The test ID.
+         * @param {WebhookRequest} hook The test hook object.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createWebhook: async (testId: number, hook: WebhookRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'testId' is not null or undefined
+            assertParamExists('createWebhook', 'testId', testId)
+            // verify required parameter 'hook' is not null or undefined
+            assertParamExists('createWebhook', 'hook', hook)
+            const localVarPath = `/api/v1/webhooks/test/{testId}`
+                .replace(`{${"testId"}}`, encodeURIComponent(String(testId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JWT required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(hook, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Delete a webhook.
+         * @param {number} hookId The hook ID.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteWebhook: async (hookId: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'hookId' is not null or undefined
+            assertParamExists('deleteWebhook', 'hookId', hookId)
+            const localVarPath = `/api/v1/webhooks/{hookId}`
+                .replace(`{${"hookId"}}`, encodeURIComponent(String(hookId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JWT required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get a webhook.
+         * @param {number} webhookId The Webhook ID.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getWebhook: async (webhookId: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'webhookId' is not null or undefined
+            assertParamExists('getWebhook', 'webhookId', webhookId)
+            const localVarPath = `/api/v1/webhooks/{webhookId}`
+                .replace(`{${"webhookId"}}`, encodeURIComponent(String(webhookId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JWT required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get all webhooks defined for a test.
+         * @param {number} testId The test ID.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getWebhooks: async (testId: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'testId' is not null or undefined
+            assertParamExists('getWebhooks', 'testId', testId)
+            const localVarPath = `/api/v1/webhooks/test/{testId}`
+                .replace(`{${"testId"}}`, encodeURIComponent(String(testId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JWT required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Update a webhook.
+         * @param {number} hookId The hook ID.
+         * @param {WebhookRequest} hook The test hook object.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateWebhook: async (hookId: number, hook: WebhookRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'hookId' is not null or undefined
+            assertParamExists('updateWebhook', 'hookId', hookId)
+            // verify required parameter 'hook' is not null or undefined
+            assertParamExists('updateWebhook', 'hook', hook)
+            const localVarPath = `/api/v1/webhooks/{hookId}`
+                .replace(`{${"hookId"}}`, encodeURIComponent(String(hookId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JWT required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(hook, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * WebhooksApi - functional programming interface
+ * @export
+ */
+export const WebhooksApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = WebhooksApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary Create a webhook for a test.
+         * @param {number} testId The test ID.
+         * @param {WebhookRequest} hook The test hook object.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createWebhook(testId: number, hook: WebhookRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<WebhookResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createWebhook(testId, hook, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Delete a webhook.
+         * @param {number} hookId The hook ID.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteWebhook(hookId: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteWebhook(hookId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Get a webhook.
+         * @param {number} webhookId The Webhook ID.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getWebhook(webhookId: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<WebhookResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getWebhook(webhookId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Get all webhooks defined for a test.
+         * @param {number} testId The test ID.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getWebhooks(testId: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<WebhookResponse>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getWebhooks(testId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Update a webhook.
+         * @param {number} hookId The hook ID.
+         * @param {WebhookRequest} hook The test hook object.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async updateWebhook(hookId: number, hook: WebhookRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<WebhookResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updateWebhook(hookId, hook, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * WebhooksApi - factory interface
+ * @export
+ */
+export const WebhooksApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = WebhooksApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary Create a webhook for a test.
+         * @param {number} testId The test ID.
+         * @param {WebhookRequest} hook The test hook object.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createWebhook(testId: number, hook: WebhookRequest, options?: any): AxiosPromise<WebhookResponse> {
+            return localVarFp.createWebhook(testId, hook, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Delete a webhook.
+         * @param {number} hookId The hook ID.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteWebhook(hookId: number, options?: any): AxiosPromise<void> {
+            return localVarFp.deleteWebhook(hookId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get a webhook.
+         * @param {number} webhookId The Webhook ID.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getWebhook(webhookId: number, options?: any): AxiosPromise<WebhookResponse> {
+            return localVarFp.getWebhook(webhookId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get all webhooks defined for a test.
+         * @param {number} testId The test ID.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getWebhooks(testId: number, options?: any): AxiosPromise<Array<WebhookResponse>> {
+            return localVarFp.getWebhooks(testId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Update a webhook.
+         * @param {number} hookId The hook ID.
+         * @param {WebhookRequest} hook The test hook object.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateWebhook(hookId: number, hook: WebhookRequest, options?: any): AxiosPromise<WebhookResponse> {
+            return localVarFp.updateWebhook(hookId, hook, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * WebhooksApi - object-oriented interface
+ * @export
+ * @class WebhooksApi
+ * @extends {BaseAPI}
+ */
+export class WebhooksApi extends BaseAPI {
+    /**
+     * 
+     * @summary Create a webhook for a test.
+     * @param {number} testId The test ID.
+     * @param {WebhookRequest} hook The test hook object.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof WebhooksApi
+     */
+    public createWebhook(testId: number, hook: WebhookRequest, options?: AxiosRequestConfig) {
+        return WebhooksApiFp(this.configuration).createWebhook(testId, hook, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Delete a webhook.
+     * @param {number} hookId The hook ID.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof WebhooksApi
+     */
+    public deleteWebhook(hookId: number, options?: AxiosRequestConfig) {
+        return WebhooksApiFp(this.configuration).deleteWebhook(hookId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get a webhook.
+     * @param {number} webhookId The Webhook ID.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof WebhooksApi
+     */
+    public getWebhook(webhookId: number, options?: AxiosRequestConfig) {
+        return WebhooksApiFp(this.configuration).getWebhook(webhookId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get all webhooks defined for a test.
+     * @param {number} testId The test ID.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof WebhooksApi
+     */
+    public getWebhooks(testId: number, options?: AxiosRequestConfig) {
+        return WebhooksApiFp(this.configuration).getWebhooks(testId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Update a webhook.
+     * @param {number} hookId The hook ID.
+     * @param {WebhookRequest} hook The test hook object.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof WebhooksApi
+     */
+    public updateWebhook(hookId: number, hook: WebhookRequest, options?: AxiosRequestConfig) {
+        return WebhooksApiFp(this.configuration).updateWebhook(hookId, hook, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

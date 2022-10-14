@@ -1,8 +1,8 @@
 /* tslint:disable */
 /* eslint-disable */
 /**
- * Adversarial Security Assessment Platform for AI
- * Adversarial Security Assessment Platform for AI API
+ * GuardAI Platform API
+ * GuardAI is an adversarial security assessment Platform for AI
  *
  * The version of the OpenAPI document: 1.0
  * Contact: info@navinfo.eu

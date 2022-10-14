@@ -1,0 +1,8 @@
+version: 1
+
+connection:
+  # Ensure that the URL matches your GuardAI Platform deployment
+  host: "https://guardai.navinfo.cloud"
+  # Create an API key from your GuardAI Platform profile
+  api-key-id: "keyid"
+  api-key: "key"

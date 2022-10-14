@@ -1,9 +1,9 @@
-# How to use the ASA Platform Python API client
+# How to use the GuardAI Platform Python API client
 
-### Install the required dependencies
+### Install the API client
 
 ```shell
-pip install -r asap_api/requirements.txt
+pip install ./guardai_api
 ```
 
 # Running the example code
@@ -14,12 +14,14 @@ pip install -r examples/requirements.txt
 ```
 
 ### 2. Configure the API credentials 
-Edit the asap-sdk-config.yml file to configure the API connection:
+Edit the guardai-sdk-config.yml file to configure the API connection:
 ```yaml
+version: 1
+
 connection:
-  # Ensure that the URL matches your ASA Platform deployment
-  host: "https://asap.gpu.navinfo.cloud"
-  # Create an API key from your ASA Platform profile
+  # Ensure that the URL matches your GuardAI Platform deployment
+  host: "https://guardai.navinfo.cloud"
+  # Create an API key from your GuardAI Platform profile
   api-key-id: "keyid"
   api-key: "key"
 
@@ -33,5 +35,5 @@ connection:
 #### Starting a robustness test
 
 ```shell
-./examples/start_robustness_test.py
+./examples/start_robustness_test.py --test-id <test-id>
 ```

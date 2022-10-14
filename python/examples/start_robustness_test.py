@@ -6,32 +6,20 @@
 #  -*- coding: utf-8 -*-
 __author__ = "Kobus Grobler"
 
-import sys
 import argparse
 import time
 
-sys.path.append('.')
-sys.path.append('./asap_api')
+from guardai_api.api.test_api import TestApi
+from guardai_api.exceptions import ApiException, NotFoundException
 
-from asap_client.exceptions import ApiException, NotFoundException
-from asap_client.asap_api.test_api import TestApi
-from api_util.util import load_sdk_config, get_auth_token, get_api_client
+from util import get_client
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='ASA Start Test Example')
+    parser = argparse.ArgumentParser(description='GaurdAI Start Test Example')
     parser.add_argument('--test-id', type=int, required=True,
-                        help='The ASA Platform test ID to start.')
+                        help='The test ID to start.')
     args = parser.parse_args()
-
-    config = load_sdk_config()
-    if config is None:
-        print("A configuration file with valid connection information is required.")
-        exit(1)
-
-    print('Retrieving authentication token...')
-    auth_token = get_auth_token(config['connection']['host'],
-                                config['connection']['api-key'], config['connection']['api-key-id'])
-    api_client = get_api_client(config['connection']['host'], auth_token)
+    api_client = get_client()
     test_api = TestApi(api_client)
 
     print(f'Starting test #{args.test_id}')

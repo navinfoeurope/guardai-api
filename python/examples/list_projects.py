@@ -6,26 +6,14 @@
 #  -*- coding: utf-8 -*-
 __author__ = "Kobus Grobler"
 
-import sys
+from guardai_api.api.project_api import ProjectApi
+from guardai_api.api.test_api import TestApi
 
-sys.path.append('.')
-sys.path.append('./asap_api')
-
-from asap_client.asap_api.project_api import ProjectApi
-from asap_client.asap_api.test_api import TestApi
-from api_util.util import load_sdk_config, get_auth_token, get_api_client
+from util import get_client
 
 if __name__ == '__main__':
 
-    config = load_sdk_config()
-    if config is None:
-        print("A configuration file with valid connection information is required.")
-        exit(1)
-
-    print('Retrieving authentication token...')
-    auth_token = get_auth_token(config['connection']['host'],
-                                config['connection']['api-key'], config['connection']['api-key-id'])
-    api_client = get_api_client(config['connection']['host'], auth_token)
+    api_client = get_client()
     project_api = ProjectApi(api_client)
     test_api = TestApi(api_client)
 

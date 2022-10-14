@@ -1,13 +1,13 @@
-# Adversarial Security Assessment Platform for AI API
+# GuardAI Adversarial Security Assessment Platform for AI API
 
-The ASA Platform, created by [NavInfo Europe](https://navinfo.eu), is used to measure the 
+The GuardAI Platform, created by [NavInfo Europe](https://www.navinfo.eu), is used to measure the 
 Adversarial and Natural Robustness of a model.
 
 The provided API is used in automation to integrate testing into your AI
-development pipeline. Specifically, this enables integration with continuous integration and/or deployment systems
+development pipeline. Specifically, this enables integration with continuous integration and/or deployment systems.
 
 ## API Guide
-In general, using the ASAP API consists of the following high level steps:
+In general, using the GuardAI API consists of the following high level steps:
 1. Creating API credentials
 
    Go to the Profile page
@@ -38,16 +38,16 @@ In general, using the ASAP API consists of the following high level steps:
     ...
    ```
    See the example code for examples on how to get information on projects, tests and how to start a robustness test. 
-   Also consult the ASAP SDK for guidance on how to integrate new models into the platform.
+   Also consult the GuardAI SDK for guidance on how to integrate new models into the platform.
 
 
 ## API Examples
 [Python examples](python/README.md#Running-the-example-code)
 
 ## API Reference Documentation
-[HTML Documentation](https://navinfoeurope.github.io/asap-api/docs/index.html)
+[HTML Documentation](https://navinfoeurope.github.io/guardai-api/docs/index.html)
 
-[Python API client documentation](python/asap_api/README.md#Documentation-for-API-Endpoints)
+[Python API client documentation](python/guardai_api/README.md#Documentation-for-API-Endpoints)
 
 ### Source code
-[GitHub](https://github.com/navinfoeurope/asap-api/)
+[GitHub](https://github.com/navinfoeurope/guardai-api/)
